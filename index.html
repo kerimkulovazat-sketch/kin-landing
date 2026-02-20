@@ -730,51 +730,89 @@
             showTyping();
             
             try {
-                // Отправляем на сервер
-                const response = await fetch(`${API_URL}/chat/send`, {
+                // Отправляем webhook на сервер Ли
+                const webhookUrl = `${API_URL}/webhook/${currentCompanion}`;
+                const response = await fetch(webhookUrl, {
                     method: 'POST',
                     headers: { 'Content-Type': 'application/json' },
                     body: JSON.stringify({
                         user_id: currentUser.id,
-                        companion: currentCompanion,
                         message: message
                     })
                 });
                 
-                // Ждём ответ бота
-                setTimeout(async () => {
-                    hideTyping();
-                    
-                    // Пытаемся получить ответ
-                    try {
-                        const messagesRes = await fetch(`${API_URL}/chat/messages?user_id=${currentUser.id}&companion=${currentCompanion}&last_id=0`);
-                        const data = await messagesRes.json();
-                        
-                        if (data.messages && data.messages.length > 0) {
-                            const botMsg = data.messages.find(m => m.from === 'bot');
-                            if (botMsg) {
-                                addMessage('bot', botMsg.text);
-                            } else {
-                                // Если нет ответа от бота, эмулируем
-                                addBotResponse(message);
-                            }
-                        } else {
-                            addBotResponse(message);
-                        }
-                    } catch (e) {
-                        addBotResponse(message);
-                    }
-                    
-                    messagesCount++;
-                    document.getElementById('msgLeft').textContent = MAX_FREE_MESSAGES - messagesCount;
-                    
-                }, 1500);
+                if (!response.ok) {
+                    throw new Error('Webhook failed');
+                }
+                
+                // Запускаем polling для получения ответа
+                startPollingForResponse();
                 
             } catch (e) {
-                console.error('Error:', e);
+                console.error('Error sending webhook:', e);
                 hideTyping();
-                addBotResponse(message);
+                addMessage('bot', '❌ Ошибка отправки сообщения. Попробуй ещё раз.');
             }
+        }
+        
+        // Polling для получения ответа от бота
+        let pollingInterval = null;
+        let lastMessageId = 0;
+        
+        function startPollingForResponse() {
+            let attempts = 0;
+            const maxAttempts = 30; // Максимум 30 попыток (60 секунд)
+            
+            if (pollingInterval) clearInterval(pollingInterval);
+            
+            pollingInterval = setInterval(async () => {
+                attempts++;
+                
+                try {
+                    // Запрашиваем сообщения
+                    const response = await fetch(
+                        `${API_URL}/chat/messages?user_id=${currentUser.id}&companion=${currentCompanion}&last_id=${lastMessageId}`
+                    );
+                    
+                    if (!response.ok) throw new Error('Failed to fetch messages');
+                    
+                    const data = await response.json();
+                    
+                    if (data.messages && data.messages.length > 0) {
+                        // Ищем ответ от бота
+                        const botMessages = data.messages.filter(m => m.from === 'bot' && m.id > lastMessageId);
+                        
+                        if (botMessages.length > 0) {
+                            // Нашли ответ!
+                            hideTyping();
+                            
+                            botMessages.forEach(msg => {
+                                addMessage('bot', msg.text);
+                                lastMessageId = Math.max(lastMessageId, msg.id);
+                            });
+                            
+                            // Останавливаем polling
+                            clearInterval(pollingInterval);
+                            pollingInterval = null;
+                            
+                            // Обновляем счётчик
+                            messagesCount++;
+                            document.getElementById('msgLeft').textContent = MAX_FREE_MESSAGES - messagesCount;
+                        }
+                    }
+                    
+                    // Если превысили количество попыток
+                    if (attempts >= maxAttempts) {
+                        clearInterval(pollingInterval);
+                        pollingInterval = null;
+                        hideTyping();
+                        addMessage('bot', '⏱️ Бот думает слишком долго. Попробуй позже.');
+                    }
+                    
+                } catch (e) {
+                    console.error('Polling error:', e);
+                }
+            }, 2000); // Проверяем каждые 2 секунды
         }
         
         function addMessage(from, text) {
@@ -799,31 +837,6 @@
         function hideTyping() {
             const typing = document.getElementById('typingIndicator');
             if (typing) typing.remove();
-        }
-        
-        function addBotResponse(userMessage) {
-            // Эмуляция ответов пока бот не подключен
-            const responses = {
-                'li': [
-                    'Я понимаю... Расскажи подробнее?',
-                    'Это важно для тебя?',
-                    'Я рядом. Продолжай.',
-                    'Интересно... А что ты чувствуешь?',
-                    'Понимаю. Хочешь чаю? ☕'
-                ],
-                'leo': [
-                    'Честно? Не знаю что сказать.',
-                    'А что ты сам думаешь?',
-                    'Слушай, давай без драмы.',
-                    'Типично. Но окей, рассказывай.',
-                    'Я тут, да. Продолжай.'
-                ]
-            };
-            
-            const randomResponse = responses[currentCompanion][Math.floor(Math.random() * responses[currentCompanion].length)];
-            addMessage('bot', randomResponse);
-            messagesCount++;
-            document.getElementById('msgLeft').textContent = MAX_FREE_MESSAGES - messagesCount;
         }
         
         function handleKeyPress(e) {
