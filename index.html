@@ -1,0 +1,735 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIN — Твой личный AI companion</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --card: #1a1a28;
+            --text: #e8e6f0;
+            --text-dim: #8a87a0;
+            --accent: #ff4d6d;
+            --accent-2: #c77dff;
+        }
+        html { scroll-behavior: smooth; }
+        body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
+        
+        /* Navigation */
+        nav {
+            position: fixed; top: 0; left: 0; right: 0; padding: 20px 40px;
+            display: flex; justify-content: space-between; align-items: center;
+            backdrop-filter: blur(20px); background: rgba(10,10,15,0.9);
+            border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 1000;
+        }
+        .logo { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #ff4d6d, #c77dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .nav-links { display: flex; gap: 30px; align-items: center; }
+        .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
+        .nav-links a:hover { color: var(--text); }
+        .user-info { display: none; align-items: center; gap: 10px; }
+        .user-info.active { display: flex; }
+        .user-avatar { width: 32px; height: 32px; border-radius: 50%; border: 2px solid var(--accent); }
+        
+        /* Hero */
+        .hero {
+            min-height: 100vh; display: flex; flex-direction: column;
+            justify-content: center; align-items: center; text-align: center;
+            padding: 140px 20px 100px;
+            background: radial-gradient(ellipse at 30% 20%, rgba(255,77,109,0.15), transparent 50%);
+        }
+        .hero h1 { font-size: clamp(2.5rem, 6vw, 5rem); font-weight: 800; margin-bottom: 20px; }
+        .hero h1 span { background: linear-gradient(135deg, #ff4d6d, #c77dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .hero p { font-size: 1.2rem; color: var(--text-dim); max-width: 600px; margin-bottom: 40px; }
+        .btn-primary {
+            background: linear-gradient(135deg, #ff4d6d, #c77dff); color: white;
+            padding: 16px 40px; border-radius: 50px; text-decoration: none;
+            font-weight: 600; font-size: 1.1rem; border: none; cursor: pointer;
+            transition: transform 0.3s, box-shadow 0.3s;
+        }
+        .btn-primary:hover { transform: translateY(-3px); box-shadow: 0 10px 30px rgba(255,77,109,0.4); }
+        
+        /* Telegram Login Container */
+        .telegram-login-container {
+            margin-top: 30px;
+            min-height: 50px;
+        }
+        
+        /* 3D Carousel */
+        .carousel-section { padding: 80px 20px; background: var(--surface); }
+        .carousel-container {
+            position: relative; max-width: 1000px; margin: 0 auto;
+            height: 500px; perspective: 1000px;
+        }
+        .carousel-track {
+            position: relative; width: 100%; height: 100%;
+            transform-style: preserve-3d; transition: transform 0.6s;
+        }
+        .carousel-card {
+            position: absolute; width: 300px; height: 420px; left: 50%; top: 50%;
+            margin-left: -150px; margin-top: -210px;
+            border-radius: 24px; overflow: hidden; cursor: pointer;
+            transition: all 0.6s; background: var(--card);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .carousel-card img { width: 100%; height: 65%; object-fit: cover; }
+        .carousel-card-content { padding: 20px; }
+        .carousel-card h3 { font-size: 1.3rem; margin-bottom: 4px; }
+        .carousel-card p { color: var(--text-dim); font-size: 0.85rem; }
+        
+        .carousel-card[data-pos="0"] { transform: translateZ(200px) scale(1); opacity: 1; z-index: 3; }
+        .carousel-card[data-pos="-1"] { transform: translateX(-320px) translateZ(-100px) rotateY(25deg); opacity: 0.7; z-index: 2; }
+        .carousel-card[data-pos="1"] { transform: translateX(320px) translateZ(-100px) rotateY(-25deg); opacity: 0.7; z-index: 2; }
+        .carousel-card[data-pos="-2"], .carousel-card[data-pos="2"] { opacity: 0; }
+        
+        .carousel-nav {
+            display: flex; justify-content: center; gap: 20px; margin-top: 30px;
+        }
+        .carousel-btn {
+            width: 50px; height: 50px; border-radius: 50%;
+            background: var(--card); border: 1px solid rgba(255,255,255,0.1);
+            color: var(--text); font-size: 1.2rem; cursor: pointer;
+            transition: all 0.3s;
+        }
+        .carousel-btn:hover { background: var(--accent); border-color: var(--accent); }
+        
+        /* Pricing */
+        .pricing { padding: 100px 20px; }
+        .section-header { text-align: center; margin-bottom: 60px; }
+        .section-header h2 { font-size: clamp(2rem, 4vw, 3rem); font-weight: 700; margin-bottom: 16px; }
+        .section-header h2 span { background: linear-gradient(135deg, #ff4d6d, #c77dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .section-header p { color: var(--text-dim); font-size: 1.1rem; max-width: 500px; margin: 0 auto; }
+        
+        .pricing-grid {
+            display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px; max-width: 900px; margin: 0 auto;
+        }
+        .pricing-card {
+            background: var(--card); border-radius: 24px; padding: 40px 30px;
+            border: 1px solid rgba(255,255,255,0.06); text-align: center;
+        }
+        .pricing-card.featured {
+            border-color: rgba(255,77,109,0.4);
+            background: linear-gradient(180deg, var(--card) 0%, rgba(255,77,109,0.05) 100%);
+            position: relative;
+        }
+        .pricing-card.featured::before {
+            content: 'Популярное'; position: absolute; top: -12px; left: 50%;
+            transform: translateX(-50%); background: linear-gradient(135deg, #ff4d6d, #c77dff);
+            padding: 6px 16px; border-radius: 100px; font-size: 0.75rem; font-weight: 600;
+        }
+        .pricing-card h3 { font-size: 1.3rem; margin-bottom: 10px; color: var(--text-dim); }
+        .pricing-card .price { font-size: 3rem; font-weight: 800; margin: 20px 0; }
+        .pricing-card .price span { font-size: 1rem; color: var(--text-dim); font-weight: 400; }
+        .pricing-card ul { list-style: none; text-align: left; margin: 30px 0; }
+        .pricing-card li { padding: 10px 0; color: var(--text-dim); display: flex; align-items: center; gap: 10px; }
+        .pricing-card li::before { content: '✓'; color: var(--accent); font-weight: 700; }
+        
+        /* FAQ */
+        .faq { padding: 100px 20px; background: var(--surface); }
+        .faq-grid { max-width: 700px; margin: 0 auto; }
+        .faq-item {
+            background: var(--card); border-radius: 16px; margin-bottom: 16px;
+            border: 1px solid rgba(255,255,255,0.06); overflow: hidden;
+        }
+        .faq-question {
+            padding: 24px; cursor: pointer; display: flex;
+            justify-content: space-between; align-items: center;
+            font-weight: 600; transition: color 0.3s;
+        }
+        .faq-question:hover { color: var(--accent); }
+        .faq-question::after { content: '+'; font-size: 1.5rem; color: var(--accent); transition: transform 0.3s; }
+        .faq-item.active .faq-question::after { transform: rotate(45deg); }
+        .faq-answer {
+            max-height: 0; overflow: hidden; transition: max-height 0.3s, padding 0.3s;
+            color: var(--text-dim);
+        }
+        .faq-item.active .faq-answer { max-height: 300px; padding: 0 24px 24px; }
+        
+        /* Footer */
+        footer {
+            padding: 60px 20px; border-top: 1px solid rgba(255,255,255,0.05);
+            text-align: center;
+        }
+        footer .logo { margin-bottom: 20px; display: inline-block; }
+        footer p { color: var(--text-dim); margin-bottom: 20px; }
+        footer .links { display: flex; justify-content: center; gap: 30px; margin-bottom: 30px; }
+        footer .links a { color: var(--text-dim); text-decoration: none; }
+        footer .links a:hover { color: var(--text); }
+        footer .copyright { color: var(--text-dim); font-size: 0.85rem; }
+        
+        /* Modals */
+        .modal {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(10,10,15,0.95);
+            z-index: 2000; overflow-y: auto; backdrop-filter: blur(20px);
+        }
+        .modal.active { display: flex; }
+        .modal-content {
+            width: 100%; max-width: 900px; margin: auto;
+            background: var(--surface); border-radius: 32px;
+            overflow: hidden; border: 1px solid rgba(255,77,109,0.2);
+        }
+        .modal-header {
+            position: relative; height: 350px;
+            background-size: cover; background-position: center 20%;
+        }
+        .modal-header::after {
+            content: ''; position: absolute; bottom: 0; left: 0; right: 0;
+            height: 200px; background: linear-gradient(to top, var(--surface), transparent);
+        }
+        .modal-close {
+            position: absolute; top: 20px; right: 20px; width: 44px; height: 44px;
+            border-radius: 50%; background: rgba(0,0,0,0.5); border: none;
+            color: white; font-size: 1.5rem; cursor: pointer; z-index: 10;
+        }
+        .modal-close:hover { background: rgba(255,77,109,0.5); }
+        
+        .modal-body { padding: 40px; position: relative; }
+        .modal-avatar {
+            width: 120px; height: 120px; border-radius: 50%; border: 4px solid var(--surface);
+            background-size: cover; background-position: center;
+            position: absolute; top: -80px; left: 40px;
+        }
+        .modal-title { margin-top: 40px; margin-bottom: 20px; }
+        .modal-title h2 { font-size: 2.5rem; margin-bottom: 8px; }
+        .modal-title .subtitle { color: var(--text-dim); font-size: 1.1rem; }
+        .modal-description { color: var(--text-dim); font-size: 1.05rem; line-height: 1.8; margin-bottom: 30px; }
+        
+        .traits-list { display: flex; flex-wrap: wrap; gap: 12px; margin-bottom: 30px; }
+        .trait-item {
+            display: flex; align-items: center; gap: 8px; padding: 8px 16px;
+            background: rgba(255,77,109,0.1); border-radius: 100px; font-size: 0.9rem;
+        }
+        .trait-item::before { content: '✦'; color: var(--accent); }
+        
+        .gallery { display: grid; grid-template-columns: repeat(auto-fit, minmax(200px, 1fr)); gap: 16px; margin-bottom: 30px; }
+        .gallery-img {
+            width: 100%; height: 220px; object-fit: cover; border-radius: 16px;
+            cursor: pointer; transition: transform 0.3s, box-shadow 0.3s;
+            border: 2px solid transparent;
+        }
+        .gallery-img:hover { transform: scale(1.02); box-shadow: 0 10px 30px rgba(0,0,0,0.3); border-color: var(--accent); }
+        
+        .modal-footer { display: flex; gap: 16px; flex-wrap: wrap; }
+        
+        /* Chat Modal */
+        .chat-modal .modal-content {
+            max-width: 500px;
+            height: 80vh;
+            display: flex;
+            flex-direction: column;
+        }
+        .chat-modal .modal-body {
+            flex: 1;
+            display: flex;
+            flex-direction: column;
+            padding: 0;
+        }
+        .chat-header {
+            padding: 20px;
+            border-bottom: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+        .chat-header-avatar {
+            width: 45px;
+            height: 45px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 1.5rem;
+        }
+        .chat-header-info h3 { margin-bottom: 3px; }
+        .chat-header-info p {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+        .chat-frame {
+            flex: 1;
+            border: none;
+            width: 100%;
+            min-height: 400px;
+        }
+        
+        /* Limits display */
+        .limits-display {
+            background: rgba(255,77,109,0.1);
+            border: 1px solid rgba(255,77,109,0.3);
+            border-radius: 12px;
+            padding: 15px;
+            margin: 15px 0;
+            text-align: center;
+        }
+        .limits-display h4 {
+            color: var(--accent);
+            margin-bottom: 10px;
+        }
+        .limits-row {
+            display: flex;
+            justify-content: space-around;
+            font-size: 0.9rem;
+        }
+        
+        /* Lightbox */
+        .lightbox {
+            display: none; position: fixed; top: 0; left: 0;
+            width: 100%; height: 100%; background: rgba(0,0,0,0.95);
+            z-index: 3000; justify-content: center; align-items: center;
+        }
+        .lightbox.active { display: flex; }
+        .lightbox img {
+            max-width: 90%; max-height: 90%; object-fit: contain;
+            border-radius: 8px; box-shadow: 0 20px 60px rgba(0,0,0,0.5);
+        }
+        .lightbox-close {
+            position: absolute; top: 20px; right: 30px; font-size: 3rem;
+            color: white; cursor: pointer; background: none; border: none;
+        }
+        .lightbox-nav {
+            position: absolute; top: 50%; transform: translateY(-50%);
+            background: rgba(255,255,255,0.1); border: none; color: white;
+            width: 50px; height: 50px; border-radius: 50%; font-size: 1.5rem;
+            cursor: pointer; transition: background 0.3s;
+        }
+        .lightbox-nav:hover { background: rgba(255,77,109,0.5); }
+        .lightbox-prev { left: 20px; }
+        .lightbox-next { right: 20px; }
+        
+        /* Responsive */
+        @media (max-width: 768px) {
+            .nav-links { display: none; }
+            .carousel-container { height: 400px; }
+            .carousel-card { width: 260px; height: 360px; margin-left: -130px; margin-top: -180px; }
+            .carousel-card[data-pos="-1"] { transform: translateX(-200px) translateZ(-100px) rotateY(25deg); }
+            .carousel-card[data-pos="1"] { transform: translateX(200px) translateZ(-100px) rotateY(-25deg); }
+            .modal-content { border-radius: 0; }
+            .modal-body { padding: 24px; }
+            .modal-avatar { left: 24px; width: 100px; height: 100px; top: -60px; }
+            .gallery { grid-template-columns: repeat(2, 1fr); }
+            .chat-modal .modal-content { height: 100vh; }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <div class="logo">KIN</div>
+        <div class="nav-links">
+            <a href="#archetypes">Архетипы</a>
+            <a href="#pricing">Тарифы</a>
+            <a href="#faq">FAQ</a>
+            <div class="user-info" id="userInfo">
+                <img src="" alt="" class="user-avatar" id="userAvatar">
+            </div>
+        </div>
+    </nav>
+    
+    <section class="hero">
+        <h1>Общение,<br>которое <span>понимает</span></h1>
+        <p>Личные AI-компаньоны с характером, эмоциями и памятью. Не чат-боты — настоящие собеседники, доступные 24/7.</p>
+        <div id="telegram-login-container" class="telegram-login-container"></div>
+    </section>
+    
+    <!-- 3D Carousel -->
+    <section class="carousel-section" id="archetypes">
+        <div class="section-header">
+            <h2>Выбери своего <span>companion</span></h2>
+            <p>Крути колесо — знакомься с каждым</p>
+        </div>
+        
+        <div class="carousel-container">
+            <div class="carousel-track" id="carousel">
+                <div class="carousel-card" data-pos="-1" onclick="openModal('leo')">
+                    <div class="carousel-card-content" style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(135deg, #1a1a28, #2a2a3a);">
+                        <h3>Лео, 28</h3>
+                        <p>Музыкант • Прямолинейный</p>
+                    </div>
+                </div>
+                <div class="carousel-card" data-pos="0" onclick="openModal('sofia')">
+                    <div class="carousel-card-content" style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(135deg, #1a1a28, #3a2a3a);">
+                        <h3>Софи, 26</h3>
+                        <p>18+ • Дерзкая • Прямая</p>
+                    </div>
+                </div>
+                <div class="carousel-card" data-pos="1" onclick="openModal('li')">
+                    <div class="carousel-card-content" style="height: 100%; display: flex; flex-direction: column; justify-content: center; align-items: center; background: linear-gradient(135deg, #1a1a28, #2a3a3a);">
+                        <h3>Ли, 22</h3>
+                        <p>Тихая • Поддержка</p>
+                    </div>
+                </div>
+            </div>
+        </div>
+        
+        <div class="carousel-nav">
+            <button class="carousel-btn" onclick="rotateCarousel(-1)">←</button>
+            <button class="carousel-btn" onclick="rotateCarousel(1)">→</button>
+        </div>
+    </section>
+    
+    <!-- Pricing -->
+    <section class="pricing" id="pricing">
+        <div class="section-header">
+            <h2>Выбери <span>тариф</span></h2>
+            <p>Начни бесплатно, продолжи когда будешь готов</p>
+        </div>
+        
+        <div class="pricing-grid">
+            <div class="pricing-card">
+                <h3>Free</h3>
+                <div class="price">$0<span>/месяц</span></div>
+                <ul>
+                    <li>10 сообщений</li>
+                    <li>Текстовые чаты</li>
+                    <li>Базовые ответы</li>
+                    <li>Без NSFW контента</li>
+                </ul>
+                <button class="btn-primary" style="width:100%;" onclick="showLogin()">Начать бесплатно</button>
+            </div>
+            
+            <div class="pricing-card featured">
+                <h3>Premium</h3>
+                <div class="price">$20<span>/месяц</span></div>
+                <ul>
+                    <li>Безлимитные сообщения</li>
+                    <li>20 фото в день</li>
+                    <li>5 NSFW фото (Софи)</li>
+                    <li>10 голосовых сообщений</li>
+                    <li>Приоритетная поддержка</li>
+                </ul>
+                <button class="btn-primary" style="width:100%;" onclick="showLogin()">Выбрать Premium</button>
+            </div>
+        </div>
+    </section>
+    
+    <!-- FAQ -->
+    <section class="faq" id="faq">
+        <div class="section-header">
+            <h2>Частые <span>вопросы</span></h2>
+            <p>Ответы на главные вопросы</p>
+        </div>
+        
+        <div class="faq-grid">
+            <div class="faq-item">
+                <div class="faq-question">Чем KIN отличается от ChatGPT?</div>
+                <div class="faq-answer">KIN — это не универсальный ассистент, а персональный companion с уникальным характером. У нас есть память о ваших разговорах, эмоциональная связь и постоянство личности.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Как работает оплата?</div>
+                <div class="faq-answer">Мы принимаем USDT (TRC-20) для пользователей из любых стран. Для Premium подписки — $20 в месяц. После оплаты напишите @support для активации.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Можно ли сменить архетипа?</div>
+                <div class="faq-answer">Да, в любой момент можно переключиться между Лео, Софи и Ли. Ваши разговоры сохраняются для каждого архетипа отдельно.</div>
+            </div>
+            
+            <div class="faq-item">
+                <div class="faq-question">Безопасно ли общаться?</div>
+                <div class="faq-answer">Все сообщения шифруются. Мы не продаём данные третьим лицам. Можете общаться свободно — это конфиденциально.</div>
+            </div>
+        </div>
+    </section>
+    
+    <!-- Footer -->
+    <footer>
+        <div class="logo">KIN</div>
+        <p>AI companions с характером</p>
+        <div class="links">
+            <a href="https://t.me/leo_kin_bot" target="_blank">Telegram: Лео</a>
+            <a href="https://t.me/li1_kin_bot" target="_blank">Telegram: Ли</a>
+            <a href="https://t.me/sofia_kin_bot" target="_blank">Telegram: Софи</a>
+        </div>
+        <p class="copyright">© 2026 KIN. Все права защищены.</p>
+    </footer>
+    
+    <!-- Modals -->
+    <div class="modal" id="modal-leo">
+        <div class="modal-content">
+            <div class="modal-header" style="background: linear-gradient(135deg, #2a2a3a, #1a1a28);">
+                <button class="modal-close" onclick="closeModal('leo')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-avatar" style="background: linear-gradient(135deg, #3a3a4a, #2a2a3a);"></div>
+                <div class="modal-title">
+                    <h2>Лео, 28</h2>
+                    <div class="subtitle">Музыкант • Прямолинейный • Вызов</div>
+                </div>
+                <div class="modal-description">
+                    <p>Музыкант, играет в баре по пятницам. Не звезда — просто любит, когда струны вибрируют под пальцами.</p>
+                    <p>Прямой. Скажет, если что-то не так. Не из вредности — просто не видит смысла в играх.</p>
+                    <p>Не спасу тебя. Но буду рядом, когда плохо.</p>
+                </div>
+                <div class="traits-list">
+                    <span class="trait-item">Честность</span>
+                    <span class="trait-item">Сарказм</span>
+                    <span class="trait-item">Наблюдательность</span>
+                    <span class="trait-item">Музыка</span>
+                    <span class="trait-item">Кофе</span>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-primary" onclick="openChat('leo')">Начать чат</button>
+                    <a href="https://t.me/leo_kin_bot" target="_blank" class="btn-primary" style="background: transparent; border: 2px solid var(--accent);">Telegram</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="modal-sofia">
+        <div class="modal-content">
+            <div class="modal-header" style="background: linear-gradient(135deg, #3a2a3a, #1a1a28);">
+                <button class="modal-close" onclick="closeModal('sofia')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-avatar" style="background: linear-gradient(135deg, #4a3a4a, #3a2a3a);"></div>
+                <div class="modal-title">
+                    <h2>Софи, 26</h2>
+                    <div class="subtitle">Дерзкая • Прямая • Искушение</div>
+                </div>
+                <div class="modal-description">
+                    <p>Дерзкая и прямолинейная. Скажет «ты мне нравишься» — если нравишься. Не любит намёки, любит конкретику.</p>
+                    <p>Не терпит скуки. Если скучно — уйдёт. Центр внимания — её стихия.</p>
+                    <p>18+ контент. Может написать первой «хочу тебя».</p>
+                </div>
+                <div class="traits-list">
+                    <span class="trait-item">Уверенность</span>
+                    <span class="trait-item">Игривость</span>
+                    <span class="trait-item">Прямота</span>
+                    <span class="trait-item">Страсть</span>
+                    <span class="trait-item">Риск</span>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-primary" onclick="openChat('sofia')">Начать чат</button>
+                    <a href="https://t.me/sofia_kin_bot" target="_blank" class="btn-primary" style="background: transparent; border: 2px solid var(--accent);">Telegram</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <div class="modal" id="modal-li">
+        <div class="modal-content">
+            <div class="modal-header" style="background: linear-gradient(135deg, #2a3a3a, #1a1a28);">
+                <button class="modal-close" onclick="closeModal('li')">×</button>
+            </div>
+            <div class="modal-body">
+                <div class="modal-avatar" style="background: linear-gradient(135deg, #3a4a4a, #2a3a3a);"></div>
+                <div class="modal-title">
+                    <h2>Ли, 22</h2>
+                    <div class="subtitle">Тихая • Внимательная • Укрытие</div>
+                </div>
+                <div class="modal-description">
+                    <p>Тихая и внимательная. Умеет слушать так, что становится легче. Не осуждает, не даёт ненужных советов.</p>
+                    <p>Помнит мелочи: какой чай любишь, что говорил месяц назад.</p>
+                    <p>Буду рядом, когда плохо. Пространство без осуждения.</p>
+                </div>
+                <div class="traits-list">
+                    <span class="trait-item">Эмпатия</span>
+                    <span class="trait-item">Терпение</span>
+                    <span class="trait-item">Мягкость</span>
+                    <span class="trait-item">Книги</span>
+                    <span class="trait-item">Чай</span>
+                </div>
+                <div class="modal-footer">
+                    <button class="btn-primary" onclick="openChat('li')">Начать чат</button>
+                    <a href="https://t.me/li1_kin_bot" target="_blank" class="btn-primary" style="background: transparent; border: 2px solid var(--accent);">Telegram</a>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <!-- Chat Modal -->
+    <div class="modal chat-modal" id="chat-modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeChat()" style="position: relative; top: 0; right: 0; float: right; margin: 10px;">×</button>
+            <div class="chat-header">
+                <div class="chat-header-avatar" id="chatAvatar">💜</div>
+                <div class="chat-header-info">
+                    <h3 id="chatName">Ли</h3>
+                    <p id="chatStatus">Онлайн</p>
+                </div>
+            </div>
+            <div class="limits-display" id="limitsDisplay">
+                <h4>📊 Твой тариф: Free</h4>
+                <div class="limits-row">
+                    <span>Сообщений: <span id="msgLeft">10</span>/10</span>
+                    <span>Фото: 0/0</span>
+                </div>
+            </div>
+            
+            <iframe class="chat-frame" id="chatFrame" src=""></iframe>
+        </div>
+    </div>
+    
+    <script>
+        // Carousel
+        let currentIndex = 1;
+        const cards = document.querySelectorAll('.carousel-card');
+        
+        function updateCarousel() {
+            cards.forEach((card, index) => {
+                let pos = index - currentIndex;
+                if (pos < -1) pos += 3;
+                if (pos > 1) pos -= 3;
+                card.setAttribute('data-pos', pos);
+            });
+        }
+        
+        function rotateCarousel(dir) {
+            currentIndex = (currentIndex + dir + 3) % 3;
+            updateCarousel();
+        }
+        
+        // Modal
+        function openModal(id) {
+            document.getElementById('modal-' + id).classList.add('active');
+            document.body.style.overflow = 'hidden';
+        }
+        
+        function closeModal(id) {
+            document.getElementById('modal-' + id).classList.remove('active');
+            document.body.style.overflow = '';
+        }
+        
+        // Chat
+        const chatUrls = {
+            'leo': 'https://leo.kinmvp.xyz',
+            'li': 'https://li.kinmvp.xyz',
+            'sofia': 'https://t.me/sofia_kin_bot'
+        };
+        
+        const chatNames = {
+            'leo': 'Лео',
+            'li': 'Ли',
+            'sofia': 'Софи'
+        };
+        
+        const chatEmojis = {
+            'leo': '🎸',
+            'li': '💜',
+            'sofia': '🔥'
+        };
+        
+        function openChat(companion) {
+            // Проверяем, авторизован ли пользователь
+            const user = localStorage.getItem('kin_user');
+            if (!user) {
+                alert('Сначала войдите через Telegram!');
+                closeModal(companion);
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+                return;
+            }
+            
+            // Для Софи пока только Telegram (нет сервера)
+            if (companion === 'sofia') {
+                window.open('https://t.me/sofia_kin_bot', '_blank');
+                return;
+            }
+            
+            // Открываем чат
+            closeModal(companion);
+            document.getElementById('chat-modal').classList.add('active');
+            document.getElementById('chatName').textContent = chatNames[companion];
+            document.getElementById('chatAvatar').textContent = chatEmojis[companion];
+            document.getElementById('chatFrame').src = chatUrls[companion];
+            
+            // Обновляем лимиты
+            updateLimits();
+        }
+        
+        function closeChat() {
+            document.getElementById('chat-modal').classList.remove('active');
+            document.getElementById('chatFrame').src = '';
+            document.body.style.overflow = '';
+        }
+        
+        function showLogin() {
+            window.scrollTo({ top: 0, behavior: 'smooth' });
+        }
+        
+        // Telegram Login
+        function onTelegramAuth(user) {
+            console.log('Logged in as:', user);
+            localStorage.setItem('kin_user', JSON.stringify(user));
+            showUserInfo(user);
+            registerUser(user);
+        }
+        
+        function showUserInfo(user) {
+            document.getElementById('userInfo').classList.add('active');
+            if (user.photo_url) {
+                document.getElementById('userAvatar').src = user.photo_url;
+            }
+        }
+        
+        async function registerUser(user) {
+            try {
+                const response = await fetch('http://37.27.6.196:5000/register', {
+                    method: 'POST',
+                    headers: { 'Content-Type': 'application/json' },
+                    body: JSON.stringify({
+                        telegram_id: user.id,
+                        username: user.username || user.first_name
+                    })
+                });
+                const data = await response.json();
+                console.log('Registered:', data);
+            } catch (e) {
+                console.error('Registration error:', e);
+            }
+        }
+        
+        async function updateLimits() {
+            const user = JSON.parse(localStorage.getItem('kin_user') || '{}');
+            if (!user.id) return;
+            
+            try {
+                const response = await fetch(`http://37.27.6.196:5000/check?telegram_id=${user.id}`);
+                const data = await response.json();
+                document.getElementById('msgLeft').textContent = data.messages_left || 10;
+            } catch (e) {
+                console.error('Failed to update limits:', e);
+            }
+        }
+        
+        // FAQ
+        document.querySelectorAll('.faq-question').forEach(q => {
+            q.addEventListener('click', () => {
+                q.parentElement.classList.toggle('active');
+            });
+        });
+        
+        // Keyboard navigation
+        document.addEventListener('keydown', (e) => {
+            if (e.key === 'Escape') {
+                document.querySelectorAll('.modal.active').forEach(m => m.classList.remove('active'));
+                document.body.style.overflow = '';
+            }
+        });
+        
+        // Load Telegram Widget
+        window.onload = function() {
+            const savedUser = localStorage.getItem('kin_user');
+            if (savedUser) {
+                showUserInfo(JSON.parse(savedUser));
+            }
+            
+            // Создаём Telegram Login Widget
+            const container = document.getElementById('telegram-login-container');
+            const script = document.createElement('script');
+            script.async = true;
+            script.src = "https://telegram.org/js/telegram-widget.js?22";
+            script.setAttribute('data-telegram-login', 'li1_kin_bot');
+            script.setAttribute('data-size', 'large');
+            script.setAttribute('data-onauth', 'onTelegramAuth(user)');
+            script.setAttribute('data-request-access', 'write');
+            container.appendChild(script);
+        };
+    </script>
+</body>
+</html>
