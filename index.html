@@ -27,10 +27,70 @@
             backdrop-filter: blur(20px); background: rgba(10,10,15,0.9);
             border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 1000;
         }
-        .logo { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #ff4d6d, #c77dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .logo { font-size: 1.5rem; font-weight: 800; background: linear-gradient(135deg, #ff4d6d, #c77dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; position: relative; }
+        .beta-badge {
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            color: white;
+            font-size: 0.6rem;
+            padding: 2px 8px;
+            border-radius: 100px;
+            margin-left: 8px;
+            vertical-align: super;
+            -webkit-text-fill-color: white;
+            font-weight: 700;
+            letter-spacing: 1px;
+        }
         .nav-links { display: flex; gap: 30px; align-items: center; }
         .nav-links a { color: var(--text-dim); text-decoration: none; font-size: 0.9rem; transition: color 0.3s; }
         .nav-links a:hover { color: var(--text); }
+        
+        /* Language Switcher */
+        .lang-switcher {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-right: 10px;
+        }
+        .lang-btn {
+            background: transparent;
+            border: none;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+            cursor: pointer;
+            padding: 4px 8px;
+            border-radius: 6px;
+            transition: all 0.3s;
+        }
+        .lang-btn.active {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .lang-btn:hover {
+            color: var(--text);
+            background: rgba(255,255,255,0.05);
+        }
+        .lang-divider {
+            color: var(--text-dim);
+            opacity: 0.3;
+        }
+        
+        /* Auth Buttons */
+        .btn-secondary {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--text);
+            padding: 10px 24px;
+            border-radius: 50px;
+            font-weight: 600;
+            font-size: 0.9rem;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .btn-secondary:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        
         .user-info { display: none; align-items: center; gap: 10px; }
         .user-info.active { display: flex; }
         .user-email { color: var(--text-dim); font-size: 0.9rem; }
@@ -40,6 +100,15 @@
             cursor: pointer; font-size: 0.85rem; transition: all 0.3s;
         }
         .logout-btn:hover { border-color: var(--accent); color: var(--accent); }
+        
+        /* Nav buttons spacing */
+        #startBtn {
+            padding: 10px 24px;
+            font-size: 0.9rem;
+        }
+        #loginBtn {
+            margin-right: 10px;
+        }
         
         /* Auth Modal */
         .auth-modal {
@@ -228,16 +297,22 @@
 </head>
 <body>
     <nav>
-        <div class="logo">KIN</div>
+        <div class="logo">KIN <span class="beta-badge">BETA</span></div>
         <div class="nav-links">
             <a href="#archetypes">Архетипы</a>
             <a href="#pricing">Тарифы</a>
             <a href="#faq">FAQ</a>
+            <div class="lang-switcher">
+                <button class="lang-btn active" onclick="setLanguage('ru')">RU</button>
+                <span class="lang-divider">|</span>
+                <button class="lang-btn" onclick="setLanguage('en')">EN</button>
+            </div>
             <div class="user-info" id="userInfo">
                 <span class="user-email" id="userEmail"></span>
                 <button class="logout-btn" onclick="logout()">Выйти</button>
             </div>
-            <button class="btn-primary" id="loginBtn" onclick="showAuth()" style="padding: 10px 24px; font-size: 0.9rem;">Войти</button>
+            <button class="btn-secondary" id="loginBtn" onclick="showAuth()">Войти</button>
+            <button class="btn-primary" id="startBtn" onclick="showAuth()">Начать бесплатно</button>
         </div>
     </nav>
     
@@ -616,6 +691,7 @@
             document.getElementById('userInfo').classList.add('active');
             document.getElementById('userEmail').textContent = user.email;
             document.getElementById('loginBtn').style.display = 'none';
+            document.getElementById('startBtn').style.display = 'none';
         }
         
         function logout() {
@@ -623,6 +699,25 @@
             currentUser = null;
             document.getElementById('userInfo').classList.remove('active');
             document.getElementById('loginBtn').style.display = 'block';
+            document.getElementById('startBtn').style.display = 'block';
+        }
+        
+        // Language switcher
+        function setLanguage(lang) {
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            event.target.classList.add('active');
+            
+            // Здесь можно добавить перевод контента
+            if (lang === 'en') {
+                // Перевод на английский
+                document.getElementById('loginBtn').textContent = 'Login';
+                document.getElementById('startBtn').textContent = 'Start free';
+                // ... и остальные элементы
+            } else {
+                // Русский
+                document.getElementById('loginBtn').textContent = 'Войти';
+                document.getElementById('startBtn').textContent = 'Начать бесплатно';
+            }
         }
         
         // ========== CAROUSEL ==========
