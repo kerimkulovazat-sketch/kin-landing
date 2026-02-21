@@ -211,11 +211,13 @@
             font-size: 0.85rem;
             line-height: 1.5;
             opacity: 0;
+        }
+        .phone-mockup.animate .phone-message {
             animation: messagePop 0.5s ease forwards;
         }
-        .phone-message:nth-child(1) { animation-delay: 0.3s; }
-        .phone-message:nth-child(2) { animation-delay: 1.2s; }
-        .phone-message:nth-child(3) { animation-delay: 2.1s; }
+        .phone-mockup.animate .phone-message:nth-child(1) { animation-delay: 0.3s; }
+        .phone-mockup.animate .phone-message:nth-child(2) { animation-delay: 1.2s; }
+        .phone-mockup.animate .phone-message:nth-child(3) { animation-delay: 2.1s; }
         .phone-message.received {
             align-self: flex-start;
             background: rgba(255,255,255,0.08);
@@ -1136,6 +1138,19 @@
             link.addEventListener('click', () => {
                 document.getElementById('navLinks').classList.remove('active');
             });
+        });
+        
+        // Phone animation on scroll
+        const phoneObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('animate');
+                }
+            });
+        }, { threshold: 0.3 });
+        
+        document.querySelectorAll('.phone-mockup').forEach(phone => {
+            phoneObserver.observe(phone);
         });
         
         function goAuth() {
