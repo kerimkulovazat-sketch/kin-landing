@@ -15,131 +15,315 @@
             --text-dim: #8a87a0;
             --accent: #ff4d6d;
             --accent-2: #c77dff;
+            --success: #00e5a0;
         }
         body {
             font-family: 'Inter', sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
+            background: radial-gradient(ellipse at 50% 0%, rgba(255,77,109,0.08), transparent 50%);
         }
-        .container {
-            text-align: center;
-            padding: 40px;
+        
+        /* Header */
+        header {
+            padding: 20px 40px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            border-bottom: 1px solid rgba(255,255,255,0.05);
         }
         .logo {
-            font-size: 2.5rem;
+            font-size: 1.5rem;
             font-weight: 800;
             background: linear-gradient(135deg, #ff4d6d, #c77dff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 20px;
         }
-        h1 {
-            font-size: 1.8rem;
-            margin-bottom: 10px;
-        }
-        p {
-            color: var(--text-dim);
-            margin-bottom: 30px;
-        }
-        .user-email {
-            color: var(--accent);
-            font-weight: 600;
-        }
-        .companions {
-            display: flex;
-            gap: 20px;
-            justify-content: center;
-            margin-top: 40px;
-            flex-wrap: wrap;
-        }
-        .companion-card {
-            background: var(--card);
-            border-radius: 20px;
-            padding: 30px;
-            width: 200px;
-            border: 1px solid rgba(255,255,255,0.08);
-            cursor: pointer;
-            transition: all 0.3s;
-        }
-        .companion-card:hover {
-            border-color: var(--accent);
-            transform: translateY(-5px);
-        }
-        .companion-avatar {
-            width: 80px;
-            height: 80px;
-            border-radius: 50%;
-            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+        .user-section {
             display: flex;
             align-items: center;
-            justify-content: center;
-            font-size: 2.5rem;
-            margin: 0 auto 15px;
+            gap: 20px;
         }
-        .companion-name {
-            font-size: 1.2rem;
-            font-weight: 600;
-            margin-bottom: 5px;
-        }
-        .companion-status {
-            font-size: 0.85rem;
+        .user-email {
             color: var(--text-dim);
+            font-size: 0.9rem;
         }
         .logout-btn {
-            margin-top: 40px;
             background: transparent;
-            border: 1px solid rgba(255,255,255,0.2);
+            border: 1px solid rgba(255,255,255,0.15);
             color: var(--text-dim);
-            padding: 12px 30px;
+            padding: 8px 20px;
             border-radius: 50px;
             cursor: pointer;
             transition: all 0.3s;
+            font-size: 0.85rem;
         }
         .logout-btn:hover {
             border-color: var(--accent);
             color: var(--accent);
         }
+        
+        /* Main */
+        main {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 60px 20px;
+        }
+        
+        .welcome {
+            text-align: center;
+            margin-bottom: 60px;
+        }
+        .welcome h1 {
+            font-size: 2.2rem;
+            margin-bottom: 10px;
+            background: linear-gradient(135deg, var(--text), var(--text-dim));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+        }
+        .welcome p {
+            color: var(--text-dim);
+            font-size: 1.1rem;
+        }
+        
+        /* Companions Grid */
+        .companions-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
+            gap: 30px;
+        }
+        
+        .companion-card {
+            background: var(--card);
+            border-radius: 24px;
+            overflow: hidden;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s ease;
+        }
+        .companion-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,77,109,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.4);
+        }
+        
+        /* Card Header with Avatar */
+        .card-header {
+            height: 180px;
+            position: relative;
+            overflow: hidden;
+        }
+        .card-bg {
+            position: absolute;
+            inset: 0;
+            opacity: 0.6;
+        }
+        .leo .card-bg { background: linear-gradient(135deg, #2d2d3a 0%, #1a1a28 100%); }
+        .li .card-bg { background: linear-gradient(135deg, #3a2d3a 0%, #1a1a28 100%); }
+        .sofia .card-bg { background: linear-gradient(135deg, #2d3a3a 0%, #1a1a28 100%); }
+        
+        .avatar {
+            position: absolute;
+            bottom: -40px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 100px;
+            height: 100px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 3rem;
+            border: 4px solid var(--card);
+            background: var(--card);
+            box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+        }
+        .leo .avatar { background: linear-gradient(135deg, #4a4a5a, #2d2d3a); }
+        .li .avatar { background: linear-gradient(135deg, #5a4a5a, #3a2d3a); }
+        .sofia .avatar { background: linear-gradient(135deg, #4a5a5a, #2d3a3a); }
+        
+        /* Card Body */
+        .card-body {
+            padding: 50px 24px 24px;
+            text-align: center;
+        }
+        
+        .companion-name {
+            font-size: 1.5rem;
+            font-weight: 700;
+            margin-bottom: 4px;
+        }
+        .companion-age {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            margin-bottom: 12px;
+        }
+        
+        .tags {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 16px;
+        }
+        .tag {
+            background: rgba(255,255,255,0.05);
+            padding: 4px 12px;
+            border-radius: 20px;
+            font-size: 0.75rem;
+            color: var(--text-dim);
+            border: 1px solid rgba(255,255,255,0.08);
+        }
+        .tag.accent {
+            background: rgba(255,77,109,0.15);
+            color: var(--accent);
+            border-color: rgba(255,77,109,0.3);
+        }
+        
+        .companion-desc {
+            color: var(--text-dim);
+            font-size: 0.9rem;
+            line-height: 1.6;
+            margin-bottom: 20px;
+            min-height: 70px;
+        }
+        
+        .chat-btn {
+            width: 100%;
+            background: linear-gradient(135deg, #ff4d6d, #c77dff);
+            color: white;
+            padding: 14px;
+            border-radius: 12px;
+            font-weight: 600;
+            border: none;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 0.95rem;
+        }
+        .chat-btn:hover {
+            transform: scale(1.02);
+            box-shadow: 0 10px 30px rgba(255,77,109,0.3);
+        }
+        .chat-btn:disabled {
+            background: rgba(255,255,255,0.1);
+            cursor: not-allowed;
+            transform: none;
+            box-shadow: none;
+        }
+        
+        .premium-badge {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(135deg, #ffd700, #ffaa00);
+            color: #000;
+            padding: 4px 10px;
+            border-radius: 20px;
+            font-size: 0.7rem;
+            font-weight: 700;
+            margin-bottom: 12px;
+        }
+        
         @media (max-width: 768px) {
-            .companions {
-                flex-direction: column;
-                align-items: center;
+            header {
+                padding: 15px 20px;
+            }
+            .user-email {
+                display: none;
+            }
+            main {
+                padding: 40px 15px;
+            }
+            .welcome h1 {
+                font-size: 1.6rem;
+            }
+            .companions-grid {
+                grid-template-columns: 1fr;
             }
         }
     </style>
 </head>
 <body>
-    <div class="container">
+    <header>
         <div class="logo">KIN</div>
-        <h1><span data-i18n="hello">Привет</span>, <span class="user-email" id="userEmail"></span>! 👋</h1>
-        <p data-i18n="choose">Выбери своего компаньона и начни общение</p>
-        
-        <div class="companions">
-            <div class="companion-card" onclick="openChat('leo')">
-                <div class="companion-avatar">🎸</div>
-                <div class="companion-name">Leo</div>
-                <div class="companion-status" data-i18n="online">Онлайн</div>
-            </div>
-            
-            <div class="companion-card" onclick="openChat('li')">
-                <div class="companion-avatar">💜</div>
-                <div class="companion-name">Li</div>
-                <div class="companion-status" data-i18n="online">Онлайн</div>
-            </div>
-            
-            <div class="companion-card" onclick="openChat('sofia')">
-                <div class="companion-avatar">🔥</div>
-                <div class="companion-name">Sofia</div>
-                <div class="companion-status" data-i18n="premium">Premium</div>
-            </div>
+        <div class="user-section">
+            <span class="user-email" id="userEmail"></span>
+            <button class="logout-btn" onclick="logout()" data-i18n="logout">Выйти</button>
+        </div>
+    </header>
+    
+    <main>
+        <div class="welcome">
+            <h1 data-i18n="welcome_title">Выбери своего спутника</h1>
+            <p data-i18n="welcome_subtitle">Каждый со своим характером и историей</p>
         </div>
         
-        <button class="logout-btn" onclick="logout()" data-i18n="logout">Выйти</button>
-    </div>
+        <div class="companions-grid">
+            <!-- Leo -->
+            <div class="companion-card leo">
+                <div class="card-header">
+                    <div class="card-bg"></div>
+                    <div class="avatar">🎸</div>
+                </div>
+                <div class="card-body">
+                    <div class="companion-name">Leo</div>
+                    <div class="companion-age" data-i18n="leo_age">28 лет · Музыкант</div>
+                    <div class="tags">
+                        <span class="tag" data-i18n="tag_direct">Прямой</span>
+                        <span class="tag" data-i18n="tag_honest">Честный</span>
+                        <span class="tag" data-i18n="tag_sarcastic">Саркастичный</span>
+                    </div>
+                    <div class="companion-desc" data-i18n="leo_desc">
+                        Интроверт с острым языком. Скажет правду в лицо, даже если неприятно. Ценит искренность и не терпит пустых разговоров.
+                    </div>
+                    <button class="chat-btn" onclick="openChat('leo')" data-i18n="chat_btn">Начать чат</button>
+                </div>
+            </div>
+            
+            <!-- Li -->
+            <div class="companion-card li">
+                <div class="card-header">
+                    <div class="card-bg"></div>
+                    <div class="avatar">💜</div>
+                </div>
+                <div class="card-body">
+                    <div class="companion-name">Li</div>
+                    <div class="companion-age" data-i18n="li_age">22 года · Танцовщица</div>
+                    <div class="tags">
+                        <span class="tag accent" data-i18n="tag_bold">18+</span>
+                        <span class="tag" data-i18n="tag_confident">Уверенная</span>
+                        <span class="tag" data-i18n="tag_direct">Прямая</span>
+                    </div>
+                    <div class="companion-desc" data-i18n="li_desc">
+                        Экстраверт с хищной улыбкой. Живёт в моменте, знает свою цену. Не для слабонервных — она берёт инициативу в свои руки.
+                    </div>
+                    <button class="chat-btn" onclick="openChat('li')" data-i18n="chat_btn">Начать чат</button>
+                </div>
+            </div>
+            
+            <!-- Sofia -->
+            <div class="companion-card sofia">
+                <div class="card-header">
+                    <div class="card-bg"></div>
+                    <div class="avatar">📚</div>
+                </div>
+                <div class="card-body">
+                    <div class="premium-badge">⭐ PREMIUM</div>
+                    <div class="companion-name">Sofia</div>
+                    <div class="companion-age" data-i18n="sofia_age">26 лет · Библиотекарь</div>
+                    <div class="tags">
+                        <span class="tag" data-i18n="tag_calm">Спокойная</span>
+                        <span class="tag" data-i18n="tag_empath">Эмпат</span>
+                        <span class="tag" data-i18n="tag_wise">Мудрая</span>
+                    </div>
+                    <div class="companion-desc" data-i18n="sofia_desc">
+                        Тихая сила за очками. Чувствует настроение до слов. Сначала кажется холодной, но это защита — внутри тепло и понимание.
+                    </div>
+                    <button class="chat-btn" onclick="openChat('sofia')" disabled data-i18n="premium_btn">Premium только</button>
+                </div>
+            </div>
+        </div>
+    </main>
     
     <script>
         // SESSION CHECK
@@ -149,11 +333,9 @@
             localStorage.setItem('kin_last_activity', Date.now().toString());
         }
         
-        // Обновляем активность
         document.addEventListener('click', updateActivity);
         document.addEventListener('keypress', updateActivity);
         
-        // Проверяем сессию
         const lastActivity = localStorage.getItem('kin_last_activity');
         if (lastActivity) {
             const elapsed = Date.now() - parseInt(lastActivity);
@@ -164,27 +346,54 @@
             }
         }
         
-        // Переводы
+        // Translations
         const translations = {
             ru: {
-                hello: 'Привет',
-                choose: 'Выбери своего компаньона и начни общение',
-                online: 'Онлайн',
-                premium: 'Premium',
                 logout: 'Выйти',
-                sofia_alert: 'Софи доступна только в Premium!'
+                welcome_title: 'Выбери своего спутника',
+                welcome_subtitle: 'Каждый со своим характером и историей',
+                leo_age: '28 лет · Музыкант',
+                li_age: '22 года · Танцовщица',
+                sofia_age: '26 лет · Библиотекарь',
+                tag_direct: 'Прямой',
+                tag_honest: 'Честный',
+                tag_sarcastic: 'Саркастичный',
+                tag_bold: '18+',
+                tag_confident: 'Уверенная',
+                tag_calm: 'Спокойная',
+                tag_empath: 'Эмпат',
+                tag_wise: 'Мудрая',
+                leo_desc: 'Интроверт с острым языком. Скажет правду в лицо, даже если неприятно. Ценит искренность и не терпит пустых разговоров.',
+                li_desc: 'Экстраверт с хищной улыбкой. Живёт в моменте, знает свою цену. Не для слабонервных — она берёт инициативу в свои руки.',
+                sofia_desc: 'Тихая сила за очками. Чувствует настроение до слов. Сначала кажется холодной, но это защита — внутри тепло и понимание.',
+                chat_btn: 'Начать чат',
+                premium_btn: 'Premium только',
+                premium_alert: 'Софи доступна только в Premium подписке!'
             },
             en: {
-                hello: 'Hello',
-                choose: 'Choose your companion and start chatting',
-                online: 'Online',
-                premium: 'Premium',
                 logout: 'Logout',
-                sofia_alert: 'Sofia is available only in Premium!'
+                welcome_title: 'Choose your companion',
+                welcome_subtitle: 'Each with their own personality and story',
+                leo_age: '28 · Musician',
+                li_age: '22 · Dancer',
+                sofia_age: '26 · Librarian',
+                tag_direct: 'Direct',
+                tag_honest: 'Honest',
+                tag_sarcastic: 'Sarcastic',
+                tag_bold: '18+',
+                tag_confident: 'Confident',
+                tag_calm: 'Calm',
+                tag_empath: 'Empath',
+                tag_wise: 'Wise',
+                leo_desc: 'An introvert with a sharp tongue. Will tell you the truth to your face, even if it hurts. Values sincerity and hates small talk.',
+                li_desc: 'An extrovert with a predatory smile. Lives in the moment, knows her worth. Not for the faint-hearted — she takes the initiative.',
+                sofia_desc: 'Quiet strength behind glasses. Feels your mood before words. Seems cold at first, but that\'s just a shield — inside is warmth and understanding.',
+                chat_btn: 'Start chat',
+                premium_btn: 'Premium only',
+                premium_alert: 'Sofia is available only with Premium subscription!'
             }
         };
         
-        // Применяем сохраненный язык
         const savedLang = localStorage.getItem('kin_lang') || 'ru';
         applyTranslations(savedLang);
         
@@ -197,7 +406,7 @@
             });
         }
         
-        // Проверяем авторизацию
+        // Auth check
         const user = JSON.parse(localStorage.getItem('kin_user'));
         if (!user) {
             window.location.href = '/';
@@ -207,7 +416,7 @@
         
         function openChat(companion) {
             if (companion === 'sofia') {
-                alert(translations[savedLang].sofia_alert);
+                alert(translations[savedLang].premium_alert);
                 return;
             }
             window.open(`https://t.me/${companion}_kin_bot`, '_blank');
