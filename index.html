@@ -738,9 +738,7 @@
             const savedUser = localStorage.getItem('kin_user');
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
-                // НЕ показываем пользователя в шапке — чистый лендинг
             }
-            // НЕ показываем auth при загрузке — пусть смотрит лендинг
             
             const savedLang = localStorage.getItem('kin_lang') || 'ru';
             if (savedLang !== 'ru') {
@@ -752,6 +750,9 @@
                     }
                 });
             }
+            
+            // Инициализируем карусель
+            updateCarousel();
         };
         
         // ========== AUTH ==========
@@ -1004,34 +1005,6 @@
         
         let currentLang = 'ru';
         
-        function setLanguage(lang) {
-            currentLang = lang;
-            
-            // Обновляем активную кнопку
-            document.querySelectorAll('.lang-btn').forEach(btn => {
-                btn.classList.remove('active');
-                if (btn.textContent.toLowerCase() === lang) {
-                    btn.classList.add('active');
-                }
-            });
-            
-            // Переводим все элементы с data-i18n
-            document.querySelectorAll('[data-i18n]').forEach(el => {
-                const key = el.getAttribute('data-i18n');
-                if (translations[lang][key]) {
-                    el.textContent = translations[lang][key];
-                }
-            });
-            
-            // Переводим placeholder'ы
-            document.querySelectorAll('[data-i18n-placeholder]').forEach(el => {
-                const key = el.getAttribute('data-i18n-placeholder');
-                if (translations[lang][key]) {
-                    el.placeholder = translations[lang][key];
-                }
-            });
-        }
-        
         // Language switcher buttons
         function setLanguage(lang) {
             currentLang = lang;
@@ -1060,20 +1033,9 @@
                 }
             });
         }
-        
-        // При загрузке проверяем сохраненный язык
-        window.addEventListener('load', function() {
-            const savedLang = localStorage.getItem('kin_lang') || 'ru';
-            if (savedLang !== 'ru') {
-                applyTranslations(savedLang);
-                document.querySelectorAll('.lang-btn').forEach(btn => {
-                    btn.classList.remove('active');
-                    if (btn.textContent.toLowerCase() === savedLang) {
-                        btn.classList.add('active');
-                    }
-                });
-            }
-        });
+                }
+            });
+        }
         
         // ========== CAROUSEL ==========
         let currentIndex = 2;
