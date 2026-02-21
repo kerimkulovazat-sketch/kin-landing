@@ -327,7 +327,8 @@
             .final-phone { width: 160px; height: 320px; transform-style: preserve-3d; }
             .final-phone-left { transform: rotateY(30deg) rotateX(5deg) rotateZ(-5deg) translateX(-60px) translateY(10px); }
             .final-phone-right { transform: rotateY(-30deg) rotateX(5deg) rotateZ(5deg) translateX(60px) translateY(-20px); }
-            .final-cta-phones { height: 380px; perspective: 800px; }
+            .final-cta-phones { height: 350px; perspective: 800px; }
+            .final-phone { width: 140px; height: 280px; }
             .site-footer { padding: 40px 20px; }
             .footer-content { gap: 24px; }
             .footer-links { gap: 20px; }
@@ -357,10 +358,10 @@
         .final-cta-content p { font-size: 1.2rem; color: var(--text-dim); margin-bottom: 32px; }
         .final-cta-btn { background: linear-gradient(135deg, #ff4d6d, #c77dff); color: white; padding: 16px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: 600; border: none; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
         .final-cta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(255,77,109,0.4); }
-                .final-cta-phones { position: relative; height: 400px; display: flex; justify-content: center; align-items: center; perspective: 1200px; transform-style: preserve-3d; }
-        .final-phone { position: absolute; width: 220px; height: 440px; transform-style: preserve-3d; transition: transform 0.5s ease; }
-        .final-phone-left { transform: rotateY(35deg) rotateX(8deg) rotateZ(-8deg) translateX(-120px) translateY(20px); z-index: 2; }
-        .final-phone-right { transform: rotateY(-35deg) rotateX(8deg) rotateZ(8deg) translateX(120px) translateY(-40px); z-index: 3; }
+        .final-cta-phones { position: relative; height: 450px; width: 100%; min-width: 350px; }
+        .final-phone { position: absolute; width: 200px; height: 400px; top: 50%; margin-top: -200px; transform-style: preserve-3d; transition: transform 0.5s ease; }
+        .final-phone-left { left: 10%; transform: rotateY(30deg) rotateX(5deg) rotateZ(-5deg); z-index: 2; }
+        .final-phone-right { right: 10%; transform: rotateY(-30deg) rotateX(5deg) rotateZ(5deg); z-index: 3; }
         .final-phone:hover { transform: rotateY(0) rotateX(0) rotateZ(0) translateX(0) scale(1.05); }
         .final-phone-frame { background: linear-gradient(145deg, #3a3a4a, #15151a); border-radius: 40px; padding: 12px; height: 100%; box-shadow: -20px 20px 60px rgba(0,0,0,0.6), -5px 5px 20px rgba(255,77,109,0.2), inset 1px 1px 3px rgba(255,255,255,0.1); position: relative; }
         .final-phone-notch { position: absolute; top: 22px; left: 50%; transform: translateX(-50%); width: 90px; height: 24px; background: #000; border-radius: 12px; z-index: 10; }
