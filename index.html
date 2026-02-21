@@ -258,6 +258,22 @@
             font-size: 1rem;
         }
 
+        /* FAQ Section */
+        .faq-section { padding: 100px 20px; background: var(--surface); }
+        .faq-container { max-width: 800px; margin: 0 auto; }
+        .faq-section h2 { text-align: center; font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; margin-bottom: 50px; }
+        .faq-section h2 span { background: linear-gradient(135deg, #ff4d6d, #c77dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .faq-item { background: var(--card-solid); border-radius: 16px; border: 1px solid rgba(255,255,255,0.06); overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); margin-bottom: 12px; }
+        .faq-item:hover { border-color: rgba(255,77,109,0.2); }
+        .faq-item.active { border-color: rgba(255,77,109,0.3); background: linear-gradient(135deg, rgba(255,77,109,0.05), rgba(199,125,255,0.05)); }
+        .faq-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; cursor: pointer; }
+        .faq-header h3 { font-size: 1.05rem; font-weight: 500; padding-right: 16px; }
+        .faq-toggle { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); flex-shrink: 0; }
+        .faq-item.active .faq-toggle { background: var(--accent); transform: rotate(45deg); }
+        .faq-content { max-height: 0; overflow: hidden; opacity: 0; transition: max-height 0.6s cubic-bezier(0.4, 0, 0.2, 1), opacity 0.6s ease, padding 0.6s ease; }
+        .faq-item.active .faq-content { max-height: 300px; opacity: 1; padding-top: 0; }
+        .faq-item.active .faq-content p { opacity: 1; transform: translateY(0); padding: 0 24px 20px; margin: 0; color: var(--text-dim); font-size: 0.95rem; line-height: 1.7; }
+
         /* Mobile Responsive */
         @media (max-width: 900px) {
             .nav-links { display: none; position: fixed; top: 70px; left: 0; right: 0; background: var(--nav-bg); backdrop-filter: blur(20px); padding: 20px; flex-direction: column; gap: 16px; border-bottom: 1px solid rgba(255,255,255,0.06); }
@@ -335,6 +351,7 @@
         <div class="nav-links" id="navLinks">
             <a href="#benefits" data-i18n="nav_benefits">Преимущества</a>
             <a href="#features" data-i18n="nav_archetypes">Архетипы</a>
+            <a href="#faq" data-i18n="nav_faq">FAQ</a>
             <a href="login.html" data-i18n="nav_login">Войти</a>
             <div class="lang-switcher">
                 <button class="lang-btn active" onclick="setLanguage('ru')" id="lang-ru">RU</button>
@@ -850,6 +867,63 @@
         </div>
     </section>
 
+    <!-- FAQ Section -->
+    <section class="faq-section" id="faq">
+        <div class="faq-container">
+            <h2 data-i18n="faq_title"><span>Часто</span> задаваемые вопросы</h2>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-header">
+                    <h3 data-i18n="faq_1_q">Что доступно в бесплатной версии?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-content">
+                    <p data-i18n="faq_1_a">В бесплатной версии доступно 10 сообщений с любым companion. Это позволяет познакомиться с персонажем и понять, подходит ли он вам. Для продолжения общения нужно оформить подписку Premium.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-header">
+                    <h3 data-i18n="faq_2_q">Мои сообщения конфиденциальны?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-content">
+                    <p data-i18n="faq_2_a">Абсолютно. Мы не продаём данные третьим лицам, не используем сообщения для обучения моделей и не показываем рекламу. Все разговоры остаются между вами и вашим companion.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-header">
+                    <h3 data-i18n="faq_3_q">Есть ли мобильное приложение?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-content">
+                    <p data-i18n="faq_3_a">KIN доступен через Telegram и WhatsApp — это удобнее приложения. Не нужно ничего устанавливать, просто напишите боту. Также есть веб-версия для общения с компьютера.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-header">
+                    <h3 data-i18n="faq_4_q">Можно ли общаться на разных языках?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-content">
+                    <p data-i18n="faq_4_a">Да, наши companions свободно общаются на русском и английском. Они понимают контекст, шутки и культурные нюансы на обоих языках.</p>
+                </div>
+            </div>
+            
+            <div class="faq-item" onclick="toggleFaq(this)">
+                <div class="faq-header">
+                    <h3 data-i18n="faq_5_q">Как работает память companion?</h3>
+                    <div class="faq-toggle">+</div>
+                </div>
+                <div class="faq-content">
+                    <p data-i18n="faq_5_a">KIN запоминает важные детали из ваших разговоров — ваши увлечения, переживания, предпочтения. С каждым разом общение становится всё более персональным и глубоким.</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
     <script>
         // Carousel
         let currentSlide = 0;
@@ -904,12 +978,20 @@
             allItems.forEach(i => { if (i !== item) i.classList.remove('active'); });
             item.classList.toggle('active');
         }
+
+        // FAQ Accordion
+        function toggleFaq(item) {
+            const allItems = document.querySelectorAll('.faq-item');
+            allItems.forEach(i => { if (i !== item) i.classList.remove('active'); });
+            item.classList.toggle('active');
+        }
         
         // Language Switcher
         const translations = {
             ru: {
                 nav_benefits: 'Преимущества',
                 nav_archetypes: 'Архетипы',
+                nav_faq: 'FAQ',
                 nav_login: 'Войти',
                 nav_join: 'Начать бесплатно',
                 hero_title: 'Общение, которое понимает',
@@ -945,11 +1027,23 @@
                 phone_online: 'онлайн',
                 phone_placeholder: 'Написать...',
                 testimonials_title: 'Что говорят люди',
-                testimonials_btn: 'Присоединиться бесплатно'
+                testimonials_btn: 'Присоединиться бесплатно',
+                faq_title: 'Часто задаваемые вопросы',
+                faq_1_q: 'Что доступно в бесплатной версии?',
+                faq_1_a: 'В бесплатной версии доступно 10 сообщений с любым companion. Это позволяет познакомиться с персонажем и понять, подходит ли он вам. Для продолжения общения нужно оформить подписку Premium.',
+                faq_2_q: 'Мои сообщения конфиденциальны?',
+                faq_2_a: 'Абсолютно. Мы не продаём данные третьим лицам, не используем сообщения для обучения моделей и не показываем рекламу. Все разговоры остаются между вами и вашим companion.',
+                faq_3_q: 'Есть ли мобильное приложение?',
+                faq_3_a: 'KIN доступен через Telegram и WhatsApp — это удобнее приложения. Не нужно ничего устанавливать, просто напишите боту. Также есть веб-версия для общения с компьютера.',
+                faq_4_q: 'Можно ли общаться на разных языках?',
+                faq_4_a: 'Да, наши companions свободно общаются на русском и английском. Они понимают контекст, шутки и культурные нюансы на обоих языках.',
+                faq_5_q: 'Как работает память companion?',
+                faq_5_a: 'KIN запоминает важные детали из ваших разговоров — ваши увлечения, переживания, предпочтения. С каждым разом общение становится всё более персональным и глубоким.'
             },
             en: {
                 nav_benefits: 'Benefits',
                 nav_archetypes: 'Archetypes',
+                nav_faq: 'FAQ',
                 nav_login: 'Login',
                 nav_join: 'Join free',
                 hero_title: 'Communication that understands',
@@ -985,7 +1079,18 @@
                 phone_online: 'online',
                 phone_placeholder: 'Type a message...',
                 testimonials_title: 'What people say',
-                testimonials_btn: 'Join free'
+                testimonials_btn: 'Join free',
+                faq_title: 'Frequently asked questions',
+                faq_1_q: 'What is available in the free version?',
+                faq_1_a: 'The free version includes 10 messages with any companion. This allows you to get to know the character and see if they are right for you. To continue chatting, you need to upgrade to Premium.',
+                faq_2_q: 'Are my messages private?',
+                faq_2_a: 'Absolutely. We do not sell data to third parties, do not use messages for training models, and do not show ads. All conversations remain between you and your companion.',
+                faq_3_q: 'Is there a mobile app?',
+                faq_3_a: 'KIN is available via Telegram and WhatsApp — more convenient than an app. No installation needed, just message the bot. There is also a web version for chatting from your computer.',
+                faq_4_q: 'Can I chat in different languages?',
+                faq_4_a: 'Yes, our companions communicate freely in Russian and English. They understand context, jokes, and cultural nuances in both languages.',
+                faq_5_q: 'How does companion memory work?',
+                faq_5_a: 'KIN remembers important details from your conversations — your hobbies, experiences, preferences. With each interaction, the conversation becomes more personal and deep.'
             }
         };
         
