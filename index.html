@@ -2,7 +2,10 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="theme-color" content="#0d0d0f">
+    <meta name="apple-mobile-web-app-capable" content="yes">
+    <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
     <title>KIN - AI Companion</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -295,7 +298,7 @@
             .testimonial-card p { font-size: 0.9rem; }
             .marquee-row { gap: 16px; }
         }
-        .mobile-menu-btn { display: none; }
+        .mobile-menu-btn { display: none; color: var(--text); font-size: 1.5rem; background: rgba(255,255,255,0.05); border-radius: 12px; width: 44px; height: 44px; align-items: center; justify-content: center; border: none; }
         @media (max-width: 900px) {
             .mobile-menu-btn { display: flex; }
         }
