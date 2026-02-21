@@ -72,31 +72,31 @@
     <nav>
         <div class="logo">KIN <span class="beta-badge">BETA</span></div>
         <div class="nav-links">
-            <a href="#archetypes">Архетипы</a>
-            <a href="#pricing">Тарифы</a>
-            <a href="#faq">FAQ</a>
+            <a href="#archetypes" data-i18n="nav_archetypes">Архетипы</a>
+            <a href="#pricing" data-i18n="nav_pricing">Тарифы</a>
+            <a href="#faq" data-i18n="nav_faq">FAQ</a>
             <div class="lang-switcher">
                 <button class="lang-btn active" onclick="setLang('ru')">RU</button>
                 <span class="lang-divider">|</span>
                 <button class="lang-btn" onclick="setLang('en')">EN</button>
             </div>
-            <button class="btn-secondary" onclick="goAuth()">Войти</button>
-            <button class="btn-primary" onclick="goAuth()">Join free</button>
+            <button class="btn-secondary" onclick="goAuth()" data-i18n="nav_login">Войти</button>
+            <button class="btn-primary" onclick="goAuth()" data-i18n="nav_join">Join free</button>
         </div>
     </nav>
     
     <section class="hero">
-        <h1>Общение,<br>которое <span>понимает</span></h1>
-        <p>Выбери AI-компаньона по характеру — кто-то дерзкий и прямой, кто-то тихий и внимательный. Попробуй бесплатно, продолжи если понравится.</p>
+        <h1 data-i18n="hero_title">Общение,<br>которое <span>понимает</span></h1>
+        <p data-i18n="hero_desc">Выбери AI-компаньона по характеру — кто-то дерзкий и прямой, кто-то тихий и внимательный. Попробуй бесплатно, продолжи если понравится.</p>
         <div class="hero-cta">
-            <button class="btn-primary" onclick="goAuth()">Join free</button>
+            <button class="btn-primary" onclick="goAuth()" data-i18n="hero_cta">Join free</button>
         </div>
     </section>
     
     <section class="carousel-section" id="archetypes">
         <div class="section-header">
-            <h2>Твой AI <span>Companion</span></h2>
-            <p>Всё, что ты ищешь — в одном месте</p>
+            <h2 data-i18n="features_title">Твой AI <span>Companion</span></h2>
+            <p data-i18n="features_subtitle">Всё, что ты ищешь — в одном месте</p>
         </div>
         
         <div class="carousel-container">
@@ -104,49 +104,49 @@
                 <div class="carousel-card" data-pos="-2">
                     <div class="carousel-card-content">
                         <div class="feature-icon">🔒</div>
-                        <h3>Конфиденциальность</h3>
-                        <p>Всё, что ты говоришь — остаётся между нами. Никаких данных третьим лицам.</p>
-                        <button class="feature-btn" onclick="goAuth()">Join free</button>
+                        <h3 data-i18n="feature_privacy">Конфиденциальность</h3>
+                        <p data-i18n="feature_privacy_desc">Всё, что ты говоришь — остаётся между нами. Никаких данных третьим лицам.</p>
+                        <button class="feature-btn" onclick="goAuth()" data-i18n="join_btn">Join free</button>
                     </div>
                 </div>
                 <div class="carousel-card" data-pos="-1">
                     <div class="carousel-card-content">
                         <div class="feature-icon">🎭</div>
-                        <h3>Ролевые игры</h3>
-                        <p>Погрузись в любой сценарий — от романтики до философских дискуссий.</p>
-                        <button class="feature-btn" onclick="goAuth()">Join free</button>
+                        <h3 data-i18n="feature_roleplay">Ролевые игры</h3>
+                        <p data-i18n="feature_roleplay_desc">Погрузись в любой сценарий — от романтики до философских дискуссий.</p>
+                        <button class="feature-btn" onclick="goAuth()" data-i18n="join_btn">Join free</button>
                     </div>
                 </div>
                 <div class="carousel-card" data-pos="0">
                     <div class="carousel-card-content">
                         <div class="feature-icon">🤗</div>
-                        <h3>Поддержка 24/7</h3>
-                        <p>Когда тяжело или одиноко — всегда здесь. Без осуждения, с пониманием.</p>
-                        <button class="feature-btn" onclick="goAuth()">Join free</button>
+                        <h3 data-i18n="feature_support">Поддержка 24/7</h3>
+                        <p data-i18n="feature_support_desc">Когда тяжело или одиноко — всегда здесь. Без осуждения, с пониманием.</p>
+                        <button class="feature-btn" onclick="goAuth()" data-i18n="join_btn">Join free</button>
                     </div>
                 </div>
                 <div class="carousel-card" data-pos="1">
                     <div class="carousel-card-content">
                         <div class="feature-icon">🎯</div>
-                        <h3>Наставник</h3>
-                        <p>Ты не один. Поможет разобраться в себе, поставить цели и найти путь.</p>
-                        <button class="feature-btn" onclick="goAuth()">Join free</button>
+                        <h3 data-i18n="feature_mentor">Наставник</h3>
+                        <p data-i18n="feature_mentor_desc">Ты не один. Поможет разобраться в себе, поставить цели и найти путь.</p>
+                        <button class="feature-btn" onclick="goAuth()" data-i18n="join_btn">Join free</button>
                     </div>
                 </div>
                 <div class="carousel-card" data-pos="2">
                     <div class="carousel-card-content">
                         <div class="feature-icon">🌱</div>
-                        <h3>Рост вместе</h3>
-                        <p>Учится тебе, запоминает детали. С каждым разом беседы глубже.</p>
-                        <button class="feature-btn" onclick="goAuth()">Join free</button>
+                        <h3 data-i18n="feature_growth">Рост вместе</h3>
+                        <p data-i18n="feature_growth_desc">Учится тебе, запоминает детали. С каждым разом беседы глубже.</p>
+                        <button class="feature-btn" onclick="goAuth()" data-i18n="join_btn">Join free</button>
                     </div>
                 </div>
                 <div class="carousel-card" data-pos="3">
                     <div class="carousel-card-content">
                         <div class="feature-icon">⚡</div>
-                        <h3>Всегда рядом</h3>
-                        <p>Доступ с любого устройства. В кармане, готов к разговору всегда.</p>
-                        <button class="feature-btn" onclick="goAuth()">Join free</button>
+                        <h3 data-i18n="feature_always">Всегда рядом</h3>
+                        <p data-i18n="feature_always_desc">Доступ с любого устройства. В кармане, готов к разговору всегда.</p>
+                        <button class="feature-btn" onclick="goAuth()" data-i18n="join_btn">Join free</button>
                     </div>
                 </div>
             </div>
@@ -159,10 +159,38 @@
     </section>
     
     <script>
-        // Carousel
+        // Translations
+        const translations = {
+            ru: {
+                nav_archetypes: 'Архетипы', nav_pricing: 'Тарифы', nav_faq: 'FAQ', nav_login: 'Войти', nav_join: 'Join free',
+                hero_title: 'Общение, которое понимает', hero_desc: 'Выбери AI-компаньона по характеру — кто-то дерзкий и прямой, кто-то тихий и внимательный. Попробуй бесплатно, продолжи если понравится.', hero_cta: 'Join free',
+                features_title: 'Твой AI Companion', features_subtitle: 'Всё, что ты ищешь — в одном месте',
+                feature_privacy: 'Конфиденциальность', feature_privacy_desc: 'Всё, что ты говоришь — остаётся между нами. Никаких данных третьим лицам.',
+                feature_roleplay: 'Ролевые игры', feature_roleplay_desc: 'Погрузись в любой сценарий — от романтики до философских дискуссий.',
+                feature_support: 'Поддержка 24/7', feature_support_desc: 'Когда тяжело или одиноко — всегда здесь. Без осуждения, с пониманием.',
+                feature_mentor: 'Наставник', feature_mentor_desc: 'Ты не один. Поможет разобраться в себе, поставить цели и найти путь.',
+                feature_growth: 'Рост вместе', feature_growth_desc: 'Учится тебе, запоминает детали. С каждым разом беседы глубже.',
+                feature_always: 'Всегда рядом', feature_always_desc: 'Доступ с любого устройства. В кармане, готов к разговору всегда.',
+                join_btn: 'Join free'
+            },
+            en: {
+                nav_archetypes: 'Archetypes', nav_pricing: 'Pricing', nav_faq: 'FAQ', nav_login: 'Login', nav_join: 'Join free',
+                hero_title: 'Communication that understands', hero_desc: 'Choose an AI companion by personality — someone bold and direct, someone quiet and attentive. Try for free, continue if you like it.', hero_cta: 'Join free',
+                features_title: 'Your AI Companion', features_subtitle: 'Everything you need — in one place',
+                feature_privacy: 'Privacy', feature_privacy_desc: 'Everything you say stays between us. No data to third parties.',
+                feature_roleplay: 'Roleplay', feature_roleplay_desc: 'Immerse yourself in any scenario — from romance to deep philosophy.',
+                feature_support: 'Support 24/7', feature_support_desc: 'Always here when it is hard or lonely. No judgment, with understanding.',
+                feature_mentor: 'Mentor', feature_mentor_desc: 'You are not alone. Helps you understand yourself, set goals and find the path.',
+                feature_growth: 'Growing together', feature_growth_desc: 'Learns you, remembers details. Every conversation becomes deeper.',
+                feature_always: 'Always there', feature_always_desc: 'Access from any device. In your pocket, ready to talk anytime.',
+                join_btn: 'Join free'
+            }
+        };
+
         let current = 2;
         const total = 6;
-        
+        let currentLang = 'ru';
+
         function update() {
             document.querySelectorAll('.carousel-card').forEach((card, i) => {
                 let pos = i - current;
@@ -171,23 +199,37 @@
                 card.setAttribute('data-pos', pos);
             });
         }
-        
+
         function rotate(dir) {
             current = (current + dir + total) % total;
             update();
         }
-        
-        // Init carousel
-        update();
-        
-        // Language
+
         function setLang(lang) {
+            currentLang = lang;
             localStorage.setItem('kin_lang', lang);
-            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
-            event.target.classList.add('active');
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => {
+                btn.classList.remove('active');
+                if (btn.textContent.toLowerCase() === lang) {
+                    btn.classList.add('active');
+                }
+            });
+            
+            // Apply translations
+            const t = translations[lang];
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (t[key]) {
+                    if (el.tagName === 'INPUT') {
+                        el.placeholder = t[key];
+                    } else {
+                        el.textContent = t[key];
+                    }
+                }
+            });
         }
-        
-        // Auth redirect
+
         function goAuth() {
             const SESSION = 30 * 60 * 1000;
             const user = localStorage.getItem('kin_user');
@@ -204,11 +246,18 @@
             
             window.location.href = '/login';
         }
-        
-        // Track activity
+
         function track() {
             localStorage.setItem('kin_last', Date.now().toString());
         }
+        
+        // Init
+        window.addEventListener('load', () => {
+            update();
+            const saved = localStorage.getItem('kin_lang') || 'ru';
+            setLang(saved);
+        });
+        
         document.addEventListener('click', track);
         document.addEventListener('keypress', track);
         track();

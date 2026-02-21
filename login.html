@@ -198,6 +198,7 @@
     <script>
         // SESSION CHECK
         const SESSION_TIMEOUT = 30 * 60 * 1000;
+        let currentLang = 'ru';
         
         const lastActivity = localStorage.getItem('kin_last_activity');
         if (lastActivity) {
@@ -221,7 +222,7 @@
         document.addEventListener('click', updateActivity);
         document.addEventListener('keypress', updateActivity);
         
-        // Переводы
+        // Translations
         const translations = {
             ru: {
                 back: '← Назад',
@@ -233,7 +234,8 @@
                 password: 'Пароль',
                 password2: 'Повторите пароль',
                 login_btn: 'Войти',
-                register_btn: 'Зарегистрироваться'
+                register_btn: 'Зарегистрироваться',
+                pass_mismatch: 'Пароли не совпадают'
             },
             en: {
                 back: '← Back',
@@ -245,15 +247,15 @@
                 password: 'Password',
                 password2: 'Confirm password',
                 login_btn: 'Login',
-                register_btn: 'Register'
+                register_btn: 'Register',
+                pass_mismatch: 'Passwords do not match'
             }
         };
         
-        // Применяем сохраненный язык
-        const savedLang = localStorage.getItem('kin_lang') || 'ru';
-        applyTranslations(savedLang);
-        
+        // Apply saved language from landing
         function applyTranslations(lang) {
+            currentLang = lang;
+            document.documentElement.lang = lang;
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) {
@@ -262,10 +264,11 @@
             });
         }
         
-        // Проверяем авторизацию
-        if (localStorage.getItem('kin_user')) {
-            window.location.href = '/app';
-        }
+        // Init on load
+        window.addEventListener('load', () => {
+            const savedLang = localStorage.getItem('kin_lang') || 'ru';
+            applyTranslations(savedLang);
+        });
         
         function switchTab(tab) {
             document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
@@ -291,6 +294,7 @@
             if (savedUser) {
                 const user = JSON.parse(savedUser);
                 if (user.email === email) {
+                    updateActivity();
                     window.location.href = '/app';
                     return;
                 }
@@ -309,7 +313,7 @@
             const errorEl = document.getElementById('regError');
             
             if (password !== password2) {
-                errorEl.textContent = savedLang === 'en' ? 'Passwords do not match' : 'Пароли не совпадают';
+                errorEl.textContent = translations[currentLang].pass_mismatch;
                 errorEl.classList.add('active');
                 return;
             }
