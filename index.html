@@ -237,6 +237,7 @@
                 <span class="user-email" id="userEmail"></span>
                 <button class="logout-btn" onclick="logout()">Выйти</button>
             </div>
+            <button class="btn-primary" id="loginBtn" onclick="showAuth()" style="padding: 10px 24px; font-size: 0.9rem;">Войти</button>
         </div>
     </nav>
     
@@ -538,9 +539,8 @@
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
                 showUserInfo(currentUser);
-            } else {
-                showAuth();
             }
+            // НЕ показываем auth при загрузке — пусть смотрит лендинг
         };
         
         // ========== AUTH ==========
@@ -615,13 +615,14 @@
         function showUserInfo(user) {
             document.getElementById('userInfo').classList.add('active');
             document.getElementById('userEmail').textContent = user.email;
+            document.getElementById('loginBtn').style.display = 'none';
         }
         
         function logout() {
             localStorage.removeItem('kin_user');
             currentUser = null;
             document.getElementById('userInfo').classList.remove('active');
-            showAuth();
+            document.getElementById('loginBtn').style.display = 'block';
         }
         
         // ========== CAROUSEL ==========
@@ -644,10 +645,7 @@
         
         // ========== MODALS ==========
         function openModal(id) {
-            if (!currentUser) {
-                showAuth();
-                return;
-            }
+            // Показываем модалку без авторизации — пусть читают
             document.getElementById('modal-' + id).classList.add('active');
             document.body.style.overflow = 'hidden';
         }
@@ -677,6 +675,10 @@
         };
         
         function openChat(companion) {
+            // Закрываем модалку архетипа
+            closeModal(companion);
+            
+            // Проверяем авторизацию ТОЛЬКО когда хочет начать чат
             if (!currentUser) {
                 showAuth();
                 return;
