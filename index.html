@@ -250,28 +250,79 @@
 
         /* Mobile Responsive */
         @media (max-width: 900px) {
-            .nav-links { display: none; }
+            .nav-links { display: none; position: fixed; top: 70px; left: 0; right: 0; background: var(--nav-bg); backdrop-filter: blur(20px); padding: 20px; flex-direction: column; gap: 16px; border-bottom: 1px solid rgba(255,255,255,0.06); }
+            .nav-links.active { display: flex; }
+            .nav-links a { padding: 12px 0; font-size: 1.1rem; border-bottom: 1px solid rgba(255,255,255,0.06); }
+            .nav-links a:last-of-type { border-bottom: none; }
+            .mobile-menu-btn { display: flex; width: 44px; height: 44px; align-items: center; justify-content: center; font-size: 1.5rem; background: rgba(255,255,255,0.05); border-radius: 12px; }
             .benefits-container { grid-template-columns: 1fr; gap: 40px; }
             .testimonial-card { width: 320px; padding: 20px; }
             .carousel-card { width: 280px; height: 340px; margin-left: -140px; margin-top: -170px; }
             .carousel-card.prev { transform: translateX(-200px) translateZ(-80px) rotateY(20deg); }
             .carousel-card.next { transform: translateX(200px) translateZ(-80px) rotateY(-20deg); }
+            .carousel-container { perspective: 800px; }
+            .phone-mockup { transform: rotateY(-10deg) rotateX(5deg) scale(0.85); }
         }
         @media (max-width: 480px) {
-            .hero h1 { font-size: 2rem; }
-            .hero p { font-size: 1rem; }
-            .carousel-card { width: 260px; height: 320px; margin-left: -130px; margin-top: -160px; }
-            .carousel-card.prev { transform: translateX(-160px) translateZ(-60px) rotateY(15deg); }
-            .carousel-card.next { transform: translateX(160px) translateZ(-60px) rotateY(-15deg); }
-            .marquee-outer::before, .marquee-outer::after { width: 60px; }
+            nav { padding: 12px 16px; }
+            .hero { padding: 100px 16px 60px; min-height: auto; }
+            .hero h1 { font-size: 1.75rem; line-height: 1.3; }
+            .hero p { font-size: 1rem; padding: 0 8px; }
+            .hero-cta { padding: 14px 32px; font-size: 1rem; width: 90%; max-width: 300px; justify-content: center; }
+            .features-section { padding: 60px 16px; }
+            .features-header h2 { font-size: 1.5rem; }
+            .carousel { height: 360px; }
+            .carousel-card { width: 240px; height: 300px; margin-left: -120px; margin-top: -150px; padding: 28px 20px; }
+            .carousel-card.prev { transform: translateX(-140px) translateZ(-60px) rotateY(15deg); }
+            .carousel-card.next { transform: translateX(140px) translateZ(-60px) rotateY(-15deg); }
+            .carousel-card h3 { font-size: 1.2rem; }
+            .carousel-card p { font-size: 0.9rem; }
+            .feature-icon { width: 52px; height: 52px; font-size: 1.6rem; }
+            .carousel-btn { width: 44px; height: 44px; }
+            .benefits-section { padding: 60px 16px; }
+            .benefits-container { gap: 32px; }
+            .benefit-header { padding: 16px 20px; }
+            .benefit-header h3 { font-size: 1rem; }
+            .benefit-item.active .benefit-content p { padding: 12px 20px 16px; font-size: 0.9rem; }
+            .phone-mockup { width: 220px; height: 440px; transform: rotateY(0) rotateX(0) scale(1); }
+            .phone-frame { border-radius: 36px; padding: 10px; }
+            .phone-screen { border-radius: 28px; }
+            .testimonials-section { padding: 60px 0; }
+            .testimonials-header { flex-direction: column; gap: 20px; padding: 0 16px; }
+            .testimonials-header h2 { font-size: 1.5rem; }
+            .marquee-outer::before, .marquee-outer::after { width: 40px; }
+            .testimonial-card { width: 280px; padding: 20px; }
+            .testimonial-card p { font-size: 0.9rem; }
+            .marquee-row { gap: 16px; }
         }
+        .mobile-menu-btn { display: none; }
+        @media (max-width: 900px) {
+            .mobile-menu-btn { display: flex; }
+        }
+        
+        /* Touch device optimizations */
+        @media (hover: none) and (pointer: coarse) {
+            .carousel-btn { width: 52px; height: 52px; }
+            .benefit-header { padding: 18px 20px; }
+            .lang-btn { padding: 10px 16px; }
+            .nav-cta { padding: 12px 28px; }
+            .testimonial-card { width: 300px; }
+            .hero-cta { min-height: 52px; }
+        }
+        
+        /* Prevent horizontal scroll */
+        body { overflow-x: hidden; max-width: 100vw; }
+        
+        /* Smooth scroll */
+        html { scroll-behavior: smooth; }
     </style>
 </head>
 <body>
     <!-- Navigation -->
     <nav>
         <div class="nav-brand">KIN</div>
-        <div class="nav-links">
+        <button class="mobile-menu-btn" onclick="toggleMobileMenu()">☰</button>
+        <div class="nav-links" id="navLinks">
             <a href="#benefits" data-i18n="nav_benefits">Преимущества</a>
             <a href="#features" data-i18n="nav_archetypes">Архетипы</a>
             <a href="login.html" data-i18n="nav_login">Войти</a>
@@ -794,6 +845,8 @@
         let currentSlide = 0;
         const slides = document.querySelectorAll('.carousel-card');
         const totalSlides = slides.length;
+        let touchStartX = 0;
+        let touchEndX = 0;
         
         function updateCarousel() {
             slides.forEach((slide, index) => {
@@ -809,6 +862,28 @@
         function rotateCarousel(direction) {
             currentSlide = (currentSlide + direction + totalSlides) % totalSlides;
             updateCarousel();
+        }
+        
+        // Swipe support for mobile
+        const carousel = document.getElementById('featureCarousel');
+        if (carousel) {
+            carousel.addEventListener('touchstart', (e) => {
+                touchStartX = e.changedTouches[0].screenX;
+            }, { passive: true });
+            
+            carousel.addEventListener('touchend', (e) => {
+                touchEndX = e.changedTouches[0].screenX;
+                handleSwipe();
+            }, { passive: true });
+        }
+        
+        function handleSwipe() {
+            const swipeThreshold = 50;
+            const diff = touchStartX - touchEndX;
+            if (Math.abs(diff) > swipeThreshold) {
+                if (diff > 0) rotateCarousel(1);
+                else rotateCarousel(-1);
+            }
         }
         
         updateCarousel();
@@ -935,6 +1010,19 @@
             const row = wrapper.querySelector('.marquee-row');
             row.classList.remove('slow');
         }
+        
+        // Mobile menu toggle
+        function toggleMobileMenu() {
+            const navLinks = document.getElementById('navLinks');
+            navLinks.classList.toggle('active');
+        }
+        
+        // Close mobile menu when clicking a link
+        document.querySelectorAll('.nav-links a').forEach(link => {
+            link.addEventListener('click', () => {
+                document.getElementById('navLinks').classList.remove('active');
+            });
+        });
         
         function goAuth() {
             window.location.href = 'login.html';
