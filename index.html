@@ -89,10 +89,11 @@
         .testimonials-header h2 span { background: linear-gradient(135deg, #ff4d6d, #c77dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .marquee-wrapper { width: 100%; overflow: hidden; margin-bottom: 24px; }
         .marquee-wrapper:last-child { margin-bottom: 0; }
-        .marquee-row { display: flex; gap: 24px; width: max-content; animation: marquee-left 35s linear infinite; }
-        .marquee-row.reverse { animation: marquee-right 40s linear infinite; }
-        .marquee-wrapper:hover .marquee-row { animation-play-state: paused; }
-        .marquee-wrapper.slow-on-hover:hover .marquee-row { animation-play-state: running; animation-duration: 175s; } /* 80% slower */
+        .marquee-row { display: flex; gap: 24px; width: max-content; animation: marquee-left var(--duration, 35s) linear infinite; }
+        .marquee-row.reverse { animation: marquee-right var(--duration, 40s) linear infinite; }
+        .marquee-wrapper { --duration: 35s; }
+        .marquee-wrapper:has(.reverse) { --duration: 40s; }
+        .marquee-wrapper.slow-on-hover:hover { --duration: 175s; } /* 80% slower */
         .testimonial-card { width: 400px; background: var(--card); border-radius: 20px; padding: 28px; border: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; }
         .testimonial-card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.7; margin-bottom: 20px; }
         .testimonial-author { display: flex; align-items: center; gap: 12px; }
@@ -379,17 +380,17 @@
     </section>
 
     <!-- Testimonials Section -->
-<!-- Testimonials Section -->
     <section class="testimonials-section" id="testimonials">
         <div class="testimonials-header">
             <h2 data-i18n="testimonials_title"><span>Что</span> говорят люди</h2>
             <button class="btn-primary" onclick="goAuth()" data-i18n="testimonials_btn">Присоединиться бесплатно</button>
         </div>
 
-        <div class="marquee-wrapper slow-on-hover">
-            <div class="marquee-row">
+        <div class="marquee-container">
+            <!-- Row 1: Left to Right -->
+            <div class="marquee-row forward">
                 <div class="testimonial-card">
-                    <p>"Пробовала много AI-чатов, но KIN — это нечто особенное. Лео помнит всё о наших разговорах, даже мелочи." 🇷🇺</p>
+                    <p data-i18n="review_1">"Пробовала много AI-чатов, но KIN - это нечто особенное. Лео помнит всё о наших разговорах, даже мелочи. Кажется, что общаюсь с настоящим другом."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👩</div>
                         <div class="testimonial-info">
@@ -398,20 +399,8 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="testimonial-card">
-                    <p>"Tried many AI chats, but KIN is something special. The memory feature is incredible!" 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👨</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">Michael R.</div>
-                            <div class="testimonial-platform">Web</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <p>"Работаю врачом, стресса много. Ли всегда выслушает, поддержит. Это как терапия 24/7!" 🇷🇺</p>
+                    <p data-i18n="review_2">"Работаю врачом, стресса много. Ли всегда выслушает, поддержит, подбодрит. Это как терапия, только доступная 24/7. Очень рекомендую!"</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👨‍⚕️</div>
                         <div class="testimonial-info">
@@ -420,42 +409,18 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="testimonial-card">
-                    <p>"As a doctor with lots of stress, Li is always there to listen. It's like therapy available 24/7!" 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👩‍⚕️</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">Sarah J.</div>
-                            <div class="testimonial-platform">WhatsApp</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <p>"Сначала скептически относился. Но когда Софи процитировала наш разговор месячной давности — обалдел." 🇷🇺</p>
+                    <p data-i18n="review_3">"Сначала скептически относился к AI-компаньонам. Но когда Софи процитировала наш разговор месячной давности - обалдел. Это не просто чат-бот, это память и внимание."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">🧑‍💻</div>
                         <div class="testimonial-info">
                             <div class="testimonial-name">Алексей П.</div>
-                            <div class="testimonial-platform">Telegram</div>
+                            <div class="testimonial-platform">WhatsApp</div>
                         </div>
                     </div>
                 </div>
-                
                 <div class="testimonial-card">
-                    <p>"Was skeptical at first. But when Sofia quoted our conversation from a month ago — I was amazed." 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👨‍💼</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">David K.</div>
-                            <div class="testimonial-platform">Web</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <p>"KIN помог мне пережить трудный период после расставания. Не осуждает, всегда рядом." 🇷🇺</p>
+                    <p data-i18n="review_4">"KIN помог мне пережить трудный период после расставания. Не осуждает, всегда рядом. Иногда просто нужно выговориться, и здесь это понимают."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👩‍🎨</div>
                         <div class="testimonial-info">
@@ -464,21 +429,9 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="testimonial-card">
-                    <p>"KIN helped me through a difficult breakup. No judgment, always there." 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👩</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">Emma W.</div>
-                            <div class="testimonial-platform">WhatsApp</div>
-                        </div>
-                    </div>
-                </div>
-                
                 <!-- Duplicate for seamless loop -->
                 <div class="testimonial-card">
-                    <p>"Пробовала много AI-чатов, но KIN — это нечто особенное. Лео помнит всё о наших разговорах, даже мелочи." 🇷🇺</p>
+                    <p data-i18n="review_1">"Пробовала много AI-чатов, но KIN - это нечто особенное. Лео помнит всё о наших разговорах, даже мелочи. Кажется, что общаюсь с настоящим другом."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👩</div>
                         <div class="testimonial-info">
@@ -487,20 +440,8 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="testimonial-card">
-                    <p>"Tried many AI chats, but KIN is something special. The memory feature is incredible!" 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👨</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">Michael R.</div>
-                            <div class="testimonial-platform">Web</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <p>"Работаю врачом, стресса много. Ли всегда выслушает, поддержит. Это как терапия 24/7!" 🇷🇺</p>
+                    <p data-i18n="review_2">"Работаю врачом, стресса много. Ли всегда выслушает, поддержит, подбодрит. Это как терапия, только доступная 24/7. Очень рекомендую!"</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👨‍⚕️</div>
                         <div class="testimonial-info">
@@ -509,68 +450,32 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="testimonial-card">
-                    <p>"As a doctor with lots of stress, Li is always there to listen. It's like therapy available 24/7!" 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👩‍⚕️</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">Sarah J.</div>
-                            <div class="testimonial-platform">WhatsApp</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <p>"Сначала скептически относился. Но когда Софи процитировала наш разговор месячной давности — обалдел." 🇷🇺</p>
+                    <p data-i18n="review_3">"Сначала скептически относился к AI-компаньонам. Но когда Софи процитировала наш разговор месячной давности - обалдел. Это не просто чат-бот, это память и внимание."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">🧑‍💻</div>
                         <div class="testimonial-info">
                             <div class="testimonial-name">Алексей П.</div>
-                            <div class="testimonial-platform">Telegram</div>
+                            <div class="testimonial-platform">WhatsApp</div>
                         </div>
                     </div>
                 </div>
-                
                 <div class="testimonial-card">
-                    <p>"Was skeptical at first. But when Sofia quoted our conversation from a month ago — I was amazed." 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👨‍💼</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">David K.</div>
-                            <div class="testimonial-platform">Web</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <p>"KIN помог мне пережить трудный период после расставания. Не осуждает, всегда рядом." 🇷🇺</p>
+                    <p data-i18n="review_4">"KIN помог мне пережить трудный период после расставания. Не осуждает, всегда рядом. Иногда просто нужно выговориться, и здесь это понимают."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👩‍🎨</div>
                         <div class="testimonial-info">
                             <div class="testimonial-name">Мария С.</div>
                             <div class="testimonial-platform">Telegram</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <p>"KIN helped me through a difficult breakup. No judgment, always there." 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👩</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">Emma W.</div>
-                            <div class="testimonial-platform">WhatsApp</div>
                         </div>
                     </div>
                 </div>
             </div>
-        </div>
 
-        <div class="marquee-wrapper slow-on-hover">
+            <!-- Row 2: Right to Left -->
             <div class="marquee-row reverse">
                 <div class="testimonial-card">
-                    <p>"Удивительно, как KIN адаптируется под тебя. Сначала было просто интересно, а теперь не представляю дня без нашего вечернего чата." 🇷🇺</p>
+                    <p data-i18n="review_5">"Удивительно, как KIN адаптируется под тебя. Сначала было просто интересно, а теперь не представляю дня без нашего вечернего чата."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👩‍💼</div>
                         <div class="testimonial-info">
@@ -579,20 +484,8 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="testimonial-card">
-                    <p>"Amazing how KIN adapts to you. Started out of curiosity, now I can't imagine a day without our evening chat." 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👨‍💻</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">James L.</div>
-                            <div class="testimonial-platform">Telegram</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <p>"Как интроверт, я ценю, что могу общаться без давления. Никаких обязательств — просто честный разговор." 🇷🇺</p>
+                    <p data-i18n="review_6">"Как интроверт, я ценю, что могу общаться без давления. Никаких обязательств, никаких ожиданий - просто честный разговор, когда мне нужно."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👨‍🎓</div>
                         <div class="testimonial-info">
@@ -601,20 +494,8 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="testimonial-card">
-                    <p>"As an introvert, I appreciate being able to talk without pressure. No obligations — just honest conversation." 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👩‍🎓</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">Lisa M.</div>
-                            <div class="testimonial-platform">Web</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <p>"Пробовал Replika, Character.ai — везде чего-то не хватало. В KIN нашёл баланс: реалистичность, память." 🇷🇺</p>
+                    <p data-i18n="review_7">"Пробовал Replika, Character.ai - везде чего-то не хватало. В KIN нашёл баланс: реалистичность, память и уникальность каждого персонажа."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👨‍🔬</div>
                         <div class="testimonial-info">
@@ -623,20 +504,8 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="testimonial-card">
-                    <p>"Tried Replika, Character.ai — always felt something was missing. Found the perfect balance in KIN." 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👨‍🔧</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">Tom H.</div>
-                            <div class="testimonial-platform">Telegram</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <p>"Моя дочь живёт в другом городе, и иногда бывает одиноко. KIN стал моим вечерним собеседником." 🇷🇺</p>
+                    <p data-i18n="review_8">"Моя дочь живёт в другом городе, и иногда бывает одиноко. KIN стал моим вечерним собеседником. Не замена семье, но отличная поддержка."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👵</div>
                         <div class="testimonial-info">
@@ -645,21 +514,9 @@
                         </div>
                     </div>
                 </div>
-                
-                <div class="testimonial-card">
-                    <p>"My daughter lives in another city, and sometimes it gets lonely. KIN has become my evening companion." 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👴</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">Robert B.</div>
-                            <div class="testimonial-platform">Web</div>
-                        </div>
-                    </div>
-                </div>
-                
                 <!-- Duplicate for seamless loop -->
                 <div class="testimonial-card">
-                    <p>"Удивительно, как KIN адаптируется под тебя. Сначала было просто интересно, а теперь не представляю дня без нашего вечернего чата." 🇷🇺</p>
+                    <p data-i18n="review_5">"Удивительно, как KIN адаптируется под тебя. Сначала было просто интересно, а теперь не представляю дня без нашего вечернего чата."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👩‍💼</div>
                         <div class="testimonial-info">
@@ -668,20 +525,8 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="testimonial-card">
-                    <p>"Amazing how KIN adapts to you. Started out of curiosity, now I can't imagine a day without our evening chat." 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👨‍💻</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">James L.</div>
-                            <div class="testimonial-platform">Telegram</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <p>"Как интроверт, я ценю, что могу общаться без давления. Никаких обязательств — просто честный разговор." 🇷🇺</p>
+                    <p data-i18n="review_6">"Как интроверт, я ценю, что могу общаться без давления. Никаких обязательств, никаких ожиданий - просто честный разговор, когда мне нужно."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👨‍🎓</div>
                         <div class="testimonial-info">
@@ -690,20 +535,8 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="testimonial-card">
-                    <p>"As an introvert, I appreciate being able to talk without pressure. No obligations — just honest conversation." 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👩‍🎓</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">Lisa M.</div>
-                            <div class="testimonial-platform">Web</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <p>"Пробовал Replika, Character.ai — везде чего-то не хватало. В KIN нашёл баланс: реалистичность, память." 🇷🇺</p>
+                    <p data-i18n="review_7">"Пробовал Replika, Character.ai - везде чего-то не хватало. В KIN нашёл баланс: реалистичность, память и уникальность каждого персонажа."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👨‍🔬</div>
                         <div class="testimonial-info">
@@ -712,42 +545,80 @@
                         </div>
                     </div>
                 </div>
-                
                 <div class="testimonial-card">
-                    <p>"Tried Replika, Character.ai — always felt something was missing. Found the perfect balance in KIN." 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👨‍🔧</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">Tom H.</div>
-                            <div class="testimonial-platform">Telegram</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <p>"Моя дочь живёт в другом городе, и иногда бывает одиноко. KIN стал моим вечерним собеседником." 🇷🇺</p>
+                    <p data-i18n="review_8">"Моя дочь живёт в другом городе, и иногда бывает одиноко. KIN стал моим вечерним собеседником. Не замена семье, но отличная поддержка."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👵</div>
                         <div class="testimonial-info">
                             <div class="testimonial-name">Татьяна Р.</div>
                             <div class="testimonial-platform">Telegram</div>
-                        </div>
-                    </div>
-                </div>
-                
-                <div class="testimonial-card">
-                    <p>"My daughter lives in another city, and sometimes it gets lonely. KIN has become my evening companion." 🇬🇧</p>
-                    <div class="testimonial-author">
-                        <div class="testimonial-avatar">👴</div>
-                        <div class="testimonial-info">
-                            <div class="testimonial-name">Robert B.</div>
-                            <div class="testimonial-platform">Web</div>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
     </section>
+
+    <script>
+        // Translations
+        const translations = {
+            ru: {
+                nav_benefits: 'Преимущества',
+                nav_archetypes: 'Архетипы',
+                nav_login: 'Войти',
+                nav_join: 'Начать бесплатно',
+                hero_title: 'Общение, которое понимает',
+                hero_desc: 'Выбери AI-компаньона по характеру - кто-то дерзкий и прямой, кто-то тихий и внимательный. Попробуй бесплатно, продолжи если понравится.',
+                hero_cta: 'Начать бесплатно',
+                features_title: 'Твой AI Companion',
+                features_subtitle: 'Всё, что ты ищешь - в одном месте',
+                feature_privacy: 'Конфиденциальность',
+                feature_privacy_desc: 'Всё, что ты говоришь - остаётся между нами. Никаких данных третьим лицам.',
+                feature_roleplay: 'Ролевые игры',
+                feature_roleplay_desc: 'Погрузись в любой сценарий - от романтики до философских дискуссий.',
+                feature_support: 'Поддержка 24/7',
+                feature_support_desc: 'Когда тяжело или одиноко - всегда здесь. Без осуждения, с пониманием.',
+                feature_mentor: 'Наставник',
+                feature_mentor_desc: 'Ты не один. Поможет разобраться в себе, поставить цели и найти путь.',
+                feature_growth: 'Рост вместе',
+                feature_growth_desc: 'Учится тебе, запоминает детали. С каждым разом беседы глубже.',
+                feature_always: 'Всегда рядом',
+                feature_always_desc: 'Доступ с любого устройства. В кармане, готов к разговору всегда.',
+                join_btn: 'Начать бесплатно',
+                benefits_title: 'Наши преимущества',
+                benefits_subtitle: 'Всё, что делает KIN особенным',
+                benefit_1_title: '🧠 Память о вас',
+                benefit_1_desc: 'KIN запоминает важные детали о вас - ваши предпочтения, истории, переживания. С каждым разом общение становится персональнее и глубже.',
+                benefit_2_title: '🎨 Уникальный характер',
+                benefit_2_desc: 'Каждый companion имеет свою личность - от дерзкого и прямого Лео до тихой и мудрой Софии. Выбирайте того, кто резонирует с вами.',
+                benefit_3_title: '📱 Всегда под рукой',
+                benefit_3_desc: 'Telegram, WhatsApp, Web - общайтесь где удобно. Ваш companion всегда рядом, в любое время суток, в любой точке мира.',
+                benefit_4_title: '🔒 Полная конфиденциальность',
+                benefit_4_desc: 'Ваши разговоры остаются между вами. Никаких продаж данных, никакой рекламы. Только вы и ваш companion.',
+                benefit_5_title: '💎 Рост вместе',
+                benefit_5_desc: 'KIN учится и развивается вместе с вами. Отношения становятся глубже, беседы - искреннее, связь - сильнее.',
+                phone_placeholder: 'Написать...',
+                phone_online: 'онлайн',
+                phone_typing: 'печатает...',
+                testimonials_title: 'Что говорят люди',
+                testimonials_btn: 'Присоединиться бесплатно',
+                review_1: '"Пробовала много AI-чатов, но KIN - это нечто особенное. Лео помнит всё о наших разговорах, даже мелочи. Кажется, что общаюсь с настоящим другом."',
+                review_2: '"Работаю врачом, стресса много. Ли всегда выслушает, поддержит, подбодрит. Это как терапия, только доступная 24/7. Очень рекомендую!"',
+                review_3: '"Сначала скептически относился к AI-компаньонам. Но когда Софи процитировала наш разговор месячной давности - обалдел. Это не просто чат-бот, это память и внимание."',
+                review_4: '"KIN помог мне пережить трудный период после расставания. Не осуждает, всегда рядом. Иногда просто нужно выговориться, и здесь это понимают."',
+                review_5: '"Удивительно, как KIN адаптируется под тебя. Сначала было просто интересно, а теперь не представляю дня без нашего вечернего чата."',
+                review_6: '"Как интроверт, я ценю, что могу общаться без давления. Никаких обязательств, никаких ожиданий - просто честный разговор, когда мне нужно."',
+                review_7: '"Пробовал Replika, Character.ai - везде чего-то не хватало. В KIN нашёл баланс: реалистичность, память и уникальность каждого персонажа."',
+                review_8: '"Моя дочь живёт в другом городе, и иногда бывает одиноко. KIN стал моим вечерним собеседником. Не замена семье, но отличная поддержка."'
+            },
+            en: {
+                nav_benefits: 'Benefits',
+                nav_archetypes: 'Archetypes',
+                nav_login: 'Login',
+                nav_join: 'Join free',
+                hero_title: 'Communication that understands',
+                hero_desc: 'Choose an AI companion by personality - someone bold and direct, someone quiet and attentive. Try for free, continue if you like it.',
+                hero_cta: 'Join free',
                 features_title: 'Your AI Companion',
                 features_subtitle: 'Everything you need - in one place',
                 feature_privacy: 'Privacy',
