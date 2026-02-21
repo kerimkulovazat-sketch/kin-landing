@@ -2,7 +2,7 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
     <meta name="theme-color" content="#0d0d0f">
     <meta name="apple-mobile-web-app-capable" content="yes">
     <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
@@ -328,9 +328,14 @@
             .final-phone-left { transform: rotateY(30deg) rotateX(5deg) rotateZ(-5deg) translateX(-60px) translateY(10px); }
             .final-phone-right { transform: rotateY(-30deg) rotateX(5deg) rotateZ(5deg) translateX(60px) translateY(-20px); }
             .final-cta-phones { height: 350px; perspective: 800px; }
-            .phone-3d { width: 140px; height: 280px; }
-            .phone-3d-left { left: 5%; }
-            .phone-3d-right { right: 5%; }
+            .phone-3d { width: 130px; height: 260px; }
+            .phone-3d-left { left: 2%; transform: translateY(-50%) perspective(800px) rotateY(15deg) rotateX(3deg); }
+            .phone-3d-right { right: 2%; transform: translateY(-50%) perspective(800px) rotateY(-15deg) rotateX(3deg) translateY(-20px); }
+            .final-cta-phones { height: 320px; }
+            .final-cta-container { grid-template-columns: 1fr; gap: 40px; }
+            .final-cta-content { text-align: center; }
+            .final-cta-content h2 { font-size: 2rem; }
+            .final-cta-content p { font-size: 1rem; }
             .site-footer { padding: 40px 20px; }
             .footer-content { gap: 24px; }
             .footer-links { gap: 20px; }
@@ -341,7 +346,11 @@
             .mobile-menu-btn { display: flex; }
         }
         
-        /* Touch device optimizations */
+        /* Touch optimizations */
+        .carousel { touch-action: pan-y; user-select: none; -webkit-user-select: none; }
+        .marquee-wrapper { touch-action: pan-x; }
+        .benefit-item, .faq-item { touch-action: manipulation; }
+        input, button { touch-action: manipulation; }
         @media (hover: none) and (pointer: coarse) {
             .carousel-btn { width: 52px; height: 52px; }
             .benefit-header { padding: 18px 20px; }
