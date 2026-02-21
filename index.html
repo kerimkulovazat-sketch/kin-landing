@@ -324,6 +324,14 @@
             .testimonial-card { width: 280px; padding: 20px; }
             .testimonial-card p { font-size: 0.9rem; }
             .marquee-row { gap: 16px; }
+            .final-phone { width: 160px; height: 320px; }
+            .final-phone-left { transform: rotateY(10deg) rotateX(3deg) translateX(-30px); }
+            .final-phone-right { transform: rotateY(-10deg) rotateX(3deg) translateX(30px) translateY(-10px); }
+            .final-cta-phones { height: 340px; }
+            .site-footer { padding: 40px 20px; }
+            .footer-content { gap: 24px; }
+            .footer-links { gap: 20px; }
+            .footer-legal { flex-direction: column; align-items: center; gap: 12px; text-align: center; }
         }
         .mobile-menu-btn { display: none; color: #ffffff !important; font-size: 1.5rem; background: rgba(255,255,255,0.08); border-radius: 12px; width: 44px; height: 44px; align-items: center; justify-content: center; border: 1px solid rgba(255,255,255,0.1); -webkit-text-fill-color: #ffffff; }
         @media (max-width: 900px) {
@@ -347,30 +355,49 @@
         .final-cta-content h2 { font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 700; margin-bottom: 20px; line-height: 1.2; }
         .final-cta-content h2 span { background: linear-gradient(135deg, #ff4d6d, #c77dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .final-cta-content p { font-size: 1.2rem; color: var(--text-dim); margin-bottom: 32px; }
-        .final-cta-btn { background: linear-gradient(135deg, #a8ff78, #78ffd6); color: #0d0d0f; padding: 16px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: 600; border: none; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
-        .final-cta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(168,255,120,0.3); }
+        .final-cta-btn { background: linear-gradient(135deg, #ff4d6d, #c77dff); color: white; padding: 16px 40px; border-radius: 30px; font-size: 1.1rem; font-weight: 600; border: none; cursor: pointer; transition: transform 0.3s, box-shadow 0.3s; }
+        .final-cta-btn:hover { transform: translateY(-3px); box-shadow: 0 12px 40px rgba(255,77,109,0.4); }
         .final-cta-phones { position: relative; height: 400px; display: flex; justify-content: center; align-items: center; }
         .final-phone { position: absolute; width: 200px; height: 400px; }
         .final-phone-left { transform: rotateY(15deg) rotateX(5deg) translateX(-60px); z-index: 2; }
         .final-phone-right { transform: rotateY(-15deg) rotateX(5deg) translateX(60px) translateY(-20px); z-index: 1; }
-        .final-phone-frame { background: linear-gradient(145deg, #4a4a5a, #1a1a20); border-radius: 32px; padding: 10px; height: 100%; box-shadow: -15px 15px 40px rgba(0,0,0,0.5), -3px 3px 10px rgba(255,77,109,0.15); }
-        .final-phone-screen { background: var(--bg); border-radius: 24px; height: 100%; overflow: hidden; display: flex; flex-direction: column; }
-        .final-phone-header { padding: 30px 16px 12px; background: linear-gradient(180deg, rgba(255,77,109,0.1) 0%, transparent 100%); text-align: center; }
-        .final-phone-avatar { width: 48px; height: 48px; border-radius: 50%; background: linear-gradient(135deg, rgba(255,77,109,0.3), rgba(199,125,255,0.3)); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 8px; }
-        .final-phone-name { font-weight: 600; font-size: 0.9rem; }
-        .final-phone-chat { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 10px; }
-        .final-phone-msg { max-width: 85%; padding: 10px 14px; border-radius: 16px; font-size: 0.8rem; }
-        .final-phone-msg.received { align-self: flex-start; background: rgba(255,255,255,0.08); border-bottom-left-radius: 4px; }
-        .final-phone-msg.sent { align-self: flex-end; background: linear-gradient(135deg, rgba(255,77,109,0.3), rgba(199,125,255,0.3)); border-bottom-right-radius: 4px; }
-        .final-phone-image { flex: 1; display: flex; align-items: center; justify-content: center; font-size: 4rem; background: linear-gradient(135deg, rgba(255,77,109,0.1), rgba(199,125,255,0.1)); }
-        .final-phone-label { text-align: center; padding: 12px; font-size: 0.85rem; color: var(--text-dim); border-top: 1px solid rgba(255,255,255,0.06); }
+        .final-phone-frame { background: linear-gradient(145deg, #3a3a4a, #15151a); border-radius: 40px; padding: 12px; height: 100%; box-shadow: -20px 20px 60px rgba(0,0,0,0.6), -5px 5px 20px rgba(255,77,109,0.2), inset 1px 1px 3px rgba(255,255,255,0.1); position: relative; }
+        .final-phone-notch { position: absolute; top: 22px; left: 50%; transform: translateX(-50%); width: 90px; height: 24px; background: #000; border-radius: 12px; z-index: 10; }
+        .final-phone-screen { background: var(--bg); border-radius: 32px; height: 100%; overflow: hidden; display: flex; flex-direction: column; position: relative; }
+        
+        /* Chat Screen */
+        .final-phone-chat-header { display: flex; align-items: center; gap: 12px; padding: 50px 16px 12px; background: linear-gradient(180deg, rgba(255,77,109,0.15) 0%, transparent 100%); border-bottom: 1px solid rgba(255,255,255,0.06); }
+        .final-phone-chat-avatar { width: 40px; height: 40px; border-radius: 50%; background: linear-gradient(135deg, #ff4d6d, #c77dff); display: flex; align-items: center; justify-content: center; font-size: 1.3rem; }
+        .final-phone-chat-info { flex: 1; }
+        .final-phone-chat-name { font-weight: 600; font-size: 0.95rem; }
+        .final-phone-chat-status { font-size: 0.75rem; color: #4ade80; }
+        .final-phone-chat-messages { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+        .final-chat-msg { max-width: 80%; padding: 10px 14px; border-radius: 18px; font-size: 0.8rem; line-height: 1.4; }
+        .final-chat-msg.received { align-self: flex-start; background: rgba(255,255,255,0.1); border-bottom-left-radius: 4px; }
+        .final-chat-msg.sent { align-self: flex-end; background: linear-gradient(135deg, rgba(255,77,109,0.4), rgba(199,125,255,0.4)); border-bottom-right-radius: 4px; }
+        .final-phone-chat-input { display: flex; align-items: center; gap: 10px; padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.06); }
+        .final-phone-chat-input span { flex: 1; font-size: 0.85rem; color: var(--text-dim); }
+        .final-phone-send-btn { width: 32px; height: 32px; border-radius: 50%; background: linear-gradient(135deg, #ff4d6d, #c77dff); display: flex; align-items: center; justify-content: center; font-size: 0.9rem; }
+        
+        /* Gallery Screen */
+        .final-phone-gallery-header { display: flex; align-items: center; justify-content: space-between; padding: 50px 16px 12px; background: linear-gradient(180deg, rgba(199,125,255,0.15) 0%, transparent 100%); }
+        .final-phone-back { font-size: 1.3rem; color: var(--text); }
+        .final-phone-gallery-title { font-weight: 600; font-size: 1rem; }
+        .final-phone-more { font-size: 1.3rem; color: var(--text); }
+        .final-phone-gallery-grid { flex: 1; display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; padding: 16px; overflow: hidden; }
+        .final-gallery-item { background: rgba(255,255,255,0.05); border-radius: 12px; display: flex; align-items: center; justify-content: center; font-size: 2rem; min-height: 70px; }
 
         /* Footer */
-        .site-footer { background: var(--surface); padding: 40px 24px; border-top: 1px solid rgba(255,255,255,0.06); display: flex; justify-content: space-between; align-items: center; flex-wrap: wrap; gap: 24px; }
-        .footer-brand { font-size: 1.5rem; font-weight: 700; background: linear-gradient(135deg, #ff4d6d, #c77dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .footer-links { display: flex; gap: 32px; }
-        .footer-links a { font-size: 0.9rem; color: var(--text-dim); transition: color 0.3s; }
+        .site-footer { background: var(--surface); padding: 60px 24px 40px; border-top: 1px solid rgba(255,255,255,0.06); }
+        .footer-content { max-width: 1200px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; gap: 32px; }
+        .footer-brand { font-size: 1.8rem; font-weight: 700; background: linear-gradient(135deg, #ff4d6d, #c77dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
+        .footer-links { display: flex; gap: 40px; flex-wrap: wrap; justify-content: center; }
+        .footer-links a { font-size: 0.95rem; color: var(--text-dim); transition: color 0.3s; }
         .footer-links a:hover { color: var(--text); }
+        .footer-legal { display: flex; gap: 24px; flex-wrap: wrap; justify-content: center; border-top: 1px solid rgba(255,255,255,0.06); padding-top: 24px; width: 100%; }
+        .footer-legal a { font-size: 0.85rem; color: var(--text-dim); transition: color 0.3s; }
+        .footer-legal a:hover { color: var(--text); }
+        .footer-copyright { font-size: 0.85rem; color: var(--text-dim); }
 
         /* Prevent horizontal scroll */
         body { overflow-x: hidden; max-width: 100vw; }
@@ -969,25 +996,49 @@
                 <button class="final-cta-btn" onclick="goAuth()" data-i18n="final_cta_btn">Присоединиться бесплатно</button>
             </div>
             <div class="final-cta-phones">
+                <!-- Phone 1: Chat with Leo -->
                 <div class="final-phone phone-left">
                     <div class="final-phone-frame">
+                        <div class="final-phone-notch"></div>
                         <div class="final-phone-screen">
-                            <div class="final-phone-header">
-                                <div class="final-phone-avatar">🖤</div>
-                                <div class="final-phone-name">KIN</div>
+                            <div class="final-phone-chat-header">
+                                <div class="final-phone-chat-avatar">🎸</div>
+                                <div class="final-phone-chat-info">
+                                    <div class="final-phone-chat-name">Leo</div>
+                                    <div class="final-phone-chat-status">онлайн</div>
+                                </div>
                             </div>
-                            <div class="final-phone-chat">
-                                <div class="final-phone-msg received">Привет! Рада тебя видеть ✨</div>
-                                <div class="final-phone-msg sent">Привет! Как дела?</div>
+                            <div class="final-phone-chat-messages">
+                                <div class="final-chat-msg received">Привет. Я тут новый трек записал 🔥</div>
+                                <div class="final-chat-msg sent">О, круто! Покажешь?</div>
+                                <div class="final-chat-msg received">Конечно. Заходи вечером 🎧</div>
+                            </div>
+                            <div class="final-phone-chat-input">
+                                <span>Сообщение...</span>
+                                <div class="final-phone-send-btn">➤</div>
                             </div>
                         </div>
                     </div>
                 </div>
+                
+                <!-- Phone 2: Li Gallery -->
                 <div class="final-phone phone-right">
                     <div class="final-phone-frame">
+                        <div class="final-phone-notch"></div>
                         <div class="final-phone-screen">
-                            <div class="final-phone-image">📸</div>
-                            <div class="final-phone-label">Photos</div>
+                            <div class="final-phone-gallery-header">
+                                <div class="final-phone-back">←</div>
+                                <div class="final-phone-gallery-title">Li's Photos</div>
+                                <div class="final-phone-more">⋮</div>
+                            </div>
+                            <div class="final-phone-gallery-grid">
+                                <div class="final-gallery-item">💃</div>
+                                <div class="final-gallery-item">✨</div>
+                                <div class="final-gallery-item">🌙</div>
+                                <div class="final-gallery-item">🔥</div>
+                                <div class="final-gallery-item">💋</div>
+                                <div class="final-gallery-item">🖤</div>
+                            </div>
                         </div>
                     </div>
                 </div>
@@ -997,17 +1048,24 @@
 
     <!-- Footer -->
     <footer class="site-footer">
-        <div class="footer-brand">KIN</div>
-        <div class="footer-links">
-            <a href="#benefits" data-i18n="nav_benefits">Преимущества</a>
-            <a href="#features" data-i18n="nav_archetypes">Архетипы</a>
-            <a href="#testimonials" data-i18n="nav_reviews">Отзывы</a>
-            <a href="#faq" data-i18n="nav_faq">FAQ</a>
+        <div class="footer-content">
+            <div class="footer-brand">KIN</div>
+            <div class="footer-links">
+                <a href="#benefits" data-i18n="nav_benefits">Преимущества</a>
+                <a href="#features" data-i18n="nav_archetypes">Архетипы</a>
+                <a href="#testimonials" data-i18n="nav_reviews">Отзывы</a>
+                <a href="#faq" data-i18n="nav_faq">FAQ</a>
+            </div>
+            <div class="footer-legal">
+                <a href="#" data-i18n="footer_privacy">Политика конфиденциальности</a>
+                <a href="#" data-i18n="footer_terms">Условия использования</a>
+                <a href="#" data-i18n="footer_blog">Блог</a>
+            </div>
+            <div class="footer-copyright" data-i18n="footer_copy">© 2026 KIN. Все права защищены.</div>
         </div>
     </footer>
 
-    <script>
-        // Carousel
+    <script>        // Carousel
         let currentSlide = 0;
         const slides = document.querySelectorAll('.carousel-card');
         const totalSlides = slides.length;
@@ -1127,7 +1185,11 @@
                 nav_reviews: 'Отзывы',
                 final_cta_title: '<span>Попробуй</span> бесплатно',
                 final_cta_desc: 'Зарегистрируйся и познакомься со своим companion уже сегодня.',
-                final_cta_btn: 'Присоединиться бесплатно'
+                final_cta_btn: 'Присоединиться бесплатно',
+                footer_privacy: 'Политика конфиденциальности',
+                footer_terms: 'Условия использования',
+                footer_blog: 'Блог',
+                footer_copy: '© 2026 KIN. Все права защищены.'
             },
             en: {
                 nav_benefits: 'Benefits',
@@ -1186,7 +1248,11 @@
                 nav_reviews: 'Reviews',
                 final_cta_title: '<span>Try it</span> for free',
                 final_cta_desc: 'Sign up and meet your companion today.',
-                final_cta_btn: 'Join free'
+                final_cta_btn: 'Join free',
+                footer_privacy: 'Privacy Policy',
+                footer_terms: 'Terms of Service',
+                footer_blog: 'Blog',
+                footer_copy: '© 2026 KIN. All rights reserved.'
             }
         };
         
