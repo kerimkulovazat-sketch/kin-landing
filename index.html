@@ -376,11 +376,11 @@
                 <span class="lang-divider">|</span>
                 <button class="lang-btn" onclick="setLanguage('en')">EN</button>
             </div>
-            <div class="user-info" id="userInfo">
+            <div class="user-info" id="userInfo" style="display: none !important;">
                 <span class="user-email" id="userEmail"></span>
             </div>
-            <button class="btn-secondary" id="loginBtn" onclick="window.location.href='/login'" data-i18n="nav_login">Войти</button>
-            <button class="btn-primary" id="startBtn" onclick="window.location.href='/login'" data-i18n="nav_start">Начать бесплатно</button>
+            <button class="btn-secondary" id="loginBtn" onclick="handleAuthClick()" data-i18n="nav_login">Войти</button>
+            <button class="btn-primary" id="startBtn" onclick="handleAuthClick()" data-i18n="nav_start">Начать бесплатно</button>
         </div>
     </nav>
     
@@ -682,9 +682,20 @@
             const savedUser = localStorage.getItem('kin_user');
             if (savedUser) {
                 currentUser = JSON.parse(savedUser);
-                showUserInfo(currentUser);
+                // НЕ показываем пользователя в шапке — чистый лендинг
             }
             // НЕ показываем auth при загрузке — пусть смотрит лендинг
+            
+            const savedLang = localStorage.getItem('kin_lang') || 'ru';
+            if (savedLang !== 'ru') {
+                applyTranslations(savedLang);
+                document.querySelectorAll('.lang-btn').forEach(btn => {
+                    btn.classList.remove('active');
+                    if (btn.textContent.toLowerCase() === savedLang) {
+                        btn.classList.add('active');
+                    }
+                });
+            }
         };
         
         // ========== AUTH ==========
@@ -1250,6 +1261,50 @@
                     document.body.style.overflow = '';
                 }
             });
+        });
+        // ========== SESSION MANAGEMENT ==========
+        const SESSION_TIMEOUT = 30 * 60 * 1000; // 30 минут
+        
+        function handleAuthClick() {
+            const user = JSON.parse(localStorage.getItem('kin_user'));
+            const lastActivity = localStorage.getItem('kin_last_activity');
+            
+            if (user && lastActivity) {
+                const elapsed = Date.now() - parseInt(lastActivity);
+                if (elapsed < SESSION_TIMEOUT) {
+                    window.location.href = '/app';
+                    return;
+                } else {
+                    localStorage.removeItem('kin_user');
+                    localStorage.removeItem('kin_last_activity');
+                }
+            }
+            
+            window.location.href = '/login';
+        }
+        
+        function updateActivity() {
+            localStorage.setItem('kin_last_activity', Date.now().toString());
+        }
+        
+        // Обновляем активность
+        document.addEventListener('click', updateActivity);
+        document.addEventListener('mousemove', updateActivity);
+        document.addEventListener('keypress', updateActivity);
+        
+        // Проверяем сессию при загрузке
+        window.addEventListener('load', function() {
+            const user = JSON.parse(localStorage.getItem('kin_user'));
+            const lastActivity = localStorage.getItem('kin_last_activity');
+            
+            if (user && lastActivity) {
+                const elapsed = Date.now() - parseInt(lastActivity);
+                if (elapsed > SESSION_TIMEOUT) {
+                    localStorage.removeItem('kin_user');
+                    localStorage.removeItem('kin_last_activity');
+                }
+            }
+            updateActivity();
         });
     </script>
 </body>

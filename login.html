@@ -196,6 +196,31 @@
     </div>
     
     <script>
+        // SESSION CHECK
+        const SESSION_TIMEOUT = 30 * 60 * 1000;
+        
+        const lastActivity = localStorage.getItem('kin_last_activity');
+        if (lastActivity) {
+            const elapsed = Date.now() - parseInt(lastActivity);
+            if (elapsed > SESSION_TIMEOUT) {
+                localStorage.removeItem('kin_user');
+                localStorage.removeItem('kin_last_activity');
+            }
+        }
+        
+        if (localStorage.getItem('kin_user') && lastActivity) {
+            const elapsed = Date.now() - parseInt(lastActivity);
+            if (elapsed < SESSION_TIMEOUT) {
+                window.location.href = '/app';
+            }
+        }
+        
+        function updateActivity() {
+            localStorage.setItem('kin_last_activity', Date.now().toString());
+        }
+        document.addEventListener('click', updateActivity);
+        document.addEventListener('keypress', updateActivity);
+        
         // Переводы
         const translations = {
             ru: {
@@ -272,6 +297,7 @@
             }
             
             localStorage.setItem('kin_user', JSON.stringify({ email, id: email }));
+            updateActivity();
             window.location.href = '/app';
         }
         
@@ -289,6 +315,7 @@
             }
             
             localStorage.setItem('kin_user', JSON.stringify({ email, id: email }));
+            updateActivity();
             window.location.href = '/app';
         }
     </script>
