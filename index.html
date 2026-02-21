@@ -142,55 +142,6 @@
         }
         
         /* Auth Modal */
-        .auth-modal {
-            display: none; position: fixed; top: 0; left: 0; right: 0; bottom: 0;
-            background: rgba(10,10,15,0.95); z-index: 2000;
-            justify-content: center; align-items: center; backdrop-filter: blur(20px);
-        }
-        .auth-modal.active { display: flex; }
-        .auth-container {
-            background: var(--card); padding: 40px; border-radius: 24px;
-            width: 100%; max-width: 400px; border: 1px solid rgba(255,77,109,0.2);
-            position: relative;
-        }
-        .auth-close {
-            position: absolute;
-            top: 15px;
-            right: 15px;
-            background: none;
-            border: none;
-            color: var(--text-dim);
-            font-size: 1.5rem;
-            cursor: pointer;
-            width: 36px;
-            height: 36px;
-            border-radius: 50%;
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            transition: all 0.3s;
-        }
-        .auth-close:hover {
-            background: rgba(255,255,255,0.1);
-            color: var(--text);
-        }
-        .auth-container h2 { font-size: 1.8rem; margin-bottom: 10px; text-align: center; }
-        .auth-container p { color: var(--text-dim); text-align: center; margin-bottom: 30px; }
-        .auth-tabs { display: flex; gap: 10px; margin-bottom: 25px; }
-        .auth-tab {
-            flex: 1; background: transparent; border: none; color: var(--text-dim);
-            padding: 12px; cursor: pointer; border-bottom: 2px solid transparent; transition: all 0.3s;
-        }
-        .auth-tab.active { color: var(--accent); border-bottom-color: var(--accent); }
-        .auth-form { display: none; }
-        .auth-form.active { display: block; }
-        .form-group { margin-bottom: 20px; }
-        .form-group label { display: block; margin-bottom: 8px; font-size: 0.9rem; color: var(--text-dim); }
-        .form-group input {
-            width: 100%; background: rgba(255,255,255,0.05); border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px; padding: 14px 16px; color: white; font-size: 1rem; font-family: 'Inter', sans-serif;
-        }
-        .form-group input:focus { outline: none; border-color: var(--accent); }
         .btn-primary {
             background: linear-gradient(135deg, #ff4d6d, #c77dff); color: white;
             padding: 16px 40px; border-radius: 50px; font-weight: 600; font-size: 1.1rem;
@@ -409,50 +360,6 @@
             <button class="btn-primary" id="startBtn" onclick="handleAuthClick()" data-i18n="nav_start">Начать бесплатно</button>
         </div>
     </nav>
-    
-    <!-- Auth Modal -->
-    <div class="auth-modal" id="authModal" onclick="closeAuthOnBackdrop(event)">
-        <div class="auth-container" onclick="event.stopPropagation()">
-            <button class="auth-close" onclick="hideAuth()">×</button>
-            <h2 data-i18n="auth_welcome">👋 Добро пожаловать в KIN</h2>
-            <p data-i18n="auth_desc">Войдите или зарегистрируйтесь, чтобы начать общение</p>
-            
-            <div class="auth-tabs">
-                <button class="auth-tab active" onclick="switchTab('login')" data-i18n="auth_login">Вход</button>
-                <button class="auth-tab" onclick="switchTab('register')" data-i18n="auth_register">Регистрация</button>
-            </div>
-            
-            <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
-                <div class="form-group">
-                    <label data-i18n="auth_email">Email</label>
-                    <input type="email" id="loginEmail" required placeholder="your@email.com">
-                </div>
-                <div class="form-group">
-                    <label data-i18n="auth_password">Пароль</label>
-                    <input type="password" id="loginPassword" required placeholder="••••••••">
-                </div>
-                <button type="submit" class="btn-primary" data-i18n="auth_login_btn">Войти</button>
-                <div class="error-msg" id="loginError"></div>
-            </form>
-            
-            <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
-                <div class="form-group">
-                    <label data-i18n="auth_email">Email</label>
-                    <input type="email" id="regEmail" required placeholder="your@email.com">
-                </div>
-                <div class="form-group">
-                    <label data-i18n="auth_password">Пароль</label>
-                    <input type="password" id="regPassword" required placeholder="Минимум 6 символов" minlength="6">
-                </div>
-                <div class="form-group">
-                    <label data-i18n="auth_password2">Повторите пароль</label>
-                    <input type="password" id="regPassword2" required placeholder="••••••••">
-                </div>
-                <button type="submit" class="btn-primary" data-i18n="auth_register_btn">Зарегистрироваться</button>
-                <div class="error-msg" id="regError"></div>
-            </form>
-        </div>
-    </div>
     
     <section class="hero">
         <h1 data-i18n="hero_title">Общение,<br>которое <span>понимает</span></h1>
