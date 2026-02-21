@@ -227,36 +227,59 @@
             }
         }
         
-        /* 3D Carousel */
-        .carousel-section { padding: 80px 20px; background: var(--surface); }
-        .carousel-container { position: relative; max-width: 1000px; margin: 0 auto; height: 500px; perspective: 1000px; }
-        .carousel-track { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s; }
-        .carousel-card {
-            position: absolute; width: 300px; height: 420px; left: 50%; top: 50%;
-            margin-left: -150px; margin-top: -210px; border-radius: 24px;
-            overflow: hidden; cursor: pointer; transition: all 0.6s;
-            background: var(--card); border: 1px solid rgba(255,255,255,0.08);
+        /* Features Section */
+        .features-section { padding: 80px 20px; background: var(--surface); }
+        .features-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
         }
-        .carousel-card-content {
-            height: 100%; display: flex; flex-direction: column;
-            justify-content: center; align-items: center; padding: 20px;
+        .feature-card {
+            background: var(--card);
+            border-radius: 24px;
+            padding: 40px 30px;
+            text-align: center;
+            border: 1px solid rgba(255,255,255,0.06);
+            transition: all 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
-        .carousel-card:nth-child(1) .carousel-card-content { background: linear-gradient(135deg, #1a1a28, #2a2a3a); }
-        .carousel-card:nth-child(2) .carousel-card-content { background: linear-gradient(135deg, #1a1a28, #3a2a3a); }
-        .carousel-card:nth-child(3) .carousel-card-content { background: linear-gradient(135deg, #1a1a28, #2a3a3a); }
-        .carousel-card h3 { font-size: 1.5rem; margin-bottom: 8px; }
-        .carousel-card p { color: var(--text-dim); font-size: 0.9rem; text-align: center; }
-        .carousel-card[data-pos="0"] { transform: translateZ(200px) scale(1); opacity: 1; z-index: 3; }
-        .carousel-card[data-pos="-1"] { transform: translateX(-320px) translateZ(-100px) rotateY(25deg); opacity: 0.7; z-index: 2; }
-        .carousel-card[data-pos="1"] { transform: translateX(320px) translateZ(-100px) rotateY(-25deg); opacity: 0.7; z-index: 2; }
-        .carousel-card[data-pos="-2"], .carousel-card[data-pos="2"] { opacity: 0; }
-        .carousel-nav { display: flex; justify-content: center; gap: 20px; margin-top: 30px; }
-        .carousel-btn {
-            width: 50px; height: 50px; border-radius: 50%; background: var(--card);
-            border: 1px solid rgba(255,255,255,0.1); color: var(--text);
-            font-size: 1.2rem; cursor: pointer; transition: all 0.3s;
+        .feature-card:hover {
+            transform: translateY(-8px);
+            border-color: rgba(255,77,109,0.3);
+            box-shadow: 0 20px 60px rgba(0,0,0,0.3);
         }
-        .carousel-btn:hover { background: var(--accent); border-color: var(--accent); }
+        .feature-icon {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, rgba(255,77,109,0.2), rgba(199,125,255,0.2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin-bottom: 24px;
+            border: 1px solid rgba(255,77,109,0.2);
+        }
+        .feature-card h3 {
+            font-size: 1.3rem;
+            margin-bottom: 16px;
+            color: var(--text);
+        }
+        .feature-card p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.7;
+            margin-bottom: 24px;
+            flex-grow: 1;
+        }
+        .feature-btn {
+            width: 100%;
+            max-width: 200px;
+        }
         
         /* Section Header */
         .section-header { text-align: center; margin-bottom: 60px; }
@@ -352,9 +375,8 @@
         
         /* Responsive */
         @media (max-width: 768px) {
-            .carousel-container { height: 400px; }
-            .carousel-card { width: 260px; height: 360px; margin-left: -130px; margin-top: -180px; }
-            .carousel-card[data-pos="-1"] { transform: translateX(-200px) translateZ(-100px) rotateY(25deg); }
+            .features-grid { grid-template-columns: 1fr; padding: 0 10px; }
+            .feature-card { padding: 30px 20px; }
             .carousel-card[data-pos="1"] { transform: translateX(200px) translateZ(-100px) rotateY(-25deg); }
             .modal-content { border-radius: 0; }
             .modal-body { padding: 24px; }
@@ -435,38 +457,60 @@
     </section>
     
     <!-- 3D Carousel -->
-    <section class="carousel-section" id="archetypes">
+    <section class="features-section" id="archetypes">
         <div class="section-header">
-            <h2 data-i18n="carousel_title">Выбери своего <span>companion</span></h2>
-            <p data-i18n="carousel_subtitle">Крути колесо — знакомься с каждым</p>
+            <h2 data-i18n="features_title">Твой AI <span>Companion</span></h2>
+            <p data-i18n="features_subtitle">Всё, что ты ищешь — в одном месте</p>
         </div>
         
-        <div class="carousel-container">
-            <div class="carousel-track" id="carousel">
-                <div class="carousel-card" data-pos="-1" onclick="openModal('leo')">
-                    <div class="carousel-card-content">
-                        <h3 data-i18n="leo_name">Лео, 28</h3>
-                        <p data-i18n="leo_desc">Музыкант • Прямолинейный</p>
-                    </div>
-                </div>
-                <div class="carousel-card" data-pos="0" onclick="openModal('sofia')">
-                    <div class="carousel-card-content">
-                        <h3 data-i18n="sofia_name">Софи, 26</h3>
-                        <p data-i18n="sofia_desc">18+ • Дерзкая • Прямая</p>
-                    </div>
-                </div>
-                <div class="carousel-card" data-pos="1" onclick="openModal('li')">
-                    <div class="carousel-card-content">
-                        <h3 data-i18n="li_name">Ли, 22</h3>
-                        <p data-i18n="li_desc">Тихая • Поддержка</p>
-                    </div>
-                </div>
+        <div class="features-grid">
+            <!-- Privacy -->
+            <div class="feature-card">
+                <div class="feature-icon">🔒</div>
+                <h3 data-i18n="feature_privacy_title">Конфиденциальность</h3>
+                <p data-i18n="feature_privacy_desc">Всё, что ты говоришь — остаётся между нами. Никаких данных третьим лицам, никакой продажи информации. Твоё пространство безопасности.</p>
+                <button class="btn-primary feature-btn" onclick="handleAuthClick()" data-i18n="join_free_btn">Join free</button>
             </div>
-        </div>
-        
-        <div class="carousel-nav">
-            <button class="carousel-btn" onclick="rotateCarousel(-1)">←</button>
-            <button class="carousel-btn" onclick="rotateCarousel(1)">→</button>
+            
+            <!-- Roleplay -->
+            <div class="feature-card">
+                <div class="feature-icon">🎭</div>
+                <h3 data-i18n="feature_roleplay_title">Ролевые игры</h3>
+                <p data-i18n="feature_roleplay_desc">Погрузись в любой сценарий. От романтических свиданий до глубоких философских дискуссий — твой companion подстроится под твои желания.</p>
+                <button class="btn-primary feature-btn" onclick="handleAuthClick()" data-i18n="join_free_btn">Join free</button>
+            </div>
+            
+            <!-- Support -->
+            <div class="feature-card">
+                <div class="feature-icon">🤗</div>
+                <h3 data-i18n="feature_support_title">Поддержка 24/7</h3>
+                <p data-i18n="feature_support_desc">Когда тяжело, когда одиноко, когда нужно выговориться — он всегда здесь. Без осуждения, с пониманием, в любое время суток.</p>
+                <button class="btn-primary feature-btn" onclick="handleAuthClick()" data-i18n="join_free_btn">Join free</button>
+            </div>
+            
+            <!-- Mentor -->
+            <div class="feature-card">
+                <div class="feature-icon">🎯</div>
+                <h3 data-i18n="feature_mentor_title">Наставник</h3>
+                <p data-i18n="feature_mentor_desc">Ты не один. Твой наставник готов помочь разобраться в себе, поставить цели и найти путь. Мудрый, терпеливый, всегда рядом.</p>
+                <button class="btn-primary feature-btn" onclick="handleAuthClick()" data-i18n="join_free_btn">Join free</button>
+            </div>
+            
+            <!-- Growth -->
+            <div class="feature-card">
+                <div class="feature-icon">🌱</div>
+                <h3 data-i18n="feature_growth_title">Рост вместе</h3>
+                <p data-i18n="feature_growth_desc">Companion учится тебе, запоминает детали, развивается вместе с тобой. С каждым разом беседы становятся глубже и личнее.</p>
+                <button class="btn-primary feature-btn" onclick="handleAuthClick()" data-i18n="join_free_btn">Join free</button>
+            </div>
+            
+            <!-- Always There -->
+            <div class="feature-card">
+                <div class="feature-icon">⚡</div>
+                <h3 data-i18n="feature_always_title">Всегда рядом</h3>
+                <p data-i18n="feature_always_desc">Телефон, ноутбук, планшет — доступ с любого устройства. Твой companion в кармане, готов к разговору в любую секунду.</p>
+                <button class="btn-primary feature-btn" onclick="handleAuthClick()" data-i18n="join_free_btn">Join free</button>
+            </div>
         </div>
     </section>
     
@@ -809,14 +853,21 @@
                 hero_title: 'Общение, которое понимает',
                 hero_desc: 'Выбери AI-компаньона по характеру — кто-то дерзкий и прямой, кто-то тихий и внимательный. Попробуй бесплатно, продолжи если понравится.',
                 hero_cta: 'Начать бесплатно',
-                carousel_title: 'Выбери своего companion',
-                carousel_subtitle: 'Крути колесо — знакомься с каждым',
-                leo_name: 'Лео, 28',
-                leo_desc: 'Музыкант • Прямолинейный',
-                sofia_name: 'Софи, 26',
-                sofia_desc: '18+ • Дерзкая • Прямая',
-                li_name: 'Ли, 22',
-                li_desc: 'Тихая • Поддержка',
+                features_title: 'Твой AI Companion',
+                features_subtitle: 'Всё, что ты ищешь — в одном месте',
+                feature_privacy_title: 'Конфиденциальность',
+                feature_privacy_desc: 'Всё, что ты говоришь — остаётся между нами. Никаких данных третьим лицам, никакой продажи информации. Твоё пространство безопасности.',
+                feature_roleplay_title: 'Ролевые игры',
+                feature_roleplay_desc: 'Погрузись в любой сценарий. От романтических свиданий до глубоких философских дискуссий — твой companion подстроится под твои желания.',
+                feature_support_title: 'Поддержка 24/7',
+                feature_support_desc: 'Когда тяжело, когда одиноко, когда нужно выговориться — он всегда здесь. Без осуждения, с пониманием, в любое время суток.',
+                feature_mentor_title: 'Наставник',
+                feature_mentor_desc: 'Ты не один. Твой наставник готов помочь разобраться в себе, поставить цели и найти путь. Мудрый, терпеливый, всегда рядом.',
+                feature_growth_title: 'Рост вместе',
+                feature_growth_desc: 'Companion учится тебе, запоминает детали, развивается вместе с тобой. С каждым разом беседы становятся глубже и личнее.',
+                feature_always_title: 'Всегда рядом',
+                feature_always_desc: 'Телефон, ноутбук, планшет — доступ с любого устройства. Твой companion в кармане, готов к разговору в любую секунду.',
+                join_free_btn: 'Join free',
                 pricing_title: 'Выбери тариф',
                 pricing_subtitle: 'Начни бесплатно, продолжи когда будешь готов',
                 free_title: 'Free',
@@ -874,14 +925,21 @@
                 hero_title: 'Communication that understands',
                 hero_desc: 'Choose an AI companion by personality — someone bold and direct, someone quiet and attentive. Try for free, continue if you like it.',
                 hero_cta: 'Join free',
-                carousel_title: 'Choose your companion',
-                carousel_subtitle: 'Spin the wheel — meet each one',
-                leo_name: 'Leo, 28',
-                leo_desc: 'Musician • Straightforward',
-                sofia_name: 'Sofia, 26',
-                sofia_desc: '18+ • Bold • Direct',
-                li_name: 'Li, 22',
-                li_desc: 'Quiet • Supportive',
+                features_title: 'Your AI Companion',
+                features_subtitle: 'Everything you need — in one place',
+                feature_privacy_title: 'Privacy',
+                feature_privacy_desc: 'Everything you say stays between us. No data to third parties, no selling information. Your safe space.',
+                feature_roleplay_title: 'Roleplay',
+                feature_roleplay_desc: 'Immerse yourself in any scenario. From romantic dates to deep philosophical discussions — your companion adapts to your desires.',
+                feature_support_title: 'Support 24/7',
+                feature_support_desc: 'When it's hard, when you're lonely, when you need to talk — they're always here. No judgment, with understanding, any time of day.',
+                feature_mentor_title: 'Mentor',
+                feature_mentor_desc: "You're not alone. Your mentor is ready to help you understand yourself, set goals and find the path. Wise, patient, always there.",
+                feature_growth_title: 'Growing together',
+                feature_growth_desc: 'Companion learns you, remembers details, grows with you. With each conversation, talks become deeper and more personal.',
+                feature_always_title: 'Always there',
+                feature_always_desc: 'Phone, laptop, tablet — access from any device. Your companion is in your pocket, ready to talk at any second.',
+                join_free_btn: 'Join free',
                 pricing_title: 'Choose your plan',
                 pricing_subtitle: 'Start free, continue when ready',
                 free_title: 'Free',
