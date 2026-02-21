@@ -379,8 +379,8 @@
             <div class="user-info" id="userInfo">
                 <span class="user-email" id="userEmail"></span>
             </div>
-            <button class="btn-secondary" id="loginBtn" onclick="showAuth()" data-i18n="nav_login">Войти</button>
-            <button class="btn-primary" id="startBtn" onclick="showAuth()" data-i18n="nav_start">Начать бесплатно</button>
+            <button class="btn-secondary" id="loginBtn" onclick="window.location.href='/login'" data-i18n="nav_login">Войти</button>
+            <button class="btn-primary" id="startBtn" onclick="window.location.href='/login'" data-i18n="nav_start">Начать бесплатно</button>
         </div>
     </nav>
     
@@ -431,7 +431,7 @@
     <section class="hero">
         <h1 data-i18n="hero_title">Общение,<br>которое <span>понимает</span></h1>
         <p data-i18n="hero_desc">Выбери AI-компаньона по характеру — кто-то дерзкий и прямой, кто-то тихий и внимательный. Попробуй бесплатно, продолжи если понравится.</p>
-        <button class="btn-primary" onclick="showAuth()" style="width: auto; padding: 16px 50px;" data-i18n="hero_cta">Начать бесплатно</button>
+        <button class="btn-primary" onclick="window.location.href='/login'" style="width: auto; padding: 16px 50px;" data-i18n="hero_cta">Начать бесплатно</button>
     </section>
     
     <!-- 3D Carousel -->
@@ -487,7 +487,7 @@
                     <li data-i18n="free_basic">Базовые ответы</li>
                     <li data-i18n="free_nsfw">Без NSFW контента</li>
                 </ul>
-                <button class="btn-primary" style="width:100%;" onclick="showAuth()" data-i18n="free_btn">Начать бесплатно</button>
+                <button class="btn-primary" style="width:100%;" onclick="window.location.href='/login'" data-i18n="free_btn">Начать бесплатно</button>
             </div>
             
             <div class="pricing-card featured">
@@ -500,7 +500,7 @@
                     <li data-i18n="premium_voice">10 голосовых сообщений</li>
                     <li data-i18n="premium_support">Приоритетная поддержка</li>
                 </ul>
-                <button class="btn-primary" style="width:100%;" onclick="showAuth()" data-i18n="premium_btn">Выбрать Premium</button>
+                <button class="btn-primary" style="width:100%;" onclick="window.location.href='/login'" data-i18n="premium_btn">Выбрать Premium</button>
             </div>
         </div>
     </section>
