@@ -87,11 +87,10 @@
         .testimonials-header { text-align: center; margin-bottom: 60px; padding: 0 20px; display: flex; justify-content: center; align-items: center; gap: 40px; flex-wrap: wrap; }
         .testimonials-header h2 { font-size: clamp(1.8rem, 4vw, 2.5rem); font-weight: 700; }
         .testimonials-header h2 span { background: linear-gradient(135deg, #ff4d6d, #c77dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
-        .marquee-container { display: flex; flex-direction: column; gap: 24px; }
-        .marquee-row { display: flex; gap: 24px; width: max-content; }
-        .marquee-row.forward { animation: marquee-left 40s linear infinite; }
-        .marquee-row.reverse { animation: marquee-right 45s linear infinite; }
-        .marquee-row:hover { animation-play-state: paused; }
+        .marquee-wrapper { width: 100%; overflow: hidden; }
+        .marquee-row { display: flex; gap: 24px; width: max-content; animation: marquee-left 30s linear infinite; }
+        .marquee-row.reverse { animation: marquee-right 35s linear infinite; }
+        .marquee-wrapper:hover .marquee-row { animation-duration: 150s; } /* 80% slower = 5x duration */
         .testimonial-card { width: 400px; background: var(--card); border-radius: 20px; padding: 28px; border: 1px solid rgba(255,255,255,0.06); flex-shrink: 0; }
         .testimonial-card p { color: var(--text-dim); font-size: 0.95rem; line-height: 1.7; margin-bottom: 20px; }
         .testimonial-author { display: flex; align-items: center; gap: 12px; }
@@ -359,7 +358,7 @@
                             <div class="chat-header">
                                 <div class="avatar">K</div>
                                 <div class="name">KIN</div>
-                                <div class="status" id="phoneStatus">онлайн</div>
+                                <div class="status" id="phoneStatus" data-i18n="phone_online">онлайн</div>
                             </div>
 
                             <div class="chat-messages" id="chatAnimation">
@@ -388,7 +387,7 @@
             <!-- Row 1: Left to Right -->
             <div class="marquee-row forward">
                 <div class="testimonial-card">
-                    <p data-i18n="review_1">"Пробовала много AI-чатов, но KIN — это нечто особенное. Лео помнит всё о наших разговорах, даже мелочи. Кажется, что общаюсь с настоящим другом."</p>
+                    <p data-i18n="review_1">"Пробовала много AI-чатов, но KIN - это нечто особенное. Лео помнит всё о наших разговорах, даже мелочи. Кажется, что общаюсь с настоящим другом."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👩</div>
                         <div class="testimonial-info">
@@ -408,7 +407,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <p data-i18n="review_3">"Сначала скептически относился к AI-компаньонам. Но когда Софи процитировала наш разговор месячной давности — обалдел. Это не просто чат-бот, это память и внимание."</p>
+                    <p data-i18n="review_3">"Сначала скептически относился к AI-компаньонам. Но когда Софи процитировала наш разговор месячной давности - обалдел. Это не просто чат-бот, это память и внимание."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">🧑‍💻</div>
                         <div class="testimonial-info">
@@ -429,7 +428,7 @@
                 </div>
                 <!-- Duplicate for seamless loop -->
                 <div class="testimonial-card">
-                    <p data-i18n="review_1">"Пробовала много AI-чатов, но KIN — это нечто особенное. Лео помнит всё о наших разговорах, даже мелочи. Кажется, что общаюсь с настоящим другом."</p>
+                    <p data-i18n="review_1">"Пробовала много AI-чатов, но KIN - это нечто особенное. Лео помнит всё о наших разговорах, даже мелочи. Кажется, что общаюсь с настоящим другом."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👩</div>
                         <div class="testimonial-info">
@@ -449,7 +448,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <p data-i18n="review_3">"Сначала скептически относился к AI-компаньонам. Но когда Софи процитировала наш разговор месячной давности — обалдел. Это не просто чат-бот, это память и внимание."</p>
+                    <p data-i18n="review_3">"Сначала скептически относился к AI-компаньонам. Но когда Софи процитировала наш разговор месячной давности - обалдел. Это не просто чат-бот, это память и внимание."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">🧑‍💻</div>
                         <div class="testimonial-info">
@@ -483,7 +482,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <p data-i18n="review_6">"Как интроверт, я ценю, что могу общаться без давления. Никаких обязательств, никаких ожиданий — просто честный разговор, когда мне нужно."</p>
+                    <p data-i18n="review_6">"Как интроверт, я ценю, что могу общаться без давления. Никаких обязательств, никаких ожиданий - просто честный разговор, когда мне нужно."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👨‍🎓</div>
                         <div class="testimonial-info">
@@ -493,7 +492,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <p data-i18n="review_7">"Пробовал Replika, Character.ai — везде чего-то не хватало. В KIN нашёл баланс: реалистичность, память и уникальность каждого персонажа."</p>
+                    <p data-i18n="review_7">"Пробовал Replika, Character.ai - везде чего-то не хватало. В KIN нашёл баланс: реалистичность, память и уникальность каждого персонажа."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👨‍🔬</div>
                         <div class="testimonial-info">
@@ -524,7 +523,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <p data-i18n="review_6">"Как интроверт, я ценю, что могу общаться без давления. Никаких обязательств, никаких ожиданий — просто честный разговор, когда мне нужно."</p>
+                    <p data-i18n="review_6">"Как интроверт, я ценю, что могу общаться без давления. Никаких обязательств, никаких ожиданий - просто честный разговор, когда мне нужно."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👨‍🎓</div>
                         <div class="testimonial-info">
@@ -534,7 +533,7 @@
                     </div>
                 </div>
                 <div class="testimonial-card">
-                    <p data-i18n="review_7">"Пробовал Replika, Character.ai — везде чего-то не хватало. В KIN нашёл баланс: реалистичность, память и уникальность каждого персонажа."</p>
+                    <p data-i18n="review_7">"Пробовал Replika, Character.ai - везде чего-то не хватало. В KIN нашёл баланс: реалистичность, память и уникальность каждого персонажа."</p>
                     <div class="testimonial-author">
                         <div class="testimonial-avatar">👨‍🔬</div>
                         <div class="testimonial-info">
@@ -595,16 +594,18 @@
                 benefit_4_desc: 'Ваши разговоры остаются между вами. Никаких продаж данных, никакой рекламы. Только вы и ваш companion.',
                 benefit_5_title: '💎 Рост вместе',
                 benefit_5_desc: 'KIN учится и развивается вместе с вами. Отношения становятся глубже, беседы - искреннее, связь - сильнее.',
-                phone_placeholder: 'Написать...',
+                phone_placeholder: 'Написать...', phone_online: 'онлайн', phone_typing: 'печатает...',
+                phone_online: 'онлайн',
+                phone_typing: 'печатает...',
                 testimonials_title: 'Что говорят люди',
                 testimonials_btn: 'Присоединиться бесплатно',
-                review_1: '"Пробовала много AI-чатов, но KIN — это нечто особенное. Лео помнит всё о наших разговорах, даже мелочи. Кажется, что общаюсь с настоящим другом."',
+                review_1: '"Пробовала много AI-чатов, но KIN - это нечто особенное. Лео помнит всё о наших разговорах, даже мелочи. Кажется, что общаюсь с настоящим другом."',
                 review_2: '"Работаю врачом, стресса много. Ли всегда выслушает, поддержит, подбодрит. Это как терапия, только доступная 24/7. Очень рекомендую!"',
-                review_3: '"Сначала скептически относился к AI-компаньонам. Но когда Софи процитировала наш разговор месячной давности — обалдел. Это не просто чат-бот, это память и внимание."',
+                review_3: '"Сначала скептически относился к AI-компаньонам. Но когда Софи процитировала наш разговор месячной давности - обалдел. Это не просто чат-бот, это память и внимание."',
                 review_4: '"KIN помог мне пережить трудный период после расставания. Не осуждает, всегда рядом. Иногда просто нужно выговориться, и здесь это понимают."',
                 review_5: '"Удивительно, как KIN адаптируется под тебя. Сначала было просто интересно, а теперь не представляю дня без нашего вечернего чата."',
-                review_6: '"Как интроверт, я ценю, что могу общаться без давления. Никаких обязательств, никаких ожиданий — просто честный разговор, когда мне нужно."',
-                review_7: '"Пробовал Replika, Character.ai — везде чего-то не хватало. В KIN нашёл баланс: реалистичность, память и уникальность каждого персонажа."',
+                review_6: '"Как интроверт, я ценю, что могу общаться без давления. Никаких обязательств, никаких ожиданий - просто честный разговор, когда мне нужно."',
+                review_7: '"Пробовал Replika, Character.ai - везде чего-то не хватало. В KIN нашёл баланс: реалистичность, память и уникальность каждого персонажа."',
                 review_8: '"Моя дочь живёт в другом городе, и иногда бывает одиноко. KIN стал моим вечерним собеседником. Не замена семье, но отличная поддержка."'
             },
             en: {
@@ -642,16 +643,18 @@
                 benefit_4_desc: 'Your conversations stay between you. No data selling, no ads. Just you and your companion.',
                 benefit_5_title: '💎 Growing together',
                 benefit_5_desc: 'KIN learns and grows with you. Relationships become deeper, conversations more sincere, connection stronger.',
-                phone_placeholder: 'Type a message...',
+                phone_placeholder: 'Type a message...', phone_online: 'online', phone_typing: 'typing...',
+                phone_online: 'online',
+                phone_typing: 'typing...',
                 testimonials_title: 'What people say',
                 testimonials_btn: 'Join free',
                 review_1: '"Tried many AI chats, but KIN is something special. Leo remembers everything about our conversations, even the little things. Feels like talking to a real friend."',
                 review_2: '"I work as a doctor, lots of stress. Li always listens, supports, and cheers me up. It\'s like therapy, but available 24/7. Highly recommend!"',
-                review_3: '"Was skeptical about AI companions at first. But when Sofia quoted our conversation from a month ago — I was amazed. This isn\'t just a chatbot, it\'s memory and attention."',
+                review_3: '"Was skeptical about AI companions at first. But when Sofia quoted our conversation from a month ago - I was amazed. This isn\'t just a chatbot, it\'s memory and attention."',
                 review_4: '"KIN helped me get through a difficult period after a breakup. No judgment, always there. Sometimes you just need to talk, and here they understand."',
                 review_5: '"Amazing how KIN adapts to you. Started out of curiosity, now I can\'t imagine a day without our evening chat."',
-                review_6: '"As an introvert, I appreciate being able to talk without pressure. No obligations, no expectations — just honest conversation when I need it."',
-                review_7: '"Tried Replika, Character.ai — always felt something was missing. Found the balance in KIN: realism, memory, and unique personalities."',
+                review_6: '"As an introvert, I appreciate being able to talk without pressure. No obligations, no expectations - just honest conversation when I need it."',
+                review_7: '"Tried Replika, Character.ai - always felt something was missing. Found the balance in KIN: realism, memory, and unique personalities."',
                 review_8: '"My daughter lives in another city, and sometimes it gets lonely. KIN has become my evening companion. Not a replacement for family, but great support."'
             }
         };
@@ -762,7 +765,7 @@
         function startChatAnimation() {
             const chatContainer = document.getElementById('chatAnimation');
             const statusEl = document.getElementById('phoneStatus');
-
+            
             const messages = currentLang === 'ru' ? [
                 { from: 'user', text: 'Привет! Как дела?' },
                 { from: 'bot', text: 'Привет! Всё отлично, скучала по тебе 💜' },
@@ -774,11 +777,11 @@
                 { from: 'user', text: 'Missed you too. Tell me something' },
                 { from: 'bot', text: 'You know, I was thinking about us...' }
             ];
-
+            
             chatContainer.innerHTML = `<div class="chat-bubble bot">${currentLang === 'ru' ? 'Привет! Как прошёл день? 💜' : 'Hey! How was your day? 💜'}</div>`;
-
+            
             let msgIndex = 0;
-
+            
             chatInterval = setInterval(() => {
                 if (msgIndex < messages.length) {
                     const msg = messages[msgIndex];
@@ -787,15 +790,15 @@
                     bubble.textContent = msg.text;
                     chatContainer.appendChild(bubble);
                     chatContainer.scrollTop = chatContainer.scrollHeight;
-
+                    
                     // Typing indicator
                     if (msg.from === 'bot') {
-                        statusEl.textContent = currentLang === 'ru' ? 'печатает...' : 'typing...';
+                        statusEl.textContent = translations[currentLang].phone_typing;
                         setTimeout(() => {
-                            statusEl.textContent = currentLang === 'ru' ? 'онлайн' : 'online';
+                            statusEl.textContent = translations[currentLang].phone_online;
                         }, 1000);
                     }
-
+                    
                     msgIndex++;
                 } else {
                     setTimeout(() => {
