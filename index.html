@@ -1118,6 +1118,15 @@
                     else el.innerHTML = translations[lang][key];
                 }
             });
+            
+            // Restart phone animation
+            document.querySelectorAll('.phone-mockup').forEach(phone => {
+                phone.classList.remove('animate');
+                void phone.offsetWidth; // Force reflow
+                if (phone.getBoundingClientRect().top < window.innerHeight && phone.getBoundingClientRect().bottom > 0) {
+                    phone.classList.add('animate');
+                }
+            });
         }
         
         setLanguage(currentLang);
@@ -1153,7 +1162,7 @@
                     entry.target.classList.add('animate');
                 }
             });
-        }, { threshold: 0.1, rootMargin: '0px 0px -100px 0px' });
+        }, { threshold: 0.5, rootMargin: '0px 0px -50px 0px' });
         
         document.querySelectorAll('.phone-mockup').forEach(phone => {
             phoneObserver.observe(phone);
