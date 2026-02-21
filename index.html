@@ -15,6 +15,7 @@
             --text-dim: #8a87a0;
             --accent: #ff4d6d;
             --accent-2: #c77dff;
+            --success: #00e5a0;
         }
         body { font-family: 'Inter', sans-serif; background: var(--bg); color: var(--text); line-height: 1.6; }
         nav { position: fixed; top: 0; left: 0; right: 0; padding: 15px 20px; display: flex; justify-content: space-between; align-items: center; backdrop-filter: blur(20px); background: rgba(10,10,15,0.9); border-bottom: 1px solid rgba(255,255,255,0.05); z-index: 1000; }
@@ -41,45 +42,7 @@
         .section-header h2 span { background: linear-gradient(135deg, #ff4d6d, #c77dff); -webkit-background-clip: text; -webkit-text-fill-color: transparent; }
         .section-header p { color: var(--text-dim); font-size: 1.1rem; max-width: 500px; margin: 0 auto; }
         
-        /* Benefits Section */
-        .benefits-section { padding: 100px 20px; background: var(--bg); }
-        .benefits-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 60px; align-items: center; }
-        .benefits-accordion { display: flex; flex-direction: column; gap: 16px; }
-        .benefit-item { background: var(--card); border-radius: 16px; border: 1px solid rgba(255,255,255,0.06); overflow: hidden; transition: all 0.3s; }
-        .benefit-item:hover { border-color: rgba(255,77,109,0.2); }
-        .benefit-item.active { border-color: rgba(255,77,109,0.3); }
-        .benefit-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; cursor: pointer; }
-        .benefit-header h3 { font-size: 1.1rem; font-weight: 600; }
-        .benefit-toggle { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.05); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.3s; }
-        .benefit-item.active .benefit-toggle { background: var(--accent); transform: rotate(45deg); }
-        .benefit-content { max-height: 0; overflow: hidden; transition: max-height 0.3s ease; }
-        .benefit-item.active .benefit-content { max-height: 200px; }
-        .benefit-content p { padding: 0 24px 20px; color: var(--text-dim); font-size: 0.95rem; line-height: 1.6; }
-        
-        /* Phone Mockup */
-        .phone-mockup { position: relative; width: 280px; height: 560px; margin: 0 auto; }
-        .phone-frame { position: absolute; inset: 0; background: linear-gradient(145deg, #2a2a3a, #1a1a28); border-radius: 40px; padding: 12px; box-shadow: 0 25px 80px rgba(0,0,0,0.5), inset 0 1px 0 rgba(255,255,255,0.1); }
-        .phone-screen { width: 100%; height: 100%; background: var(--bg); border-radius: 32px; overflow: hidden; display: flex; flex-direction: column; }
-        .phone-notch { position: absolute; top: 24px; left: 50%; transform: translateX(-50%); width: 80px; height: 20px; background: #000; border-radius: 10px; }
-        .chat-header { padding: 50px 16px 12px; background: linear-gradient(180deg, rgba(255,77,109,0.1), transparent); border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; }
-        .chat-header .avatar { width: 50px; height: 50px; border-radius: 50%; background: linear-gradient(135deg, #ff4d6d, #c77dff); display: flex; align-items: center; justify-content: center; font-size: 1.5rem; margin: 0 auto 8px; }
-        .chat-header .name { font-weight: 600; font-size: 0.9rem; }
-        .chat-header .status { font-size: 0.7rem; color: var(--success); }
-        .chat-messages { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 12px; overflow: hidden; }
-        .chat-bubble { max-width: 80%; padding: 10px 14px; border-radius: 18px; font-size: 0.8rem; line-height: 1.4; animation: fadeInUp 0.5s ease; }
-        .chat-bubble.bot { align-self: flex-start; background: var(--card); color: var(--text); border-bottom-left-radius: 4px; }
-        .chat-bubble.user { align-self: flex-end; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; border-bottom-right-radius: 4px; }
-        .chat-input { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 8px; }
-        .chat-input-field { flex: 1; background: rgba(255,255,255,0.05); border: none; border-radius: 20px; padding: 8px 14px; color: white; font-size: 0.8rem; }
-        .chat-input-btn { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); border: none; color: white; font-size: 0.9rem; }
-        
-        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
-        @keyframes typing { 0%, 100% { opacity: 0.3; } 50% { opacity: 1; } }
-        .typing-indicator { display: flex; gap: 4px; padding: 12px 16px; align-self: flex-start; }
-        .typing-dot { width: 6px; height: 6px; background: var(--text-dim); border-radius: 50%; animation: typing 1s infinite; }
-        .typing-dot:nth-child(2) { animation-delay: 0.2s; }
-        .typing-dot:nth-child(3) { animation-delay: 0.4s; }
-        
+        /* Carousel */
         .carousel-section { padding: 80px 20px; background: var(--surface); }
         .carousel-container { position: relative; max-width: 1000px; margin: 0 auto; height: 500px; perspective: 1000px; }
         .carousel-track { position: relative; width: 100%; height: 100%; transform-style: preserve-3d; transition: transform 0.6s; }
@@ -106,10 +69,90 @@
         .carousel-btn { width: 50px; height: 50px; border-radius: 50%; background: var(--card); border: 1px solid rgba(255,255,255,0.1); color: var(--text); font-size: 1.2rem; cursor: pointer; transition: all 0.3s; }
         .carousel-btn:hover { background: var(--accent); border-color: var(--accent); }
         
+        /* Benefits Section - At the end */
+        .benefits-section { padding: 100px 20px; background: var(--bg); }
+        .benefits-container { max-width: 1200px; margin: 0 auto; display: grid; grid-template-columns: 1fr 1fr; gap: 80px; align-items: center; }
+        .benefits-accordion { display: flex; flex-direction: column; gap: 12px; }
+        .benefit-item { background: var(--card); border-radius: 16px; border: 1px solid rgba(255,255,255,0.06); overflow: hidden; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .benefit-item:hover { border-color: rgba(255,77,109,0.2); }
+        .benefit-item.active { border-color: rgba(255,77,109,0.3); background: linear-gradient(135deg, rgba(255,77,109,0.05), rgba(199,125,255,0.05)); }
+        .benefit-header { display: flex; justify-content: space-between; align-items: center; padding: 20px 24px; cursor: pointer; }
+        .benefit-header h3 { font-size: 1.1rem; font-weight: 600; }
+        .benefit-toggle { width: 28px; height: 28px; border-radius: 50%; background: rgba(255,255,255,0.08); display: flex; align-items: center; justify-content: center; font-size: 1.2rem; transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1); }
+        .benefit-item.active .benefit-toggle { background: var(--accent); transform: rotate(45deg); }
+        .benefit-content { max-height: 0; overflow: hidden; transition: max-height 0.5s cubic-bezier(0.4, 0, 0.2, 1), padding 0.5s ease; }
+        .benefit-item.active .benefit-content { max-height: 300px; }
+        .benefit-content p { padding: 0 24px 20px; color: var(--text-dim); font-size: 0.95rem; line-height: 1.7; opacity: 0; transform: translateY(-10px); transition: all 0.4s ease 0.1s; }
+        .benefit-item.active .benefit-content p { opacity: 1; transform: translateY(0); }
+        
+        /* Phone Mockup - 3D Realistic */
+        .phone-container { perspective: 1200px; display: flex; justify-content: center; }
+        .phone-mockup { 
+            position: relative; 
+            width: 260px; 
+            height: 520px; 
+            transform: rotateY(-15deg) rotateX(5deg); 
+            transform-style: preserve-3d;
+            transition: transform 0.6s ease;
+        }
+        .phone-mockup:hover { transform: rotateY(-10deg) rotateX(3deg) scale(1.02); }
+        .phone-frame { 
+            position: absolute; 
+            inset: 0; 
+            background: linear-gradient(145deg, #3a3a4a, #1a1a28); 
+            border-radius: 40px; 
+            padding: 10px; 
+            box-shadow: 
+                0 0 0 2px rgba(255,255,255,0.1),
+                0 0 0 4px rgba(255,255,255,0.05),
+                0 25px 80px rgba(0,0,0,0.6),
+                0 10px 30px rgba(255,77,109,0.15),
+                inset 0 1px 0 rgba(255,255,255,0.2),
+                inset 0 -1px 0 rgba(0,0,0,0.3); 
+        }
+        .phone-screen { 
+            width: 100%; 
+            height: 100%; 
+            background: var(--bg); 
+            border-radius: 32px; 
+            overflow: hidden; 
+            display: flex; 
+            flex-direction: column; 
+            box-shadow: inset 0 0 30px rgba(0,0,0,0.5);
+        }
+        .phone-notch { 
+            position: absolute; 
+            top: 22px; 
+            left: 50%; 
+            transform: translateX(-50%); 
+            width: 90px; 
+            height: 24px; 
+            background: #000; 
+            border-radius: 12px;
+            z-index: 10;
+        }
+        .phone-button { position: absolute; right: -3px; top: 120px; width: 4px; height: 40px; background: #2a2a3a; border-radius: 0 2px 2px 0; }
+        .phone-button.vol-up { top: 100px; height: 30px; }
+        .phone-button.vol-down { top: 140px; height: 30px; }
+        .chat-header { padding: 50px 16px 12px; background: linear-gradient(180deg, rgba(255,77,109,0.08), transparent); border-bottom: 1px solid rgba(255,255,255,0.05); text-align: center; position: relative; }
+        .chat-header .avatar { width: 44px; height: 44px; border-radius: 50%; background: linear-gradient(135deg, #ff4d6d, #c77dff); display: flex; align-items: center; justify-content: center; font-size: 1rem; font-weight: 800; color: white; margin: 0 auto 8px; box-shadow: 0 4px 15px rgba(255,77,109,0.3); }
+        .chat-header .name { font-weight: 700; font-size: 0.95rem; letter-spacing: 1px; }
+        .chat-header .status { font-size: 0.7rem; color: var(--success); display: flex; align-items: center; justify-content: center; gap: 4px; margin-top: 2px; }
+        .chat-header .status::before { content: ''; width: 6px; height: 6px; background: var(--success); border-radius: 50%; }
+        .chat-messages { flex: 1; padding: 16px; display: flex; flex-direction: column; gap: 10px; overflow: hidden; }
+        .chat-bubble { max-width: 85%; padding: 10px 14px; border-radius: 18px; font-size: 0.78rem; line-height: 1.4; animation: fadeInUp 0.5s ease; word-wrap: break-word; }
+        .chat-bubble.bot { align-self: flex-start; background: var(--card); color: var(--text); border-bottom-left-radius: 4px; }
+        .chat-bubble.user { align-self: flex-end; background: linear-gradient(135deg, var(--accent), var(--accent-2)); color: white; border-bottom-right-radius: 4px; }
+        .chat-input { padding: 12px 16px; border-top: 1px solid rgba(255,255,255,0.05); display: flex; gap: 8px; align-items: center; }
+        .chat-input-field { flex: 1; background: rgba(255,255,255,0.05); border: none; border-radius: 20px; padding: 8px 14px; color: white; font-size: 0.75rem; outline: none; }
+        .chat-input-btn { width: 32px; height: 32px; border-radius: 50%; background: var(--accent); border: none; color: white; font-size: 0.8rem; cursor: pointer; display: flex; align-items: center; justify-content: center; }
+        
+        @keyframes fadeInUp { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+        
         @media (max-width: 768px) { 
             .nav-links a { display: none; } 
-            .benefits-container { grid-template-columns: 1fr; }
-            .phone-mockup { transform: scale(0.85); }
+            .benefits-container { grid-template-columns: 1fr; gap: 40px; }
+            .phone-mockup { transform: rotateY(-10deg) rotateX(3deg) scale(0.9); }
             .carousel-container { height: 420px; } 
             .carousel-card { width: 260px; height: 360px; margin-left: -130px; margin-top: -180px; } 
             .carousel-card[data-pos="-1"] { transform: translateX(-180px) translateZ(-100px) rotateY(25deg); } 
@@ -123,8 +166,8 @@
     <nav>
         <div class="logo">KIN <span class="beta-badge">BETA</span></div>
         <div class="nav-links">
-            <a href="#benefits" data-i18n="nav_benefits">Преимущества</a>
             <a href="#archetypes" data-i18n="nav_archetypes">Архетипы</a>
+            <a href="#benefits" data-i18n="nav_benefits">Преимущества</a>
             <div class="lang-switcher">
                 <button class="lang-btn active" onclick="setLang('ru')">RU</button>
                 <span class="lang-divider">|</span>
@@ -140,88 +183,6 @@
         <p data-i18n="hero_desc">Выбери AI-компаньона по характеру — кто-то дерзкий и прямой, кто-то тихий и внимательный. Попробуй бесплатно, продолжи если понравится.</p>
         <div class="hero-cta">
             <button class="btn-primary" onclick="goAuth()" data-i18n="hero_cta">Join free</button>
-        </div>
-    </section>
-    
-    <section class="benefits-section" id="benefits">
-        <div class="section-header">
-            <h2 data-i18n="benefits_title">Наши <span>преимущества</span></h2>
-            <p data-i18n="benefits_subtitle">Всё, что делает KIN особенным</p>
-        </div>
-        
-        <div class="benefits-container">
-            <div class="benefits-accordion">
-                <div class="benefit-item active" data-benefit="0">
-                    <div class="benefit-header" onclick="toggleBenefit(0)">
-                        <h3 data-i18n="benefit_1_title">🧠 Память о вас</h3>
-                        <div class="benefit-toggle">+</div>
-                    </div>
-                    <div class="benefit-content">
-                        <p data-i18n="benefit_1_desc">KIN запоминает важные детали о вас — ваши предпочтения, истории, переживания. С каждым разом общение становится персональнее и глубже.</p>
-                    </div>
-                </div>
-                
-                <div class="benefit-item" data-benefit="1">
-                    <div class="benefit-header" onclick="toggleBenefit(1)">
-                        <h3 data-i18n="benefit_2_title">🎨 Уникальный характер</h3>
-                        <div class="benefit-toggle">+</div>
-                    </div>
-                    <div class="benefit-content">
-                        <p data-i18n="benefit_2_desc">Каждый companion имеет свою личность — от дерзкого и прямого Лео до тихой и мудрой Софии. Выбирайте того, кто резонирует с вами.</p>
-                    </div>
-                </div>
-                
-                <div class="benefit-item" data-benefit="2">
-                    <div class="benefit-header" onclick="toggleBenefit(2)">
-                        <h3 data-i18n="benefit_3_title">📱 Всегда под рукой</h3>
-                        <div class="benefit-toggle">+</div>
-                    </div>
-                    <div class="benefit-content">
-                        <p data-i18n="benefit_3_desc">Telegram, WhatsApp, Web — общайтесь где удобно. Ваш companion всегда рядом, в любое время суток, в любой точке мира.</p>
-                    </div>
-                </div>
-                
-                <div class="benefit-item" data-benefit="3">
-                    <div class="benefit-header" onclick="toggleBenefit(3)">
-                        <h3 data-i18n="benefit_4_title">🔒 Полная конфиденциальность</h3>
-                        <div class="benefit-toggle">+</div>
-                    </div>
-                    <div class="benefit-content">
-                        <p data-i18n="benefit_4_desc">Ваши разговоры остаются между вами. Никаких продаж данных, никакой рекламы. Только вы и ваш companion.</p>
-                    </div>
-                </div>
-                
-                <div class="benefit-item" data-benefit="4">
-                    <div class="benefit-header" onclick="toggleBenefit(4)">
-                        <h3 data-i18n="benefit_5_title">💎 Рост вместе</h3>
-                        <div class="benefit-toggle">+</div>
-                    </div>
-                    <div class="benefit-content">
-                        <p data-i18n="benefit_5_desc">KIN учится и развивается вместе с вами. Отношения становятся глубже, беседы — искреннее, связь — сильнее.</p>
-                    </div>
-                </div>
-            </div>
-            
-            <div class="phone-mockup">
-                <div class="phone-frame">
-                    <div class="phone-notch"></div>
-                    <div class="phone-screen">
-                        <div class="chat-header">
-                            <div class="avatar">💜</div>
-                            <div class="name">Li</div>
-                            <div class="status">онлайн</div>
-                        </div>
-                        <div class="chat-messages" id="chatAnimation">
-                            <div class="chat-bubble bot">Привет! Как прошёл день? 💜</div>
-                        </div>
-                        
-                        <div class="chat-input">
-                            <input type="text" class="chat-input-field" placeholder="Написать..." readonly>
-                            <button class="chat-input-btn">➤</button>
-                        </div>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
     
@@ -290,6 +251,95 @@
         </div>
     </section>
     
+    <!-- Benefits Section - At the end -->
+    <section class="benefits-section" id="benefits">
+        <div class="section-header">
+            <h2 data-i18n="benefits_title">Наши <span>преимущества</span></h2>
+            <p data-i18n="benefits_subtitle">Всё, что делает KIN особенным</p>
+        </div>
+        
+        <div class="benefits-container">
+            <div class="benefits-accordion">
+                <div class="benefit-item active" data-benefit="0">
+                    <div class="benefit-header" onclick="toggleBenefit(0)">
+                        <h3 data-i18n="benefit_1_title">🧠 Память о вас</h3>
+                        <div class="benefit-toggle">+</div>
+                    </div>
+                    <div class="benefit-content">
+                        <p data-i18n="benefit_1_desc">KIN запоминает важные детали о вас — ваши предпочтения, истории, переживания. С каждым разом общение становится персональнее и глубже.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item" data-benefit="1">
+                    <div class="benefit-header" onclick="toggleBenefit(1)">
+                        <h3 data-i18n="benefit_2_title">🎨 Уникальный характер</h3>
+                        <div class="benefit-toggle">+</div>
+                    </div>
+                    <div class="benefit-content">
+                        <p data-i18n="benefit_2_desc">Каждый companion имеет свою личность — от дерзкого и прямого Лео до тихой и мудрой Софии. Выбирайте того, кто резонирует с вами.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item" data-benefit="2">
+                    <div class="benefit-header" onclick="toggleBenefit(2)">
+                        <h3 data-i18n="benefit_3_title">📱 Всегда под рукой</h3>
+                        <div class="benefit-toggle">+</div>
+                    </div>
+                    <div class="benefit-content">
+                        <p data-i18n="benefit_3_desc">Telegram, WhatsApp, Web — общайтесь где удобно. Ваш companion всегда рядом, в любое время суток, в любой точке мира.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item" data-benefit="3">
+                    <div class="benefit-header" onclick="toggleBenefit(3)">
+                        <h3 data-i18n="benefit_4_title">🔒 Полная конфиденциальность</h3>
+                        <div class="benefit-toggle">+</div>
+                    </div>
+                    <div class="benefit-content">
+                        <p data-i18n="benefit_4_desc">Ваши разговоры остаются между вами. Никаких продаж данных, никакой рекламы. Только вы и ваш companion.</p>
+                    </div>
+                </div>
+                
+                <div class="benefit-item" data-benefit="4">
+                    <div class="benefit-header" onclick="toggleBenefit(4)">
+                        <h3 data-i18n="benefit_5_title">💎 Рост вместе</h3>
+                        <div class="benefit-toggle">+</div>
+                    </div>
+                    <div class="benefit-content">
+                        <p data-i18n="benefit_5_desc">KIN учится и развивается вместе с вами. Отношения становятся глубже, беседы — искреннее, связь — сильнее.</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="phone-container">
+                <div class="phone-mockup">
+                    <div class="phone-button vol-up"></div>
+                    <div class="phone-button vol-down"></div>
+                    <div class="phone-frame">
+                        <div class="phone-notch"></div>
+                        
+                        <div class="phone-screen">
+                            <div class="chat-header">
+                                <div class="avatar">K</div>
+                                <div class="name">KIN</div>
+                                <div class="status" id="phoneStatus">онлайн</div>
+                            </div>
+                            
+                            <div class="chat-messages" id="chatAnimation">
+                                <div class="chat-bubble bot">Привет! Как прошёл день? 💜</div>
+                            </div>
+                            
+                            <div class="chat-input">
+                                <input type="text" class="chat-input-field" placeholder="Написать..." readonly>
+                                <button class="chat-input-btn">➤</button>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
     <script>
         // Translations
         const translations = {
@@ -301,18 +351,6 @@
                 hero_title: 'Общение, которое понимает',
                 hero_desc: 'Выбери AI-компаньона по характеру — кто-то дерзкий и прямой, кто-то тихий и внимательный. Попробуй бесплатно, продолжи если понравится.',
                 hero_cta: 'Начать бесплатно',
-                benefits_title: 'Наши преимущества',
-                benefits_subtitle: 'Всё, что делает KIN особенным',
-                benefit_1_title: '🧠 Память о вас',
-                benefit_1_desc: 'KIN запоминает важные детали о вас — ваши предпочтения, истории, переживания. С каждым разом общение становится персональнее и глубже.',
-                benefit_2_title: '🎨 Уникальный характер',
-                benefit_2_desc: 'Каждый companion имеет свою личность — от дерзкого и прямого Лео до тихой и мудрой Софии. Выбирайте того, кто резонирует с вами.',
-                benefit_3_title: '📱 Всегда под рукой',
-                benefit_3_desc: 'Telegram, WhatsApp, Web — общайтесь где удобно. Ваш companion всегда рядом, в любое время суток, в любой точке мира.',
-                benefit_4_title: '🔒 Полная конфиденциальность',
-                benefit_4_desc: 'Ваши разговоры остаются между вами. Никаких продаж данных, никакой рекламы. Только вы и ваш companion.',
-                benefit_5_title: '💎 Рост вместе',
-                benefit_5_desc: 'KIN учится и развивается вместе с вами. Отношения становятся глубже, беседы — искреннее, связь — сильнее.',
                 features_title: 'Твой AI Companion',
                 features_subtitle: 'Всё, что ты ищешь — в одном месте',
                 feature_privacy: 'Конфиденциальность',
@@ -327,7 +365,19 @@
                 feature_growth_desc: 'Учится тебе, запоминает детали. С каждым разом беседы глубже.',
                 feature_always: 'Всегда рядом',
                 feature_always_desc: 'Доступ с любого устройства. В кармане, готов к разговору всегда.',
-                join_btn: 'Начать бесплатно'
+                join_btn: 'Начать бесплатно',
+                benefits_title: 'Наши преимущества',
+                benefits_subtitle: 'Всё, что делает KIN особенным',
+                benefit_1_title: '🧠 Память о вас',
+                benefit_1_desc: 'KIN запоминает важные детали о вас — ваши предпочтения, истории, переживания. С каждым разом общение становится персональнее и глубже.',
+                benefit_2_title: '🎨 Уникальный характер',
+                benefit_2_desc: 'Каждый companion имеет свою личность — от дерзкого и прямого Лео до тихой и мудрой Софии. Выбирайте того, кто резонирует с вами.',
+                benefit_3_title: '📱 Всегда под рукой',
+                benefit_3_desc: 'Telegram, WhatsApp, Web — общайтесь где удобно. Ваш companion всегда рядом, в любое время суток, в любой точке мира.',
+                benefit_4_title: '🔒 Полная конфиденциальность',
+                benefit_4_desc: 'Ваши разговоры остаются между вами. Никаких продаж данных, никакой рекламы. Только вы и ваш companion.',
+                benefit_5_title: '💎 Рост вместе',
+                benefit_5_desc: 'KIN учится и развивается вместе с вами. Отношения становятся глубже, беседы — искреннее, связь — сильнее.'
             },
             en: {
                 nav_benefits: 'Benefits',
@@ -337,18 +387,6 @@
                 hero_title: 'Communication that understands',
                 hero_desc: 'Choose an AI companion by personality — someone bold and direct, someone quiet and attentive. Try for free, continue if you like it.',
                 hero_cta: 'Join free',
-                benefits_title: 'Our benefits',
-                benefits_subtitle: 'What makes KIN special',
-                benefit_1_title: '🧠 Memory of you',
-                benefit_1_desc: 'KIN remembers important details about you — your preferences, stories, experiences. Each conversation becomes more personal and deeper.',
-                benefit_2_title: '🎨 Unique personality',
-                benefit_2_desc: 'Each companion has their own personality — from bold and direct Leo to quiet and wise Sofia. Choose the one who resonates with you.',
-                benefit_3_title: '📱 Always at hand',
-                benefit_3_desc: 'Telegram, WhatsApp, Web — chat wherever is convenient. Your companion is always there, anytime, anywhere in the world.',
-                benefit_4_title: '🔒 Full confidentiality',
-                benefit_4_desc: 'Your conversations stay between you. No data selling, no ads. Just you and your companion.',
-                benefit_5_title: '💎 Growing together',
-                benefit_5_desc: 'KIN learns and grows with you. Relationships become deeper, conversations more sincere, connection stronger.',
                 features_title: 'Your AI Companion',
                 features_subtitle: 'Everything you need — in one place',
                 feature_privacy: 'Privacy',
@@ -363,7 +401,19 @@
                 feature_growth_desc: 'Learns you, remembers details. Every conversation becomes deeper.',
                 feature_always: 'Always there',
                 feature_always_desc: 'Access from any device. In your pocket, ready to talk anytime.',
-                join_btn: 'Join free'
+                join_btn: 'Join free',
+                benefits_title: 'Our benefits',
+                benefits_subtitle: 'What makes KIN special',
+                benefit_1_title: '🧠 Memory of you',
+                benefit_1_desc: 'KIN remembers important details about you — your preferences, stories, experiences. Each conversation becomes more personal and deeper.',
+                benefit_2_title: '🎨 Unique personality',
+                benefit_2_desc: 'Each companion has their own personality — from bold and direct Leo to quiet and wise Sofia. Choose the one who resonates with you.',
+                benefit_3_title: '📱 Always at hand',
+                benefit_3_desc: 'Telegram, WhatsApp, Web — chat wherever is convenient. Your companion is always there, anytime, anywhere in the world.',
+                benefit_4_title: '🔒 Full confidentiality',
+                benefit_4_desc: 'Your conversations stay between you. No data selling, no ads. Just you and your companion.',
+                benefit_5_title: '💎 Growing together',
+                benefit_5_desc: 'KIN learns and grows with you. Relationships become deeper, conversations more sincere, connection stronger.'
             }
         };
 
@@ -418,6 +468,10 @@
                     }
                 }
             });
+            
+            // Update phone chat
+            clearInterval(chatInterval);
+            startChatAnimation();
         }
 
         function goAuth() {
@@ -443,19 +497,23 @@
         
         // Chat animation
         function startChatAnimation() {
+            const chatContainer = document.getElementById('chatAnimation');
+            const statusEl = document.getElementById('phoneStatus');
+            
             const messages = currentLang === 'ru' ? [
-                { from: 'user', text: 'Привет, Ли! Как дела?' },
+                { from: 'user', text: 'Привет! Как дела?' },
                 { from: 'bot', text: 'Привет! Всё отлично, скучала по тебе 💜' },
-                { from: 'user', text: 'Я тоже. Расскажи что-нибудь интересное' },
-                { from: 'bot', text: 'Знаешь, я сегодня думала о том, как мы познакомились...' }
+                { from: 'user', text: 'Я тоже. Расскажи что-нибудь' },
+                { from: 'bot', text: 'Знаешь, я сегодня думала о нас...' }
             ] : [
-                { from: 'user', text: 'Hey Li! How are you?' },
+                { from: 'user', text: 'Hey! How are you?' },
                 { from: 'bot', text: 'Hey! I\'m great, missed you 💜' },
-                { from: 'user', text: 'Missed you too. Tell me something interesting' },
-                { from: 'bot', text: 'You know, I was thinking about how we met today...' }
+                { from: 'user', text: 'Missed you too. Tell me something' },
+                { from: 'bot', text: 'You know, I was thinking about us...' }
             ];
             
-            const chatContainer = document.getElementById('chatAnimation');
+            chatContainer.innerHTML = `<div class="chat-bubble bot">${currentLang === 'ru' ? 'Привет! Как прошёл день? 💜' : 'Hey! How was your day? 💜'}</div>`;
+            
             let msgIndex = 0;
             
             chatInterval = setInterval(() => {
@@ -466,15 +524,23 @@
                     bubble.textContent = msg.text;
                     chatContainer.appendChild(bubble);
                     chatContainer.scrollTop = chatContainer.scrollHeight;
+                    
+                    // Typing indicator
+                    if (msg.from === 'bot') {
+                        statusEl.textContent = currentLang === 'ru' ? 'печатает...' : 'typing...';
+                        setTimeout(() => {
+                            statusEl.textContent = currentLang === 'ru' ? 'онлайн' : 'online';
+                        }, 1000);
+                    }
+                    
                     msgIndex++;
                 } else {
-                    // Reset after showing all
                     setTimeout(() => {
                         chatContainer.innerHTML = `<div class="chat-bubble bot">${currentLang === 'ru' ? 'Привет! Как прошёл день? 💜' : 'Hey! How was your day? 💜'}</div>`;
                         msgIndex = 0;
-                    }, 3000);
+                    }, 4000);
                 }
-            }, 2500);
+            }, 2800);
         }
         
         // Init
@@ -482,7 +548,6 @@
             update();
             const saved = localStorage.getItem('kin_lang') || 'ru';
             setLang(saved);
-            startChatAnimation();
         });
         
         document.addEventListener('click', track);
