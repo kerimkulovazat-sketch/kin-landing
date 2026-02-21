@@ -151,6 +151,28 @@
         .auth-container {
             background: var(--card); padding: 40px; border-radius: 24px;
             width: 100%; max-width: 400px; border: 1px solid rgba(255,77,109,0.2);
+            position: relative;
+        }
+        .auth-close {
+            position: absolute;
+            top: 15px;
+            right: 15px;
+            background: none;
+            border: none;
+            color: var(--text-dim);
+            font-size: 1.5rem;
+            cursor: pointer;
+            width: 36px;
+            height: 36px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            transition: all 0.3s;
+        }
+        .auth-close:hover {
+            background: rgba(255,255,255,0.1);
+            color: var(--text);
         }
         .auth-container h2 { font-size: 1.8rem; margin-bottom: 10px; text-align: center; }
         .auth-container p { color: var(--text-dim); text-align: center; margin-bottom: 30px; }
@@ -363,8 +385,9 @@
     </nav>
     
     <!-- Auth Modal -->
-    <div class="auth-modal" id="authModal">
-        <div class="auth-container">
+    <div class="auth-modal" id="authModal" onclick="closeAuthOnBackdrop(event)">
+        <div class="auth-container" onclick="event.stopPropagation()">
+            <button class="auth-close" onclick="hideAuth()">×</button>
             <h2 data-i18n="auth_welcome">👋 Добро пожаловать в KIN</h2>
             <p data-i18n="auth_desc">Войдите или зарегистрируйтесь, чтобы начать общение</p>
             
@@ -673,6 +696,12 @@
             document.getElementById('authModal').classList.remove('active');
         }
         
+        function closeAuthOnBackdrop(event) {
+            if (event.target === document.getElementById('authModal')) {
+                hideAuth();
+            }
+        }
+        
         function switchTab(tab) {
             document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
@@ -707,7 +736,12 @@
             currentUser = { email, id: email };
             localStorage.setItem('kin_user', JSON.stringify(currentUser));
             hideAuth();
-            showUserInfo(currentUser);
+            
+            // Перенаправляем на дашборд
+            window.location.href = '/app';
+            
+            // Или если мы на той же странице - обновляем UI
+            // showUserInfo(currentUser);
         }
         
         async function handleLogin(e) {
@@ -730,7 +764,12 @@
             currentUser = { email, id: email };
             localStorage.setItem('kin_user', JSON.stringify(currentUser));
             hideAuth();
-            showUserInfo(currentUser);
+            
+            // Перенаправляем на дашборд
+            window.location.href = '/app';
+            
+            // Или показываем на той же странице
+            // showUserInfo(currentUser);
         }
         
         function showUserInfo(user) {

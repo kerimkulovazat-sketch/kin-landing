@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>KIN - Dashboard</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        :root {
+            --bg: #0a0a0f;
+            --surface: #12121a;
+            --card: #1a1a28;
+            --text: #e8e6f0;
+            --text-dim: #8a87a0;
+            --accent: #ff4d6d;
+            --accent-2: #c77dff;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: var(--bg);
+            color: var(--text);
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+        .container {
+            text-align: center;
+            padding: 40px;
+        }
+        .logo {
+            font-size: 2.5rem;
+            font-weight: 800;
+            background: linear-gradient(135deg, #ff4d6d, #c77dff);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+        }
+        h1 {
+            font-size: 1.8rem;
+            margin-bottom: 10px;
+        }
+        p {
+            color: var(--text-dim);
+            margin-bottom: 30px;
+        }
+        .user-email {
+            color: var(--accent);
+            font-weight: 600;
+        }
+        .companions {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            margin-top: 40px;
+            flex-wrap: wrap;
+        }
+        .companion-card {
+            background: var(--card);
+            border-radius: 20px;
+            padding: 30px;
+            width: 200px;
+            border: 1px solid rgba(255,255,255,0.08);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .companion-card:hover {
+            border-color: var(--accent);
+            transform: translateY(-5px);
+        }
+        .companion-avatar {
+            width: 80px;
+            height: 80px;
+            border-radius: 50%;
+            background: linear-gradient(135deg, var(--accent), var(--accent-2));
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-size: 2.5rem;
+            margin: 0 auto 15px;
+        }
+        .companion-name {
+            font-size: 1.2rem;
+            font-weight: 600;
+            margin-bottom: 5px;
+        }
+        .companion-status {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+        }
+        .logout-btn {
+            margin-top: 40px;
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.2);
+            color: var(--text-dim);
+            padding: 12px 30px;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .logout-btn:hover {
+            border-color: var(--accent);
+            color: var(--accent);
+        }
+        @media (max-width: 768px) {
+            .companions {
+                flex-direction: column;
+                align-items: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="logo">KIN</div>
+        <h1>Привет, <span class="user-email" id="userEmail"></span>! 👋</h1>
+        <p>Выбери своего компаньона и начни общение</p>
+        
+        <div class="companions">
+            <div class="companion-card" onclick="openChat('leo')">
+                <div class="companion-avatar">🎸</div>
+                <div class="companion-name">Лео</div>
+                <div class="companion-status">Онлайн</div>
+            </div>
+            
+            <div class="companion-card" onclick="openChat('li')">
+                <div class="companion-avatar">💜</div>
+                <div class="companion-name">Ли</div>
+                <div class="companion-status">Онлайн</div>
+            </div>
+            
+            <div class="companion-card" onclick="openChat('sofia')">
+                <div class="companion-avatar">🔥</div>
+                <div class="companion-name">Софи</div>
+                <div class="companion-status">Premium</div>
+            </div>
+        </div>
+        
+        <button class="logout-btn" onclick="logout()">Выйти</button>
+    </div>
+    
+    <script>
+        // Проверяем авторизацию
+        const user = JSON.parse(localStorage.getItem('kin_user'));
+        if (!user) {
+            window.location.href = '/';
+        } else {
+            document.getElementById('userEmail').textContent = user.email;
+        }
+        
+        function openChat(companion) {
+            if (companion === 'sofia') {
+                alert('Софи доступна только в Premium!');
+                return;
+            }
+            // Здесь можно открыть чат или перейти в Telegram
+            window.open(`https://t.me/${companion}_kin_bot`, '_blank');
+        }
+        
+        function logout() {
+            localStorage.removeItem('kin_user');
+            window.location.href = '/';
+        }
+    </script>
+</body>
+</html>
