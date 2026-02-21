@@ -151,54 +151,94 @@
     </style>
 </head>
 <body>
-    <a href="/" class="back-link">← Назад</a>
+    <a href="/" class="back-link" data-i18n="back">← Назад</a>
     
     <div class="logo">KIN</div>
     
     <div class="auth-container">
-        <h2>👋 Добро пожаловать</h2>
-        <p>Войдите или зарегистрируйтесь</p>
+        <h2 data-i18n="welcome">👋 Добро пожаловать</h2>
+        <p data-i18n="subtitle">Войдите или зарегистрируйтесь</p>
         
         <div class="auth-tabs">
-            <button class="auth-tab active" onclick="switchTab('login')">Вход</button>
-            <button class="auth-tab" onclick="switchTab('register')">Регистрация</button>
+            <button class="auth-tab active" onclick="switchTab('login')" data-i18n="login_tab">Вход</button>
+            <button class="auth-tab" onclick="switchTab('register')" data-i18n="register_tab">Регистрация</button>
         </div>
         
         <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
             <div class="form-group">
-                <label>Email</label>
+                <label data-i18n="email">Email</label>
                 <input type="email" id="loginEmail" required placeholder="your@email.com">
             </div>
             <div class="form-group">
-                <label>Пароль</label>
+                <label data-i18n="password">Пароль</label>
                 <input type="password" id="loginPassword" required placeholder="••••••••">
             </div>
-            <button type="submit" class="btn-primary">Войти</button>
+            <button type="submit" class="btn-primary" data-i18n="login_btn">Войти</button>
             <div class="error-msg" id="loginError"></div>
         </form>
         
         <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
             <div class="form-group">
-                <label>Email</label>
+                <label data-i18n="email">Email</label>
                 <input type="email" id="regEmail" required placeholder="your@email.com">
             </div>
             <div class="form-group">
-                <label>Пароль</label>
+                <label data-i18n="password">Пароль</label>
                 <input type="password" id="regPassword" required placeholder="Минимум 6 символов" minlength="6">
             </div>
             <div class="form-group">
-                <label>Повторите пароль</label>
+                <label data-i18n="password2">Повторите пароль</label>
                 <input type="password" id="regPassword2" required placeholder="••••••••">
             </div>
-            <button type="submit" class="btn-primary">Зарегистрироваться</button>
+            <button type="submit" class="btn-primary" data-i18n="register_btn">Зарегистрироваться</button>
             <div class="error-msg" id="regError"></div>
         </form>
     </div>
     
     <script>
-        // Проверяем, если уже залогинен — редирект на /app
-        const savedUser = localStorage.getItem('kin_user');
-        if (savedUser) {
+        // Переводы
+        const translations = {
+            ru: {
+                back: '← Назад',
+                welcome: '👋 Добро пожаловать',
+                subtitle: 'Войдите или зарегистрируйтесь',
+                login_tab: 'Вход',
+                register_tab: 'Регистрация',
+                email: 'Email',
+                password: 'Пароль',
+                password2: 'Повторите пароль',
+                login_btn: 'Войти',
+                register_btn: 'Зарегистрироваться'
+            },
+            en: {
+                back: '← Back',
+                welcome: '👋 Welcome',
+                subtitle: 'Login or register',
+                login_tab: 'Login',
+                register_tab: 'Register',
+                email: 'Email',
+                password: 'Password',
+                password2: 'Confirm password',
+                login_btn: 'Login',
+                register_btn: 'Register'
+            }
+        };
+        
+        // Применяем сохраненный язык
+        const savedLang = localStorage.getItem('kin_lang') || 'ru';
+        applyTranslations(savedLang);
+        
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+        
+        // Проверяем авторизацию
+        if (localStorage.getItem('kin_user')) {
             window.location.href = '/app';
         }
         
@@ -218,7 +258,7 @@
             document.getElementById('regError').classList.remove('active');
         }
         
-        async function handleLogin(e) {
+        function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
             const savedUser = localStorage.getItem('kin_user');
@@ -231,12 +271,11 @@
                 }
             }
             
-            // Создаём нового
             localStorage.setItem('kin_user', JSON.stringify({ email, id: email }));
             window.location.href = '/app';
         }
         
-        async function handleRegister(e) {
+        function handleRegister(e) {
             e.preventDefault();
             const email = document.getElementById('regEmail').value;
             const password = document.getElementById('regPassword').value;
@@ -244,7 +283,7 @@
             const errorEl = document.getElementById('regError');
             
             if (password !== password2) {
-                errorEl.textContent = 'Пароли не совпадают';
+                errorEl.textContent = savedLang === 'en' ? 'Passwords do not match' : 'Пароли не совпадают';
                 errorEl.classList.add('active');
                 return;
             }

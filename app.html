@@ -115,33 +115,66 @@
 <body>
     <div class="container">
         <div class="logo">KIN</div>
-        <h1>Привет, <span class="user-email" id="userEmail"></span>! 👋</h1>
-        <p>Выбери своего компаньона и начни общение</p>
+        <h1><span data-i18n="hello">Привет</span>, <span class="user-email" id="userEmail"></span>! 👋</h1>
+        <p data-i18n="choose">Выбери своего компаньона и начни общение</p>
         
         <div class="companions">
             <div class="companion-card" onclick="openChat('leo')">
                 <div class="companion-avatar">🎸</div>
-                <div class="companion-name">Лео</div>
-                <div class="companion-status">Онлайн</div>
+                <div class="companion-name">Leo</div>
+                <div class="companion-status" data-i18n="online">Онлайн</div>
             </div>
             
             <div class="companion-card" onclick="openChat('li')">
                 <div class="companion-avatar">💜</div>
-                <div class="companion-name">Ли</div>
-                <div class="companion-status">Онлайн</div>
+                <div class="companion-name">Li</div>
+                <div class="companion-status" data-i18n="online">Онлайн</div>
             </div>
             
             <div class="companion-card" onclick="openChat('sofia')">
                 <div class="companion-avatar">🔥</div>
-                <div class="companion-name">Софи</div>
-                <div class="companion-status">Premium</div>
+                <div class="companion-name">Sofia</div>
+                <div class="companion-status" data-i18n="premium">Premium</div>
             </div>
         </div>
         
-        <button class="logout-btn" onclick="logout()">Выйти</button>
+        <button class="logout-btn" onclick="logout()" data-i18n="logout">Выйти</button>
     </div>
     
     <script>
+        // Переводы
+        const translations = {
+            ru: {
+                hello: 'Привет',
+                choose: 'Выбери своего компаньона и начни общение',
+                online: 'Онлайн',
+                premium: 'Premium',
+                logout: 'Выйти',
+                sofia_alert: 'Софи доступна только в Premium!'
+            },
+            en: {
+                hello: 'Hello',
+                choose: 'Choose your companion and start chatting',
+                online: 'Online',
+                premium: 'Premium',
+                logout: 'Logout',
+                sofia_alert: 'Sofia is available only in Premium!'
+            }
+        };
+        
+        // Применяем сохраненный язык
+        const savedLang = localStorage.getItem('kin_lang') || 'ru';
+        applyTranslations(savedLang);
+        
+        function applyTranslations(lang) {
+            document.querySelectorAll('[data-i18n]').forEach(el => {
+                const key = el.getAttribute('data-i18n');
+                if (translations[lang] && translations[lang][key]) {
+                    el.textContent = translations[lang][key];
+                }
+            });
+        }
+        
         // Проверяем авторизацию
         const user = JSON.parse(localStorage.getItem('kin_user'));
         if (!user) {
@@ -152,10 +185,9 @@
         
         function openChat(companion) {
             if (companion === 'sofia') {
-                alert('Софи доступна только в Premium!');
+                alert(translations[savedLang].sofia_alert);
                 return;
             }
-            // Здесь можно открыть чат или перейти в Telegram
             window.open(`https://t.me/${companion}_kin_bot`, '_blank');
         }
         
