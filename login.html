@@ -2,95 +2,256 @@
 <html lang="ru">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>KIN - Login</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=5.0, viewport-fit=cover">
+    <meta name="theme-color" content="#0a0a0f">
+    <title>KIN - Вход</title>
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <style>
         * { margin: 0; padding: 0; box-sizing: border-box; }
+        
         :root {
             --bg: #0a0a0f;
-            --surface: #12121a;
-            --card: #1a1a28;
-            --text: #e8e6f0;
-            --text-dim: #8a87a0;
+            --surface: rgba(255,255,255,0.03);
+            --card: rgba(255,255,255,0.05);
+            --text: #ffffff;
+            --text-dim: #a0a0b0;
             --accent: #ff4d6d;
             --accent-2: #c77dff;
         }
+        
         body {
-            font-family: 'Inter', sans-serif;
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
             background: var(--bg);
             color: var(--text);
             min-height: 100vh;
             display: flex;
-            flex-direction: column;
             align-items: center;
             justify-content: center;
-            background: radial-gradient(ellipse at 50% 0%, rgba(255,77,109,0.1), transparent 50%);
+            position: relative;
+            overflow-x: hidden;
         }
+        
+        /* Animated Background */
+        .bg-gradient {
+            position: fixed;
+            inset: 0;
+            background: 
+                radial-gradient(ellipse at 20% 20%, rgba(255,77,109,0.15) 0%, transparent 50%),
+                radial-gradient(ellipse at 80% 80%, rgba(199,125,255,0.1) 0%, transparent 50%),
+                radial-gradient(ellipse at 50% 50%, rgba(255,77,109,0.05) 0%, transparent 70%);
+            animation: bgPulse 8s ease-in-out infinite;
+        }
+        
+        @keyframes bgPulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+        
+        /* Floating Orbs */
+        .orb {
+            position: fixed;
+            border-radius: 50%;
+            filter: blur(80px);
+            opacity: 0.4;
+            animation: float 20s ease-in-out infinite;
+        }
+        .orb-1 {
+            width: 400px; height: 400px;
+            background: linear-gradient(135deg, rgba(255,77,109,0.3), transparent);
+            top: -10%; left: -10%;
+            animation-delay: 0s;
+        }
+        .orb-2 {
+            width: 300px; height: 300px;
+            background: linear-gradient(135deg, rgba(199,125,255,0.3), transparent);
+            bottom: -5%; right: -5%;
+            animation-delay: -5s;
+        }
+        .orb-3 {
+            width: 200px; height: 200px;
+            background: linear-gradient(135deg, rgba(255,77,109,0.2), rgba(199,125,255,0.2));
+            top: 50%; left: 50%;
+            transform: translate(-50%, -50%);
+            animation-delay: -10s;
+        }
+        
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) rotate(0deg); }
+            33% { transform: translate(30px, -30px) rotate(120deg); }
+            66% { transform: translate(-20px, 20px) rotate(240deg); }
+        }
+        
+        /* Back Button */
         .back-link {
-            position: absolute;
+            position: fixed;
             top: 30px;
             left: 30px;
             color: var(--text-dim);
             text-decoration: none;
-            font-size: 0.9rem;
+            font-size: 0.95rem;
             display: flex;
             align-items: center;
             gap: 8px;
-            transition: color 0.3s;
+            transition: all 0.3s;
+            padding: 10px 16px;
+            border-radius: 12px;
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.06);
+            z-index: 100;
         }
         .back-link:hover {
             color: var(--text);
+            background: rgba(255,255,255,0.08);
+            transform: translateX(-3px);
+        }
+        
+        /* Language Switcher */
+        .lang-switcher {
+            position: fixed;
+            top: 30px;
+            right: 30px;
+            display: flex;
+            gap: 8px;
+            z-index: 100;
+        }
+        .lang-btn {
+            padding: 10px 16px;
+            border-radius: 12px;
+            font-size: 0.9rem;
+            color: var(--text-dim);
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255,255,255,0.06);
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        .lang-btn:hover {
+            background: rgba(255,255,255,0.08);
+            color: var(--text);
+        }
+        .lang-btn.active {
+            background: linear-gradient(135deg, rgba(255,77,109,0.2), rgba(199,125,255,0.2));
+            color: var(--accent);
+            border-color: rgba(255,77,109,0.3);
+        }
+        
+        /* Auth Card */
+        .auth-wrapper {
+            position: relative;
+            z-index: 10;
+            width: 100%;
+            max-width: 440px;
+            padding: 20px;
+        }
+        
+        .auth-card {
+            background: rgba(255,255,255,0.03);
+            backdrop-filter: blur(20px);
+            border-radius: 32px;
+            padding: 48px 40px;
+            border: 1px solid rgba(255,255,255,0.08);
+            box-shadow: 
+                0 25px 50px -12px rgba(0,0,0,0.5),
+                0 0 0 1px rgba(255,255,255,0.05) inset;
+            animation: cardAppear 0.6s ease-out;
+        }
+        
+        @keyframes cardAppear {
+            0% { opacity: 0; transform: translateY(30px) scale(0.95); }
+            100% { opacity: 1; transform: translateY(0) scale(1); }
+        }
+        
+        /* Logo */
+        .logo-section {
+            text-align: center;
+            margin-bottom: 32px;
         }
         .logo {
-            font-size: 2.5rem;
+            font-size: 3rem;
             font-weight: 800;
             background: linear-gradient(135deg, #ff4d6d, #c77dff);
             -webkit-background-clip: text;
             -webkit-text-fill-color: transparent;
-            margin-bottom: 40px;
+            margin-bottom: 12px;
         }
-        .auth-container {
-            background: var(--card);
-            padding: 40px;
-            border-radius: 24px;
-            width: 100%;
-            max-width: 400px;
-            border: 1px solid rgba(255,77,109,0.2);
-        }
-        .auth-container h2 {
-            font-size: 1.5rem;
-            margin-bottom: 10px;
-            text-align: center;
-        }
-        .auth-container > p {
+        .logo-subtitle {
             color: var(--text-dim);
+            font-size: 1rem;
+        }
+        
+        /* Welcome Text */
+        .welcome-text {
             text-align: center;
-            margin-bottom: 30px;
+            margin-bottom: 32px;
+        }
+        .welcome-text h1 {
+            font-size: 1.75rem;
+            font-weight: 700;
+            margin-bottom: 8px;
+        }
+        .welcome-text p {
+            color: var(--text-dim);
             font-size: 0.95rem;
         }
+        
+        /* Tabs */
         .auth-tabs {
             display: flex;
-            gap: 10px;
-            margin-bottom: 25px;
+            gap: 8px;
+            margin-bottom: 32px;
+            background: rgba(255,255,255,0.03);
+            padding: 6px;
+            border-radius: 16px;
+            border: 1px solid rgba(255,255,255,0.06);
         }
         .auth-tab {
             flex: 1;
             background: transparent;
             border: none;
             color: var(--text-dim);
-            padding: 12px;
+            padding: 14px 20px;
             cursor: pointer;
-            border-bottom: 2px solid transparent;
+            border-radius: 12px;
             transition: all 0.3s;
             font-size: 0.95rem;
+            font-weight: 500;
+            position: relative;
+            overflow: hidden;
+        }
+        .auth-tab::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,77,109,0.2), rgba(199,125,255,0.2));
+            opacity: 0;
+            transition: opacity 0.3s;
+            border-radius: 12px;
+        }
+        .auth-tab:hover {
+            color: var(--text);
         }
         .auth-tab.active {
-            color: var(--accent);
-            border-bottom-color: var(--accent);
+            color: var(--text);
+            font-weight: 600;
         }
+        .auth-tab.active::before {
+            opacity: 1;
+        }
+        .auth-tab span {
+            position: relative;
+            z-index: 1;
+        }
+        
+        /* Forms */
         .auth-form { display: none; }
-        .auth-form.active { display: block; }
+        .auth-form.active { display: block; animation: formAppear 0.4s ease; }
+        
+        @keyframes formAppear {
+            0% { opacity: 0; transform: translateX(10px); }
+            100% { opacity: 1; transform: translateX(0); }
+        }
+        
         .form-group {
             margin-bottom: 20px;
         }
@@ -99,107 +260,263 @@
             margin-bottom: 8px;
             font-size: 0.9rem;
             color: var(--text-dim);
+            font-weight: 500;
+        }
+        .input-wrapper {
+            position: relative;
         }
         .form-group input {
             width: 100%;
             background: rgba(255,255,255,0.05);
             border: 1px solid rgba(255,255,255,0.1);
-            border-radius: 12px;
-            padding: 14px 16px;
+            border-radius: 16px;
+            padding: 16px 18px;
             color: white;
             font-size: 1rem;
-            font-family: 'Inter', sans-serif;
+            font-family: inherit;
+            transition: all 0.3s;
         }
         .form-group input:focus {
             outline: none;
-            border-color: var(--accent);
+            border-color: rgba(255,77,109,0.5);
+            background: rgba(255,255,255,0.08);
+            box-shadow: 0 0 0 3px rgba(255,77,109,0.1);
         }
+        .form-group input::placeholder {
+            color: rgba(160,160,176,0.5);
+        }
+        
+        /* Submit Button */
         .btn-primary {
             background: linear-gradient(135deg, #ff4d6d, #c77dff);
             color: white;
-            padding: 16px;
-            border-radius: 12px;
+            padding: 18px;
+            border-radius: 16px;
             font-weight: 600;
             font-size: 1rem;
             border: none;
             cursor: pointer;
-            transition: transform 0.3s, box-shadow 0.3s;
+            transition: all 0.3s;
             width: 100%;
+            margin-top: 8px;
+            position: relative;
+            overflow: hidden;
+        }
+        .btn-primary::before {
+            content: '';
+            position: absolute;
+            inset: 0;
+            background: linear-gradient(135deg, rgba(255,255,255,0.2), transparent);
+            opacity: 0;
+            transition: opacity 0.3s;
         }
         .btn-primary:hover {
             transform: translateY(-2px);
-            box-shadow: 0 10px 30px rgba(255,77,109,0.3);
+            box-shadow: 0 12px 40px rgba(255,77,109,0.4);
         }
-        .error-msg {
-            color: var(--accent);
-            font-size: 0.85rem;
-            margin-top: 10px;
-            display: none;
+        .btn-primary:hover::before {
+            opacity: 1;
         }
-        .error-msg.active { display: block; }
+        .btn-primary:active {
+            transform: translateY(0);
+        }
         
+        /* Error Message */
+        .error-msg {
+            background: rgba(255,77,109,0.1);
+            border: 1px solid rgba(255,77,109,0.3);
+            color: #ff6b8a;
+            font-size: 0.9rem;
+            padding: 12px 16px;
+            border-radius: 12px;
+            margin-top: 16px;
+            display: none;
+            align-items: center;
+            gap: 8px;
+        }
+        .error-msg.active { display: flex; }
+        .error-msg::before {
+            content: '⚠️';
+        }
+        
+        /* Divider */
+        .divider {
+            display: flex;
+            align-items: center;
+            gap: 16px;
+            margin: 24px 0;
+            color: var(--text-dim);
+            font-size: 0.85rem;
+        }
+        .divider::before,
+        .divider::after {
+            content: '';
+            flex: 1;
+            height: 1px;
+            background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
+        }
+        
+        /* Social Login (placeholder) */
+        .social-login {
+            display: flex;
+            gap: 12px;
+            justify-content: center;
+        }
+        .social-btn {
+            width: 52px;
+            height: 52px;
+            border-radius: 14px;
+            background: rgba(255,255,255,0.05);
+            border: 1px solid rgba(255,255,255,0.1);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            cursor: pointer;
+            transition: all 0.3s;
+            font-size: 1.5rem;
+        }
+        .social-btn:hover {
+            background: rgba(255,255,255,0.1);
+            transform: translateY(-2px);
+        }
+        
+        /* Mobile */
         @media (max-width: 480px) {
-            .auth-container {
-                margin: 20px;
-                padding: 30px 20px;
-            }
             .back-link {
-                top: 20px;
-                left: 20px;
+                top: 16px;
+                left: 16px;
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            .lang-switcher {
+                top: 16px;
+                right: 16px;
+            }
+            .lang-btn {
+                padding: 8px 12px;
+                font-size: 0.85rem;
+            }
+            .auth-card {
+                padding: 32px 24px;
+                border-radius: 24px;
+            }
+            .logo {
+                font-size: 2.5rem;
+            }
+            .welcome-text h1 {
+                font-size: 1.5rem;
+            }
+            .auth-tabs {
+                padding: 4px;
+            }
+            .auth-tab {
+                padding: 12px 16px;
+                font-size: 0.9rem;
             }
         }
     </style>
 </head>
 <body>
+    <!-- Background -->
+    <div class="bg-gradient"></div>
+    <div class="orb orb-1"></div>
+    <div class="orb orb-2"></div>
+    <div class="orb orb-3"></div>
+    
+    <!-- Navigation -->
     <a href="/" class="back-link" data-i18n="back">← Назад</a>
     
-    <div class="logo">KIN</div>
+    <div class="lang-switcher">
+        <button class="lang-btn active" onclick="setLanguage('ru')" id="lang-ru">RU</button>
+        <button class="lang-btn" onclick="setLanguage('en')" id="lang-en">EN</button>
+    </div>
     
-    <div class="auth-container">
-        <h2 data-i18n="welcome">👋 Добро пожаловать</h2>
-        <p data-i18n="subtitle">Войдите или зарегистрируйтесь</p>
-        
-        <div class="auth-tabs">
-            <button class="auth-tab active" onclick="switchTab('login')" data-i18n="login_tab">Вход</button>
-            <button class="auth-tab" onclick="switchTab('register')" data-i18n="register_tab">Регистрация</button>
+    <!-- Auth Card -->
+    <div class="auth-wrapper">
+        <div class="auth-card">
+            <div class="logo-section">
+                <div class="logo">KIN</div>
+                <div class="logo-subtitle" data-i18n="logo_subtitle">AI Companion</div>
+            </div>
+            
+            <div class="welcome-text">
+                <h1 data-i18n="welcome">С возвращением 👋</h1>
+                <p data-i18n="subtitle">Войдите, чтобы продолжить</p>
+            </div>
+            
+            <div class="auth-tabs">
+                <button class="auth-tab active" onclick="switchTab('login')">
+                    <span data-i18n="login_tab">Вход</span>
+                </button>
+                <button class="auth-tab" onclick="switchTab('register')">
+                    <span data-i18n="register_tab">Регистрация</span>
+                </button>
+            </div>
+            
+            <!-- Login Form -->
+            <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
+                <div class="form-group">
+                    <label data-i18n="email">Email</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="loginEmail" required placeholder="name@example.com">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label data-i18n="password">Пароль</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="loginPassword" required placeholder="••••••••">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary" data-i18n="login_btn">Войти</button>
+                <div class="error-msg" id="loginError"></div>
+            </form>
+            
+            <!-- Register Form -->
+            <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
+                <div class="form-group">
+                    <label data-i18n="email">Email</label>
+                    <div class="input-wrapper">
+                        <input type="email" id="regEmail" required placeholder="name@example.com">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label data-i18n="password">Пароль</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="regPassword" required placeholder="Минимум 6 символов" minlength="6">
+                    </div>
+                </div>
+                
+                <div class="form-group">
+                    <label data-i18n="password2">Повторите пароль</label>
+                    <div class="input-wrapper">
+                        <input type="password" id="regPassword2" required placeholder="••••••••">
+                    </div>
+                </div>
+                
+                <button type="submit" class="btn-primary" data-i18n="register_btn">Создать аккаунт</button>
+                <div class="error-msg" id="regError"></div>
+            </form>
+            
+            <!-- Social Login Section (commented for future) -->
+            <!-- 
+            <div class="divider"><span data-i18n="or">или</span></div>
+            <div class="social-login">
+                <button class="social-btn" title="Telegram">📱</button>
+                <button class="social-btn" title="Google">🔍</button>
+            </div>
+            -->
         </div>
-        
-        <form class="auth-form active" id="loginForm" onsubmit="handleLogin(event)">
-            <div class="form-group">
-                <label data-i18n="email">Email</label>
-                <input type="email" id="loginEmail" required placeholder="your@email.com">
-            </div>
-            <div class="form-group">
-                <label data-i18n="password">Пароль</label>
-                <input type="password" id="loginPassword" required placeholder="••••••••">
-            </div>
-            <button type="submit" class="btn-primary" data-i18n="login_btn">Войти</button>
-            <div class="error-msg" id="loginError"></div>
-        </form>
-        
-        <form class="auth-form" id="registerForm" onsubmit="handleRegister(event)">
-            <div class="form-group">
-                <label data-i18n="email">Email</label>
-                <input type="email" id="regEmail" required placeholder="your@email.com">
-            </div>
-            <div class="form-group">
-                <label data-i18n="password">Пароль</label>
-                <input type="password" id="regPassword" required placeholder="Минимум 6 символов" minlength="6">
-            </div>
-            <div class="form-group">
-                <label data-i18n="password2">Повторите пароль</label>
-                <input type="password" id="regPassword2" required placeholder="••••••••">
-            </div>
-            <button type="submit" class="btn-primary" data-i18n="register_btn">Зарегистрироваться</button>
-            <div class="error-msg" id="regError"></div>
-        </form>
     </div>
     
     <script>
-        // SESSION CHECK
+        // Session timeout
         const SESSION_TIMEOUT = 30 * 60 * 1000;
         let currentLang = 'ru';
         
+        // Check existing session
         const lastActivity = localStorage.getItem('kin_last_activity');
         if (lastActivity) {
             const elapsed = Date.now() - parseInt(lastActivity);
@@ -226,36 +543,45 @@
         const translations = {
             ru: {
                 back: '← Назад',
-                welcome: '👋 Добро пожаловать',
-                subtitle: 'Войдите или зарегистрируйтесь',
+                logo_subtitle: 'AI Companion',
+                welcome: 'С возвращением 👋',
+                subtitle: 'Войдите, чтобы продолжить',
                 login_tab: 'Вход',
                 register_tab: 'Регистрация',
                 email: 'Email',
                 password: 'Пароль',
                 password2: 'Повторите пароль',
                 login_btn: 'Войти',
-                register_btn: 'Зарегистрироваться',
-                pass_mismatch: 'Пароли не совпадают'
+                register_btn: 'Создать аккаунт',
+                pass_mismatch: 'Пароли не совпадают',
+                or: 'или'
             },
             en: {
                 back: '← Back',
-                welcome: '👋 Welcome',
-                subtitle: 'Login or register',
+                logo_subtitle: 'AI Companion',
+                welcome: 'Welcome back 👋',
+                subtitle: 'Sign in to continue',
                 login_tab: 'Login',
                 register_tab: 'Register',
                 email: 'Email',
                 password: 'Password',
                 password2: 'Confirm password',
-                login_btn: 'Login',
-                register_btn: 'Register',
-                pass_mismatch: 'Passwords do not match'
+                login_btn: 'Sign in',
+                register_btn: 'Create account',
+                pass_mismatch: 'Passwords do not match',
+                or: 'or'
             }
         };
         
-        // Apply saved language from landing
-        function applyTranslations(lang) {
+        // Language switching
+        function setLanguage(lang) {
             currentLang = lang;
+            localStorage.setItem('kin_lang', lang);
             document.documentElement.lang = lang;
+            
+            document.querySelectorAll('.lang-btn').forEach(btn => btn.classList.remove('active'));
+            document.getElementById('lang-' + lang).classList.add('active');
+            
             document.querySelectorAll('[data-i18n]').forEach(el => {
                 const key = el.getAttribute('data-i18n');
                 if (translations[lang] && translations[lang][key]) {
@@ -264,12 +590,13 @@
             });
         }
         
-        // Init on load
+        // Init
         window.addEventListener('load', () => {
             const savedLang = localStorage.getItem('kin_lang') || 'ru';
-            applyTranslations(savedLang);
+            setLanguage(savedLang);
         });
         
+        // Tab switching
         function switchTab(tab) {
             document.querySelectorAll('.auth-tab').forEach(t => t.classList.remove('active'));
             document.querySelectorAll('.auth-form').forEach(f => f.classList.remove('active'));
@@ -286,6 +613,7 @@
             document.getElementById('regError').classList.remove('active');
         }
         
+        // Login handler
         function handleLogin(e) {
             e.preventDefault();
             const email = document.getElementById('loginEmail').value;
@@ -305,6 +633,7 @@
             window.location.href = '/app';
         }
         
+        // Register handler
         function handleRegister(e) {
             e.preventDefault();
             const email = document.getElementById('regEmail').value;
