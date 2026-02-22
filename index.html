@@ -462,6 +462,19 @@
             align-items: center; 
             justify-content: center; 
             font-size: 1rem; 
+            overflow: hidden;
+        }
+        .chat-avatar-img { 
+            width: 34px; 
+            height: 34px; 
+            border-radius: 50%; 
+            overflow: hidden;
+            border: 2px solid rgba(255,77,109,0.3);
+        }
+        .gallery-item-img {
+            aspect-ratio: 1;
+            overflow: hidden;
+            border-radius: 10px;
         }
         .chat-info { flex: 1; }
         .chat-name { font-weight: 600; font-size: 0.85rem; }
@@ -1163,19 +1176,21 @@
                             <div class="iphone-notch"></div>
                             <div class="iphone-screen-content">
                                 <div class="chat-header">
-                                    <div class="chat-avatar">🎸</div>
+                                    <div class="chat-avatar-img">
+                                        <img src="photos/leo/leo_portrait.jpg" alt="Leo" style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%;">
+                                    </div>
                                     <div class="chat-info">
                                         <div class="chat-name">Leo</div>
-                                        <div class="chat-status">онлайн</div>
+                                        <div class="chat-status" data-i18n="phone_status_online">онлайн</div>
                                     </div>
                                 </div>
                                 <div class="chat-messages">
-                                    <div class="msg received">Привет. Я тут новый трек записал 🔥</div>
-                                    <div class="msg sent">О, круто! Покажешь?</div>
-                                    <div class="msg received">Конечно. Заходи вечером 🎧</div>
+                                    <div class="msg received" data-i18n="leo_msg_1">Привет. Я тут новый трек записал 🔥</div>
+                                    <div class="msg sent" data-i18n="user_msg_1">О, круто! Покажешь?</div>
+                                    <div class="msg received" data-i18n="leo_msg_2">Конечно. Заходи вечером 🎧</div>
                                 </div>
                                 <div class="chat-input">
-                                    <span>Сообщение...</span>
+                                    <span data-i18n="phone_input_placeholder">Сообщение...</span>
                                     <div class="send-btn">➤</div>
                                 </div>
                             </div>
@@ -1191,16 +1206,14 @@
                             <div class="iphone-screen-content">
                                 <div class="gallery-header">
                                     <div class="gallery-back">←</div>
-                                    <div class="gallery-title">Li's Photos</div>
+                                    <div class="gallery-title" data-i18n="li_gallery_title">Li's Photos</div>
                                     <div class="gallery-more">⋮</div>
                                 </div>
                                 <div class="gallery-grid">
-                                    <div class="gallery-item">💃</div>
-                                    <div class="gallery-item">✨</div>
-                                    <div class="gallery-item">🌙</div>
-                                    <div class="gallery-item">🔥</div>
-                                    <div class="gallery-item">💋</div>
-                                    <div class="gallery-item">🖤</div>
+                                    <div class="gallery-item-img"><img src="photos/li/li_window.jpg" alt="Li" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"></div>
+                                    <div class="gallery-item-img"><img src="photos/li/li_balcony.jpg" alt="Li" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"></div>
+                                    <div class="gallery-item-img"><img src="photos/li/li_reading.jpg" alt="Li" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"></div>
+                                    <div class="gallery-item-img"><img src="photos/li/li_mirror.jpg" alt="Li" style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;"></div>
                                 </div>
                             </div>
                         </div>
@@ -1348,6 +1361,12 @@
                 final_cta_title: '<span>Попробуй</span> бесплатно',
                 final_cta_desc: 'Зарегистрируйся и познакомься со своим companion уже сегодня.',
                 final_cta_btn: 'Присоединиться бесплатно',
+                phone_status_online: 'онлайн',
+                phone_input_placeholder: 'Сообщение...',
+                leo_msg_1: 'Привет. Я тут новый трек записал 🔥',
+                user_msg_1: 'О, круто! Покажешь?',
+                leo_msg_2: 'Конечно. Заходи вечером 🎧',
+                li_gallery_title: "Li's Photos",
                 footer_privacy: 'Политика конфиденциальности',
                 footer_terms: 'Условия использования',
                 footer_blog: 'Блог',
@@ -1411,6 +1430,12 @@
                 final_cta_title: '<span>Try it</span> for free',
                 final_cta_desc: 'Sign up and meet your companion today.',
                 final_cta_btn: 'Join free',
+                phone_status_online: 'online',
+                phone_input_placeholder: 'Message...',
+                leo_msg_1: 'Hey. Just recorded a new track 🔥',
+                user_msg_1: 'Oh, cool! Will you show me?',
+                leo_msg_2: 'Sure. Come by tonight 🎧',
+                li_gallery_title: "Li's Photos",
                 footer_privacy: 'Privacy Policy',
                 footer_terms: 'Terms of Service',
                 footer_blog: 'Blog',
