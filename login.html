@@ -365,6 +365,12 @@
         .telegram-login-wrapper iframe {
             border-radius: 16px !important;
         }
+        .telegram-instruction {
+            text-align: center;
+            font-size: 0.95rem;
+            color: var(--text);
+            margin-bottom: 12px;
+        }
         .telegram-note {
             text-align: center;
             font-size: 0.85rem;
@@ -494,6 +500,11 @@
             
             <!-- Telegram Login -->
             <div class="divider"><span data-i18n="or">или</span></div>
+            
+            <div class="telegram-instruction" data-i18n="telegram_instruction">
+                Нажмите кнопку ниже и подтвердите вход в приложении Telegram
+            </div>
+            
             <div class="telegram-login-wrapper" id="telegram-login-container">
                 <script async src="https://telegram.org/js/telegram-widget.js?22" 
                     data-telegram-login="kinauth_bot" 
@@ -502,8 +513,9 @@
                     data-auth-url="https://kinmvp.xyz/login" 
                     data-request-access="write"></script>
             </div>
+            
             <div class="telegram-note" data-i18n="telegram_note">
-                Быстрый вход без пароля
+                Проверьте сообщения от @kinauth_bot в Telegram
             </div>
         </div>
     </div>
@@ -552,7 +564,8 @@
                 register_btn: 'Создать аккаунт',
                 pass_mismatch: 'Пароли не совпадают',
                 or: 'или',
-                telegram_note: 'Быстрый вход без пароля'
+                telegram_instruction: 'Нажмите кнопку ниже и подтвердите вход в приложении Telegram',
+                telegram_note: 'Проверьте сообщения от @kinauth_bot в Telegram'
             },
             en: {
                 back: '← Back',
@@ -568,7 +581,8 @@
                 register_btn: 'Create account',
                 pass_mismatch: 'Passwords do not match',
                 or: 'or',
-                telegram_note: 'Quick login without password'
+                telegram_instruction: 'Click the button below and confirm login in Telegram app',
+                telegram_note: 'Check messages from @kinauth_bot in Telegram'
             }
         };
         
