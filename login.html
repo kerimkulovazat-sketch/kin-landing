@@ -356,28 +356,20 @@
             background: linear-gradient(90deg, transparent, rgba(255,255,255,0.2), transparent);
         }
         
-        /* Social Login (placeholder) */
-        .social-login {
+        /* Telegram Login */
+        .telegram-login-wrapper {
             display: flex;
-            gap: 12px;
             justify-content: center;
+            margin: 8px 0;
         }
-        .social-btn {
-            width: 52px;
-            height: 52px;
-            border-radius: 14px;
-            background: rgba(255,255,255,0.05);
-            border: 1px solid rgba(255,255,255,0.1);
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            cursor: pointer;
-            transition: all 0.3s;
-            font-size: 1.5rem;
+        .telegram-login-wrapper iframe {
+            border-radius: 16px !important;
         }
-        .social-btn:hover {
-            background: rgba(255,255,255,0.1);
-            transform: translateY(-2px);
+        .telegram-note {
+            text-align: center;
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            margin-top: 12px;
         }
         
         /* Mobile */
@@ -500,14 +492,19 @@
                 <div class="error-msg" id="regError"></div>
             </form>
             
-            <!-- Social Login Section (commented for future) -->
-            <!-- 
+            <!-- Telegram Login -->
             <div class="divider"><span data-i18n="or">или</span></div>
-            <div class="social-login">
-                <button class="social-btn" title="Telegram">📱</button>
-                <button class="social-btn" title="Google">🔍</button>
+            <div class="telegram-login-wrapper" id="telegram-login-container">
+                <script async src="https://telegram.org/js/telegram-widget.js?22" 
+                    data-telegram-login="kinmvp_bot" 
+                    data-size="large" 
+                    data-radius="16"
+                    data-auth-url="https://kinmvp.xyz/login" 
+                    data-request-access="write"></script>
             </div>
-            -->
+            <div class="telegram-note" data-i18n="telegram_note">
+                Быстрый вход без пароля
+            </div>
         </div>
     </div>
     
@@ -554,7 +551,8 @@
                 login_btn: 'Войти',
                 register_btn: 'Создать аккаунт',
                 pass_mismatch: 'Пароли не совпадают',
-                or: 'или'
+                or: 'или',
+                telegram_note: 'Быстрый вход без пароля'
             },
             en: {
                 back: '← Back',
@@ -569,7 +567,8 @@
                 login_btn: 'Sign in',
                 register_btn: 'Create account',
                 pass_mismatch: 'Passwords do not match',
-                or: 'or'
+                or: 'or',
+                telegram_note: 'Quick login without password'
             }
         };
         
@@ -651,6 +650,45 @@
             updateActivity();
             window.location.href = '/app';
         }
+        
+        // Telegram Login Handler
+        function handleTelegramAuth(user) {
+            // user contains: id, first_name, last_name, username, photo_url, auth_date, hash
+            console.log('Telegram auth:', user);
+            
+            // Save user data
+            const userData = {
+                id: user.id,
+                username: user.username || user.first_name,
+                firstName: user.first_name,
+                lastName: user.last_name,
+                photoUrl: user.photo_url,
+                authMethod: 'telegram'
+            };
+            
+            localStorage.setItem('kin_user', JSON.stringify(userData));
+            updateActivity();
+            
+            // Redirect to app
+            window.location.href = '/app';
+        }
+        
+        // Check for Telegram auth callback (URL params)
+        window.addEventListener('load', () => {
+            const urlParams = new URLSearchParams(window.location.search);
+            const tgAuth = urlParams.get('tgAuth');
+            
+            if (tgAuth) {
+                // Parse Telegram auth data from URL
+                const authData = {};
+                urlParams.forEach((value, key) => {
+                    if (key !== 'tgAuth') {
+                        authData[key] = value;
+                    }
+                });
+                handleTelegramAuth(authData);
+            }
+        });
     </script>
 </body>
 </html>
